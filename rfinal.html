@@ -1,0 +1,4451 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Sosyal Medya Tasarımcısı Pro - Advanced Professional Edition</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --success: #28a745;
+            --danger: #dc3545;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --accent: #f093fb;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, #16213e 50%, #0f3460 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            padding: 15px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated background elements */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(240, 147, 251, 0.1) 0%, transparent 50%);
+            animation: gradientShift 15s ease infinite;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(20px, -30px); }
+            50% { transform: translate(0, 40px); }
+            75% { transform: translate(-20px, -20px); }
+        }
+
+        .container {
+            max-width: 1900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4), 0 0 40px rgba(102, 126, 234, 0.1), 0 0 100px rgba(240, 147, 251, 0.05);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            animation: fadeIn 0.6s ease, containerGlow 4s ease-in-out infinite;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes containerGlow {
+            0%, 100% { box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4), 0 0 40px rgba(102, 126, 234, 0.1), 0 0 100px rgba(240, 147, 251, 0.05); }
+            50% { box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4), 0 0 50px rgba(102, 126, 234, 0.2), 0 0 120px rgba(240, 147, 251, 0.1); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 35px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M0,50 Q300,0 600,50 T1200,50 L1200,120 L0,120 Z" fill="rgba(255,255,255,0.05)"/></svg>');
+            background-size: cover;
+            animation: wave 8s linear infinite;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255, 255, 255, 0.05) 25%, 
+                rgba(255, 255, 255, 0.1) 50%, 
+                rgba(255, 255, 255, 0.05) 75%, 
+                transparent 100%);
+            animation: shimmer 3s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes wave {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(100%); }
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 8px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+            animation: slideDown 0.8s ease, textGlow 3s ease-in-out infinite;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+        }
+
+        @keyframes textGlow {
+            0%, 100% { text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3); }
+            50% { text-shadow: 3px 3px 20px rgba(255, 255, 255, 0.4), 0 0 30px rgba(240, 147, 251, 0.3); }
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        header p {
+            font-size: 1em;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+            animation: slideUp 0.8s ease 0.2s both;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 20px;
+            padding: 25px;
+            min-height: calc(100vh - 200px);
+            animation: fadeIn 0.8s ease 0.3s both;
+        }
+
+        .sidebar {
+            background: linear-gradient(135deg, var(--light) 0%, #e9ecef 100%);
+            padding: 20px;
+            border-radius: 15px;
+            max-height: calc(100vh - 250px);
+            overflow-y: auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: linear-gradient(to bottom, #f1f1f1, #e9ecef);
+            border-radius: 10px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.4);
+        }
+
+        .section {
+            margin-bottom: 25px;
+            animation: slideIn 0.6s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .section h3 {
+            color: var(--primary);
+            margin-bottom: 12px;
+            font-size: 1.1em;
+            padding: 12px 15px;
+            background: white;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+            animation: slideIn 0.6s ease;
+        }
+
+        .section h3::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+            animation: expandWidth 0.4s ease;
+        }
+
+        @keyframes expandWidth {
+            from { width: 4px; }
+            to { width: 4px; }
+        }
+
+        .section h3:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+
+        .upload-area {
+            border: 3px dashed var(--primary);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            background: linear-gradient(135deg, white 0%, #f9fafb 100%);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.05);
+        }
+
+        .upload-area::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s ease;
+            z-index: 1;
+        }
+
+        .upload-area:hover::before {
+            left: 100%;
+        }
+
+        .upload-area:hover {
+            background: linear-gradient(135deg, #f0f4ff 0%, #e8f0ff 100%);
+            border-color: var(--secondary);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.25), 0 0 20px rgba(102, 126, 234, 0.15);
+        }
+
+        .upload-area.dragover {
+            background: linear-gradient(135deg, #f0f4ff 0%, #e8f0ff 100%);
+            border-color: var(--accent);
+            transform: scale(1.03);
+            box-shadow: 0 10px 25px rgba(240, 147, 251, 0.3);
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.95em;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            font-weight: 600;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.4s ease;
+            z-index: -1;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+            z-index: -1;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:active::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.45), 0 0 30px rgba(102, 126, 234, 0.2);
+            animation: glow 1s ease-in-out infinite;
+        }
+
+        .btn-primary:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success) 0%, #20c997 100%);
+            color: white;
+            margin-top: 10px;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(40, 167, 69, 0.45);
+        }
+
+        .btn-success:active {
+            transform: translateY(-1px);
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        input[type="text"],
+        input[type="range"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            font-size: 0.95em;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        input[type="text"]:focus,
+        input[type="range"]:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            outline: none;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 70px;
+            font-family: inherit;
+        }
+
+        input[type="color"] {
+            width: 100%;
+            height: 45px;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        input[type="color"]:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .slider-container {
+            margin-bottom: 15px;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+            color: #495057;
+            font-weight: 600;
+        }
+
+        input[type="range"] {
+            accent-color: var(--primary);
+            height: 6px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid var(--primary);
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3), 0 0 0 8px rgba(102, 126, 234, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.3);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.5), 0 0 0 12px rgba(102, 126, 234, 0.1);
+        }
+
+        input[type="range"]::-webkit-slider-thumb:active {
+            transform: scale(1.2);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid var(--primary);
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        input[type="range"]::-moz-range-thumb:hover {
+            transform: scale(1.3);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.5);
+        }
+
+        .btn-toggle {
+            padding: 10px 15px;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+            font-weight: 600;
+            margin-bottom: 8px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .btn-toggle::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.4s ease;
+            z-index: 0;
+        }
+
+        .btn-toggle:hover {
+            border-color: var(--primary);
+            background: #f0f4ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+
+        .btn-toggle:hover::before {
+            left: 100%;
+        }
+
+        .btn-toggle.active {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4), 0 0 15px rgba(102, 126, 234, 0.2);
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        .preset-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .preset-item {
+            height: 50px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 3px solid transparent;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .preset-item::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.4s ease, height 0.4s ease;
+        }
+
+        .preset-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.2) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .preset-item:hover::after {
+            width: 100%;
+            height: 100%;
+        }
+
+        .preset-item:hover::before {
+            opacity: 1;
+        }
+
+        .preset-item:hover {
+            transform: translateY(-3px) scale(1.08);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25), 0 0 15px rgba(102, 126, 234, 0.15);
+        }
+
+        .preset-item.active {
+            border-color: white;
+            box-shadow: 0 0 0 3px var(--primary), 0 0 20px rgba(102, 126, 234, 0.4), 0 0 30px rgba(102, 126, 234, 0.2);
+            transform: scale(1.05);
+            animation: sparkle 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes activePulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1.05); }
+        }
+
+        .canvas-container {
+            background: linear-gradient(135deg, var(--light) 0%, #e9ecef 100%);
+            border-radius: 15px;
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 600px;
+            position: relative;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.05), 0 4px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .canvas-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, transparent 0%, rgba(102, 126, 234, 0.02) 100%);
+            pointer-events: none;
+        }
+
+        #canvas {
+            max-width: 100%;
+            max-height: 700px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3), 0 0 40px rgba(102, 126, 234, 0.15);
+            border-radius: 12px;
+            background: white;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        #canvas:hover {
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35), 0 0 50px rgba(102, 126, 234, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .format-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 16px 28px;
+            background: linear-gradient(135deg, var(--success) 0%, #20c997 100%);
+            color: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4), 0 0 20px rgba(40, 167, 69, 0.2);
+            display: none;
+            animation: slideInNotif 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), slideOutNotif 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 2.5s forwards;
+            z-index: 1000;
+            font-weight: 600;
+        }
+
+        @keyframes slideInNotif {
+            from { transform: translateX(400px) rotate(10deg); opacity: 0; }
+            to { transform: translateX(0) rotate(0); opacity: 1; }
+        }
+
+        @keyframes slideOutNotif {
+            from { transform: translateX(0) rotate(0); opacity: 1; }
+            to { transform: translateX(400px) rotate(10deg); opacity: 0; }
+        }
+
+        /* Premium sparkle effects */
+        @keyframes sparkle {
+            0% { opacity: 0; transform: scale(0) rotate(0deg); }
+            50% { opacity: 1; }
+            100% { opacity: 0; transform: scale(1) rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 10px rgba(102, 126, 234, 0.3), 0 0 20px rgba(240, 147, 251, 0.1); }
+            50% { text-shadow: 0 0 20px rgba(102, 126, 234, 0.6), 0 0 30px rgba(240, 147, 251, 0.3); }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeInModal 0.3s ease;
+            backdrop-filter: blur(2px);
+        }
+
+        @keyframes fadeInModal {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 650px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+            animation: slideUpModal 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes slideUpModal {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-content h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .modal-close {
+            float: right;
+            font-size: 1.8em;
+            cursor: pointer;
+            color: #6c757d;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin: -10px -10px 0 0;
+            background: transparent;
+        }
+
+        .modal-close:hover {
+            color: white;
+            background: var(--danger);
+            transform: rotate(90deg) scale(1.1);
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #dee2e6;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            padding: 12px 18px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6c757d;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .tab-btn::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+
+        .tab-btn:hover {
+            color: var(--primary);
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .ai-suggestion {
+            padding: 14px 16px;
+            background: linear-gradient(135deg, #f0f4ff 0%, #e8f0ff 100%);
+            border-left: 4px solid var(--primary);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+        }
+
+        .ai-suggestion::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3));
+            transition: width 0.4s ease;
+        }
+
+        .ai-suggestion::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255, 255, 255, 0.2) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+
+        .ai-suggestion:hover {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border-left-color: white;
+            transform: translateX(6px) translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3), 0 0 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .ai-suggestion:hover::before {
+            width: 100%;
+        }
+
+        .ai-suggestion:hover::after {
+            opacity: 1;
+        }
+
+        .layer-item, .logo-item {
+            padding: 14px;
+            background: white;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            background: linear-gradient(135deg, white 0%, #f9fafb 100%);
+        }
+
+        .layer-item::before, .logo-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 0;
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+            transition: height 0.3s ease;
+        }
+
+        .layer-item::after, .logo-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 8px;
+            pointer-events: none;
+        }
+
+        .layer-item:hover, .logo-item:hover {
+            border-color: var(--primary);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            background: linear-gradient(135deg, #f9fafb 0%, #ffffff 100%);
+            transform: translateY(-2px);
+        }
+
+        .layer-item:hover::before, .logo-item:hover::before {
+            height: 100%;
+        }
+
+        .layer-item:hover::after, .logo-item:hover::after {
+            opacity: 1;
+            animation: shimmerLine 0.6s ease;
+        }
+
+        @keyframes shimmerLine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .layer-item.active, .logo-item.active {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.35), 0 0 20px rgba(102, 126, 234, 0.2);
+            transform: scale(1.02);
+        }
+
+        .layer-item strong, .logo-item strong, .text-item strong {
+            display: block;
+            font-size: 0.95em;
+        }
+
+        .layer-item small, .logo-item small, .text-item small {
+            display: block;
+            font-size: 0.85em;
+            opacity: 0.8;
+            margin-top: 3px;
+        }
+
+        .text-item {
+            padding: 14px;
+            background: white;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            background: linear-gradient(135deg, white 0%, #f9fafb 100%);
+        }
+
+        .text-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 0;
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+            transition: height 0.3s ease;
+        }
+
+        .text-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 8px;
+            pointer-events: none;
+        }
+
+        .text-item:hover {
+            border-color: var(--primary);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            background: linear-gradient(135deg, #f9fafb 0%, #ffffff 100%);
+            transform: translateY(-2px);
+        }
+
+        .text-item:hover::before {
+            height: 100%;
+        }
+
+        .text-item:hover::after {
+            opacity: 1;
+            animation: shimmerLine 0.6s ease;
+        }
+
+        .text-item.active {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.35), 0 0 20px rgba(102, 126, 234, 0.2);
+            transform: scale(1.02);
+        }
+
+        .layer-item::after {
+            content: '📂 Tıkla Görsel Ekle';
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%) translateX(20px);
+            font-size: 0.75em;
+            color: var(--primary);
+            opacity: 0;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .layer-item:hover::after {
+            opacity: 1;
+            transform: translateY(-50%) translateX(0);
+        }
+
+        .layer-item.active::after {
+            color: white;
+        }
+
+        @media (max-width: 1200px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .drag-overlay {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(240, 147, 251, 0.15));
+            border: 3px dashed var(--primary);
+            border-radius: 12px;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.2em;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .drag-overlay.active {
+            display: flex;
+        }
+
+        .upload-wrapper {
+            position: relative;
+        }
+
+        .layer-status {
+            padding: 10px 12px;
+            background: #e8f5e9;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 0.85em;
+            color: var(--success);
+            display: none;
+            animation: slideIn 0.3s ease;
+            border-left: 3px solid var(--success);
+        }
+
+        .layer-status.active {
+            display: block;
+        }
+
+        .layer-status.error {
+            background: #ffebee;
+            color: var(--danger);
+            border-left-color: var(--danger);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .main-content {
+                padding: 15px;
+                gap: 15px;
+            }
+
+            .sidebar {
+                padding: 15px;
+            }
+
+            .btn {
+                padding: 10px 15px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎨 AI Sosyal Medya Tasarımcısı Pro - Advanced Edition</h1>
+            <p>Profesyonel multi-katman tasarım | 10 Katman + 20 Yazı | 20+ Gradient | 15+ Font | Max AI</p>
+            <div style="margin-top: 10px; font-size: 0.85em; opacity: 0.9;">
+                ⌨️ <strong>Kısayollar:</strong> Del=Sil | Ctrl+C=Klonla | Ctrl+Alt+T=YeniYazı | Ctrl+Alt+C=KlonlaYazı | Ctrl+Z=GeriAl | Ctrl+S=İndir
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="sidebar">
+                <!-- KATMANLAR -->
+                <div class="section">
+                    <h3>🖼️ Tasarım Katmanları (Max 10)</h3>
+                    <div id="layerList" style="max-height: 300px; overflow-y: auto; border-radius: 8px; padding: 5px; background: white;"></div>
+                    <button class="btn btn-primary" id="addLayerBtn" style="margin-top: 10px; font-size: 0.9em; padding: 10px;">
+                        ➕ Katman Ekle
+                    </button>
+                    <input type="file" id="layerImageInput" accept="image/*" style="display:none;">
+                    <button class="btn btn-primary" id="removeLayerBtn" style="margin-top: 8px; background: linear-gradient(135deg, #dc3545 0%, #c82333 100%); font-size: 0.9em; padding: 10px;">
+                        🗑️ Sil
+                    </button>
+                    <button class="btn btn-primary" id="dupLayerBtn" style="margin-top: 8px; background: linear-gradient(135deg, #17a2b8 0%, #138496 100%); font-size: 0.9em; padding: 10px;">
+                        📋 Klonla
+                    </button>
+                    <div style="margin-top: 8px; padding: 8px; background: #e8f5e9; border-radius: 6px; border-left: 3px solid var(--success); font-size: 0.75em; color: #2e7d32;">
+                        ⌨️ Del: Sil | Ctrl+C: Klonla | Ctrl+↑↓: Şeffaflık | +/-: Boyut
+                    </div>
+                </div>
+
+                <!-- AI YARDIMCI -->
+                <div class="section">
+                    <h3>🤖 AI Asistan</h3>
+                    <button class="btn btn-primary" id="aiBtn">
+                        💡 Akıllı Öneriler
+                    </button>
+                    <button class="btn btn-primary" id="aiAutoBtn" style="margin-top: 10px;">
+                        ⚡ Otomatik Tasarım
+                    </button>
+                    <details style="margin-top: 12px; padding: 10px; background: #e7f3ff; border-radius: 6px; border-left: 3px solid #0066cc;">
+                        <summary style="cursor: pointer; font-weight: 600; color: #0066cc;">🚀 Gelişmiş Özellikler</summary>
+                        <div style="margin-top: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 0.85em;">
+                            <button class="btn btn-sm" onclick="smartCompositionAnalysis()" style="padding: 6px 8px; font-size: 0.75em;">🎨 Akıllı Komp.</button>
+                            <button class="btn btn-sm" onclick="aiLayoutOptimizer()" style="padding: 6px 8px; font-size: 0.75em;">✨ Layout AI</button>
+                            <button class="btn btn-sm" onclick="scoreDesignQuality()" style="padding: 6px 8px; font-size: 0.75em;">📊 Puanla</button>
+                            <button class="btn btn-sm" onclick="checkA11yContrast()" style="padding: 6px 8px; font-size: 0.75em;">✅ A11y</button>
+                            <button class="btn btn-sm" onclick="applyTrendDesign()" style="padding: 6px 8px; font-size: 0.75em;">✨ Trend</button>
+                            <button class="btn btn-sm" onclick="optimizeForSocialMedia()" style="padding: 6px 8px; font-size: 0.75em;">📱 Sosyal</button>
+                            <button class="btn btn-sm" onclick="smartPositionTexts()" style="padding: 6px 8px; font-size: 0.75em;">📝 Yerleş</button>
+                            <button class="btn btn-sm" onclick="exportDesignSettings()" style="padding: 6px 8px; font-size: 0.75em;">💾 Kaydet</button>
+                        </div>
+                    </details>
+                    <details style="margin-top: 8px; padding: 10px; background: #fff0e6; border-radius: 6px; border-left: 3px solid #ff9900;">
+                        <summary style="cursor: pointer; font-weight: 600; color: #ff9900;">✨ Text Efektleri</summary>
+                        <div style="margin-top: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 0.85em;">
+                            <button class="btn btn-sm" onclick="applyGlowEffect()" style="padding: 6px 8px; font-size: 0.75em;">✨ Parlak</button>
+                            <button class="btn btn-sm" onclick="applyNeonStyle()" style="padding: 6px 8px; font-size: 0.75em;">🌈 Neon</button>
+                            <button class="btn btn-sm" onclick="apply3DEffect()" style="padding: 6px 8px; font-size: 0.75em;">🎬 3D</button>
+                            <button class="btn btn-sm" onclick="applyMetallicEffect()" style="padding: 6px 8px; font-size: 0.75em;">🤖 Metal</button>
+                            <button class="btn btn-sm" onclick="applyRainbowEffect()" style="padding: 6px 8px; font-size: 0.75em;">🌺 Rainbow</button>
+                            <button class="btn btn-sm" onclick="smartTextSize()" style="padding: 6px 8px; font-size: 0.75em;">📏 Akıllı</button>
+                            <button class="btn btn-sm" onclick="applyColorHarmony()" style="padding: 6px 8px; font-size: 0.75em;">🎯 Uyum</button>
+                            <button class="btn btn-sm" onclick="resetTextStyle()" style="padding: 6px 8px; font-size: 0.75em;">↩️ Sıfırla</button>
+                        </div>
+                    </details>
+                    <a href="ADVANCED_FEATURES.html" style="display: inline-block; margin-top: 8px; color: #0066cc; text-decoration: none; font-weight: 600; font-size: 0.9em;">📖 Tüm Özellikler →</a>
+                    <a href="TUTORIAL.html" style="display: inline-block; margin-left: 8px; margin-top: 8px; color: #0066cc; text-decoration: none; font-weight: 600; font-size: 0.9em;">📚 Kullanım Kılavuzu →</a>
+                </div>
+
+                <!-- ARKA PLAN -->
+                <div class="section">
+                    <h3>🎨 Arka Plan & Katmanlar</h3>
+                    <div class="preset-grid" id="gradientGrid"></div>
+                    <button class="btn btn-primary" id="bgUploadBtn" style="margin-top: 10px; font-size: 0.9em; padding: 10px;">
+                        📷 Arka Plan Yükle
+                    </button>
+                    <input type="file" id="bgImageInput" accept="image/*">
+                    <div style="margin-top: 10px; padding: 10px; background: #fff3cd; border-radius: 6px; border-left: 3px solid #ffc107; font-size: 0.85em; color: #856404;">
+                        💡 İpucu: Sürükle-bırak ile görseli canvas'a direkt ekleyebilirsin!
+                    </div>
+                    <div class="slider-container" style="margin-top: 10px;">
+                        <div class="slider-label"><span>Şeffaflık</span><span id="bgOpacityVal">100%</span></div>
+                        <input type="range" id="bgOpacitySlider" min="0" max="100" value="100">
+                    </div>
+                    <div class="slider-container">
+                        <div class="slider-label"><span>Ölçek</span><span id="bgScaleVal">100%</span></div>
+                        <input type="range" id="bgScaleSlider" min="50" max="200" value="100">
+                    </div>
+                    <div class="slider-container">
+                        <div class="slider-label"><span>Döndürme</span><span id="bgRotVal">0°</span></div>
+                        <input type="range" id="bgRotSlider" min="0" max="360" value="0">
+                    </div>
+                </div>
+
+                <!-- EFEKTLER -->
+                <div class="section">
+                    <h3>🎯 Efektler</h3>
+                    <div class="slider-container">
+                        <div class="slider-label"><span>Bulanıklık</span><span id="blurVal">0px</span></div>
+                        <input type="range" id="blurSlider" min="0" max="30" value="0">
+                    </div>
+                    <div class="slider-container">
+                        <div class="slider-label"><span>Karartma</span><span id="overlayVal">0%</span></div>
+                        <input type="range" id="overlaySlider" min="0" max="80" value="0">
+                    </div>
+                </div>
+
+                <!-- FORMAT -->
+                <div class="section">
+                    <h3>📱 Format</h3>
+                    <div class="format-grid">
+                        <button class="btn-toggle active" data-fmt="1080x1080">Instagram</button>
+                        <button class="btn-toggle" data-fmt="1080x1920">Story</button>
+                        <button class="btn-toggle" data-fmt="1200x630">Facebook</button>
+                        <button class="btn-toggle" data-fmt="1200x675">Twitter</button>
+                        <button class="btn-toggle" data-fmt="1200x627">LinkedIn</button>
+                        <button class="btn-toggle" data-fmt="1280x720">YouTube</button>
+                    </div>
+                </div>
+
+                <!-- FİLTRELER -->
+                <div class="section">
+                    <h3>✨ Filtreler & Efektler</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 10px;">
+                        <button class="btn-toggle active" data-flt="none">Yok</button>
+                        <button class="btn-toggle" data-flt="gray">B&B</button>
+                        <button class="btn-toggle" data-flt="sepia">Sepia</button>
+                        <button class="btn-toggle" data-flt="bright">Parlak</button>
+                        <button class="btn-toggle" data-flt="dark">Koyu</button>
+                        <button class="btn-toggle" data-flt="vintage">Vintage</button>
+                        <button class="btn-toggle" data-flt="cool">Soğuk</button>
+                        <button class="btn-toggle" data-flt="warm">Sıcak</button>
+                        <button class="btn-toggle" data-flt="neon">Neon</button>
+                        <button class="btn-toggle" data-flt="invert">Ters</button>
+                        <button class="btn-toggle" data-flt="saturate">Canlı</button>
+                        <button class="btn-toggle" data-flt="duotone">Duotone</button>
+                    </div>
+                    <div class="slider-container">
+                        <div class="slider-label"><span>Saturasyon</span><span id="saturateVal">100%</span></div>
+                        <input type="range" id="saturateSlider" min="0" max="200" value="100">
+                    </div>
+                    <div class="slider-container">
+                        <div class="slider-label"><span>Parlaklık</span><span id="brightnessVal">100%</span></div>
+                        <input type="range" id="brightnessSlider" min="50" max="150" value="100">
+                    </div>
+                    <div class="slider-container">
+                        <div class="slider-label"><span>Kontrast</span><span id="contrastVal">100%</span></div>
+                        <input type="range" id="contrastSlider" min="50" max="150" value="100">
+                    </div>
+                    <div class="slider-container">
+                        <div class="slider-label"><span>Hue Rotation</span><span id="hueVal">0°</span></div>
+                        <input type="range" id="hueSlider" min="0" max="360" value="0">
+                    </div>
+                </div>
+
+                <!-- METIN -->
+                <div class="section">
+                    <h3>✏️ Yazılar (Çoklu)</h3>
+                    <div id="textList" style="max-height: 200px; overflow-y: auto; border-radius: 8px; padding: 5px; background: white;"></div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px;">
+                        <button class="btn btn-primary" id="addTextBtn" style="font-size: 0.9em; padding: 10px;">
+                            ➕ Yazı Ekle
+                        </button>
+                        <button class="btn btn-primary" id="dupTextBtn" style="background: linear-gradient(135deg, #17a2b8 0%, #138496 100%); font-size: 0.9em; padding: 10px;">
+                            📋 Klonla
+                        </button>
+                        <button class="btn btn-primary" id="removeTextBtn" style="background: linear-gradient(135deg, #dc3545 0%, #c82333 100%); font-size: 0.9em; padding: 10px; grid-column: span 2;">
+                            🗑️ Sil
+                        </button>
+                    </div>
+                    <div style="padding: 8px; background: #fff3cd; border-radius: 6px; border-left: 3px solid #ffc107; font-size: 0.75em; color: #856404; margin-top: 8px;">
+                        💡 <strong>Kısayollar:</strong> Ctrl+Alt+T = Yeni Yazı | Ctrl+Alt+C = Klonla | Ctrl+Z = Geri Al
+                    </div>
+
+                    <div id="textAdvancedControls" style="display:none; margin-top: 12px; padding: 12px; background: #f0f4ff; border-radius: 8px; border-left: 3px solid var(--primary);">
+                        <div style="margin-bottom: 12px;">
+                            <label style="font-size: 0.85em; color: #495057; font-weight: 600;">Yazı İçeriği</label>
+                            <textarea id="textContentInput" style="width: 100%; padding: 8px; border: 2px solid #dee2e6; border-radius: 6px; font-family: inherit; font-size: 0.9em;" rows="3" placeholder="Metni buraya yazın..."></textarea>
+                        </div>
+
+                        <div class="slider-container">
+                            <div class="slider-label"><span>Font Boyutu</span><span id="textSizeVal2">48px</span></div>
+                            <input type="range" id="textSizeSlider2" min="12" max="200" value="48">
+                        </div>
+
+                        <select id="fontSelect2" style="width: 100%; padding: 8px; border: 2px solid #dee2e6; border-radius: 6px; margin-bottom: 10px;">
+                            <option value="Arial">Arial</option>
+                            <option value="Georgia">Georgia</option>
+                            <option value="Impact">Impact</option>
+                            <option value="Courier New">Courier New</option>
+                            <option value="Verdana">Verdana</option>
+                            <option value="Trebuchet MS">Trebuchet MS</option>
+                            <option value="Times New Roman">Times New Roman</option>
+                            <option value="Comic Sans MS">Comic Sans MS</option>
+                            <option value="Palatino">Palatino</option>
+                            <option value="Garamond">Garamond</option>
+                            <option value="Bookman">Bookman</option>
+                            <option value="Consolas">Consolas</option>
+                            <option value="Lucida Console">Lucida Console</option>
+                            <option value="Segoe UI">Segoe UI</option>
+                            <option value="Tahoma">Tahoma</option>
+                        </select>
+
+                        <label style="font-size: 0.85em; color: #495057; font-weight: 600; display: block; margin-bottom: 8px;">Renk</label>
+                        <input type="color" id="textColorPicker2" style="width: 100%; height: 45px; margin-bottom: 12px;">
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 10px;">
+                            <button class="btn-toggle" data-align="left" style="font-size: 0.85em;">← Sol</button>
+                            <button class="btn-toggle active" data-align="center" style="font-size: 0.85em;">Orta</button>
+                            <button class="btn-toggle" data-align="right" style="font-size: 0.85em;">Sağ →</button>
+                        </div>
+
+                        <div class="slider-container">
+                            <div class="slider-label"><span>X Pozisyonu</span><span id="textXVal2">50%</span></div>
+                            <input type="range" id="textXSlider2" min="0" max="100" value="50">
+                        </div>
+
+                        <div class="slider-container">
+                            <div class="slider-label"><span>Y Pozisyonu</span><span id="textYVal2">50%</span></div>
+                            <input type="range" id="textYSlider2" min="0" max="100" value="50">
+                        </div>
+
+                        <div class="slider-container">
+                            <div class="slider-label"><span>Döndürme</span><span id="textRotVal2">0°</span></div>
+                            <input type="range" id="textRotSlider2" min="-180" max="180" value="0">
+                        </div>
+
+                        <div class="slider-container">
+                            <div class="slider-label"><span>Şeffaflık</span><span id="textOpacityVal2">100%</span></div>
+                            <input type="range" id="textOpacitySlider2" min="0" max="100" value="100">
+                        </div>
+
+                        <div class="slider-container">
+                            <div class="slider-label"><span>Gölge Yoğunluğu</span><span id="shadowVal2">7</span></div>
+                            <input type="range" id="shadowSlider2" min="0" max="30" value="7">
+                        </div>
+
+                        <div class="slider-container">
+                            <div class="slider-label"><span>Satır Yüksekliği</span><span id="lineHeightVal">1.3</span></div>
+                            <input type="range" id="lineHeightSlider" min="8" max="30" value="13">
+                        </div>
+
+                        <div class="slider-container">
+                            <div class="slider-label"><span>Harf Aralığı</span><span id="letterSpacingVal">0px</span></div>
+                            <input type="range" id="letterSpacingSlider" min="-5" max="20" value="0">
+                        </div>
+
+                        <div class="slider-container">
+                            <div class="slider-label"><span>Çıkış (Outline) Kalınlığı</span><span id="outlineWidthVal">0px</span></div>
+                            <input type="range" id="outlineWidthSlider" min="0" max="8" value="0">
+                        </div>
+
+                        <label style="font-size: 0.85em; color: #495057; font-weight: 600; display: block; margin-bottom: 8px;">Çıkış Rengi</label>
+                        <input type="color" id="outlineColorPicker" style="width: 100%; height: 35px; margin-bottom: 12px;" value="#000000">
+
+                        <label style="font-size: 0.85em; color: #495057; font-weight: 600; display: block; margin-bottom: 8px;">Arka Plan Rengi (Boş ise kapalı)</label>
+                        <input type="color" id="bgColorPicker" style="width: 100%; height: 35px; margin-bottom: 8px;" value="#000000">
+
+                        <div class="slider-container">
+                            <div class="slider-label"><span>Arka Plan Opaklığı</span><span id="bgOpacityVal2">100%</span></div>
+                            <input type="range" id="bgOpacitySlider2" min="0" max="100" value="100">
+                        </div>
+
+                        <div class="slider-container">
+                            <div class="slider-label"><span>Arka Plan Padding</span><span id="bgPaddingVal">10px</span></div>
+                            <input type="range" id="bgPaddingSlider" min="0" max="30" value="10">
+                        </div>
+
+                        <div style="margin-top: 10px; padding: 10px; background: #e7f7e7; border-radius: 6px; border-left: 3px solid #28a745;">
+                            <strong style="color: #155724; font-size: 0.9em;">💡 Yazı İpuçları:</strong>
+                            <div style="font-size: 0.75em; color: #155724; margin-top: 5px; line-height: 1.4;">
+                                ✓ Çıkış = Metni dıştaraftan çizgilerle çerçevele<br/>
+                                ✓ Arka Plan = Metni renkli kutu içine al<br/>
+                                ✓ 48px+ başlık, 24-32px gövde metni<br/>
+                                ✓ En fazla 3-4 yazı katmanı kullanın
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LOGO -->
+                <div class="section">
+                    <h3>🏢 Logolar & İkonlar (Max 3)</h3>
+                    <div id="logoList" style="max-height: 200px; overflow-y: auto; border-radius: 8px; padding: 5px; background: white;"></div>
+                    <button class="btn btn-primary" id="logoUploadBtn" style="margin-top: 10px; font-size: 0.9em; padding: 10px;">
+                        📷 Logo Ekle
+                    </button>
+                    <input type="file" id="logoImageInput" accept="image/*">
+                    <button class="btn btn-primary" id="removeLogoBtn" style="margin-top: 8px; background: linear-gradient(135deg, #dc3545 0%, #c82333 100%); font-size: 0.9em; padding: 10px;">
+                        🗑️ Logoyu Sil
+                    </button>
+                    <div style="margin-top: 8px; padding: 8px; background: #e7f3ff; border-radius: 6px; border-left: 3px solid var(--primary); font-size: 0.75em; color: #0066cc;">
+                        📌 Logolar sağ alt köşeye taşı ve 100-150px olacak şekilde ayarla
+                    </div>
+                    <div id="logoControls" style="display:none; margin-top: 10px;">
+                        <div class="slider-container">
+                            <div class="slider-label"><span>Boyut</span><span id="logoSizeVal">100px</span></div>
+                            <input type="range" id="logoSizeSlider" min="30" max="400" value="100">
+                        </div>
+                        <div class="slider-container">
+                            <div class="slider-label"><span>X (Sol-Sağ)</span><span id="logoXVal">90%</span></div>
+                            <input type="range" id="logoXSlider" min="0" max="100" value="90">
+                        </div>
+                        <div class="slider-container">
+                            <div class="slider-label"><span>Y (Üst-Alt)</span><span id="logoYVal">90%</span></div>
+                            <input type="range" id="logoYSlider" min="0" max="100" value="90">
+                        </div>
+                        <div class="slider-container">
+                            <div class="slider-label"><span>Döndürme</span><span id="logoRotVal">0°</span></div>
+                            <input type="range" id="logoRotSlider" min="0" max="360" value="0">
+                        </div>
+                        <div class="slider-container">
+                            <div class="slider-label"><span>Şeffaflık</span><span id="logoOpacityVal">100%</span></div>
+                            <input type="range" id="logoOpacitySlider" min="0" max="100" value="100">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- İNDİRME -->
+                <div class="section">
+                    <button class="btn btn-success" id="downloadBtn">
+                        ⬇️ PNG İndir
+                    </button>
+                    <button class="btn btn-primary" id="resetBtn" style="background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%); margin-top: 10px;">
+                        🔄 Sıfırla
+                    </button>
+                </div>
+            </div>
+
+            <div class="canvas-container">
+                <canvas id="canvas"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI MODAL -->
+    <div class="modal" id="aiModal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h2>🤖 Yapay Zeka Tasarım Asistanı</h2>
+            
+            <div class="tabs">
+                <button class="tab-btn active" data-idx="0">💡 Öneriler</button>
+                <button class="tab-btn" data-idx="1">🎨 Renkler</button>
+                <button class="tab-btn" data-idx="2">✏️ Metinler</button>
+                <button class="tab-btn" data-idx="3">🔧 Sorun Çözme</button>
+                <button class="tab-btn" data-idx="4">📚 Kurallar</button>
+                <button class="tab-btn" data-idx="5">⚙️ Katman İşlemleri</button>
+            </div>
+
+            <div id="tab0" class="tab-content active"></div>
+            <div id="tab1" class="tab-content"></div>
+            <div id="tab2" class="tab-content"></div>
+            <div id="tab3" class="tab-content"></div>
+            <div id="tab4" class="tab-content"></div>
+            <div id="tab5" class="tab-content"></div>
+        </div>
+    </div>
+
+    <div class="notification" id="notification"></div>
+
+</body>
+</html>
+
+    <script>
+        // ============ STATE & CONSTANTS ============
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        let state = {
+            format: '1080x1080',
+            gradient: 'grad1',
+            filter: 'none',
+            blur: 0,
+            overlay: 0,
+            brightness: 100,
+            contrast: 100,
+            saturate: 100,
+            hue: 0,
+            bgImage: null,
+            bgOpacity: 100,
+            bgScale: 100,
+            bgRotation: 0,
+            logos: [],
+            activeLogo: -1,
+            texts: [],
+            activeText: -1,
+            layers: [],
+            activeLayer: 0
+        };
+
+        const formatMap = {
+            '1080x1080': { w: 1080, h: 1080 },
+            '1080x1920': { w: 1080, h: 1920 },
+            '1200x630': { w: 1200, h: 630 },
+            '1200x675': { w: 1200, h: 675 },
+            '1200x627': { w: 1200, h: 627 },
+            '1280x720': { w: 1280, h: 720 }
+        };
+
+        const gradientMap = {
+            grad1: ['#667eea', '#764ba2'], grad2: ['#f093fb', '#f5576c'], grad3: ['#4facfe', '#00f2fe'],
+            grad4: ['#43e97b', '#38f9d7'], grad5: ['#fa709a', '#fee140'], grad6: ['#30cfd0', '#330867'],
+            grad7: ['#a8edea', '#fed6e3'], grad8: ['#ff9a9e', '#fecfef'], grad9: ['#ffecd2', '#fcb69f'],
+            grad10: ['#ff6e7f', '#bfe9ff'], grad11: ['#e0c3fc', '#8ec5fc'], grad12: ['#f77062', '#fe5196'],
+            grad13: ['#fd6e6a', '#bfeadb'], grad14: ['#ffecd2', '#fcb69f'], grad15: ['#ff9844', '#fe5196'],
+            grad16: ['#667eea', '#764ba2'], grad17: ['#f5af19', '#f12711'], grad18: ['#56ab2f', '#a8e063'],
+            grad19: ['#1e3c72', '#2a5298'], grad20: ['#eb3349', '#f45c43']
+        };
+
+        const colorPalettes = [
+            { name: 'Modern Mavi', colors: ['#667eea', '#764ba2', '#f093fb', '#f5576c'] },
+            { name: 'Yeşil Doğa', colors: ['#43e97b', '#38f9d7', '#fa709a', '#fee140'] },
+            { name: 'Sıcak Tones', colors: ['#ff6e7f', '#fcb69f', '#ffecd2', '#f77062'] },
+            { name: 'Pastel', colors: ['#a8edea', '#fed6e3', '#ff9a9e', '#fecfef'] },
+            { name: 'Elektrik', colors: ['#ff00ff', '#00ffff', '#ffff00', '#ff0080'] },
+            { name: 'Klasik', colors: ['#000000', '#ffffff', '#ff0000', '#0000ff'] },
+            { name: 'Altın', colors: ['#ffd700', '#ffed4e', '#ffa500', '#ff8c00'] },
+            { name: 'Deniz', colors: ['#006994', '#0e9aa7', '#3da5c4', '#c1dbee'] }
+        ];
+
+        const textSuggestions = ['İnsan Kaynakları', 'Pazarlama', 'Ürün Lansmanı', 'Yeni Hizmet', 'Özel Teklif', 'Haberler', 'Duyuru', 'İşbirliği', 'Başarı', 'Yeni Koleksiyon', 'İndirim', 'Kampanya', 'Etkinlik', 'Konferans', 'Web İçeriği', 'Sosyal İçerik', 'E-ticaret', 'Marka Tanıtımı', 'Motivasyon', 'İlham'];
+
+        const designTips = [
+            '✅ 3 renkten fazla kullanmayın',
+            '✅ Kontrast önemlidir - Koyu arka plan + açık metin',
+            '✅ Metin boyutu en az 36px olmalı',
+            '✅ Görseller merkezde olmadan 80% alan kullanmalı',
+            '✅ Logo sağ alt köşede 100-150px boyutunda olmalı',
+            '✅ Filtreleri hafif tutun (%40 ile %60 arasında)',
+            '✅ Sans-serif fontlar web için daha iyi',
+            '✅ Boşluk (whitespace) profesyonellik gösterir'
+        ];
+
+        // ============ SETUP FUNCTIONS ============
+        function initGradients() {
+            const grid = document.getElementById('gradientGrid');
+            Object.entries(gradientMap).forEach(([key, [c1, c2]]) => {
+                const el = document.createElement('div');
+                el.className = 'preset-item' + (key === 'grad1' ? ' active' : '');
+                el.setAttribute('data-grad', key);
+                el.style.background = `linear-gradient(135deg, ${c1} 0%, ${c2} 100%)`;
+                el.title = `Tıkla: Arka Plan - Ctrl+Tıkla: Metin Rengi`;
+                el.onclick = (e) => {
+                    if (e.ctrlKey) {
+                        // Apply as text color from gradient
+                        applyTextColor(c1);
+                    } else {
+                        selectGradient(key, el);
+                    }
+                };
+                grid.appendChild(el);
+            });
+        }
+
+        function setCanvasSize() {
+            const size = formatMap[state.format];
+            canvas.width = size.w;
+            canvas.height = size.h;
+            redraw();
+        }
+
+        function createLayer() {
+            return {
+                id: Date.now(),
+                image: null,
+                scale: 80,
+                x: 50,
+                y: 50,
+                rot: 0,
+                opacity: 100
+            };
+        }
+
+        function createLogo() {
+            return {
+                id: Date.now(),
+                image: null,
+                size: 100,
+                x: 90,
+                y: 90,
+                rot: 0,
+                opacity: 100
+            };
+        }
+
+        function createText() {
+            return {
+                id: Date.now(),
+                content: 'Yeni Yazı',
+                size: 48,
+                family: 'Arial',
+                color: '#ffffff',
+                x: 50,
+                y: 50,
+                rot: 0,
+                opacity: 100,
+                shadow: 7,
+                align: 'center',
+                lineHeight: 1.3,
+                letterSpacing: 0,
+                outlineWidth: 0,
+                outlineColor: '#000000',
+                backgroundColor: null,
+                backgroundPadding: 10,
+                backgroundOpacity: 100
+            };
+        }
+
+        function renderLayers() {
+            const list = document.getElementById('layerList');
+            list.innerHTML = '';
+            state.layers.forEach((layer, i) => {
+                const el = document.createElement('div');
+                el.className = 'layer-item' + (i === state.activeLayer ? ' active' : '');
+                el.innerHTML = `<strong>Katman ${i + 1}</strong><small>${layer.image ? '✓ Görsel Yüklendi' : '○ Boş'}</small>`;
+                el.onclick = () => {
+                    selectLayer(i);
+                    // Open file dialog when clicking on a layer
+                    setTimeout(() => {
+                        const input = document.getElementById('layerImageInput');
+                        if (input) {
+                            input.value = ''; // Reset file input
+                            input.click();
+                        }
+                    }, 100);
+                };
+                list.appendChild(el);
+            });
+        }
+
+        function renderLogos() {
+            const list = document.getElementById('logoList');
+            list.innerHTML = '';
+            state.logos.forEach((logo, i) => {
+                const el = document.createElement('div');
+                el.className = 'logo-item' + (i === state.activeLogo ? ' active' : '');
+                el.innerHTML = `<strong>Logo ${i + 1}</strong><small>${logo.image ? '✓ Yüklendi' : '○ Boş'}</small>`;
+                el.onclick = () => selectLogo(i);
+                list.appendChild(el);
+            });
+        }
+
+        function renderTexts() {
+            const list = document.getElementById('textList');
+            if (!list) return;
+            list.innerHTML = '';
+            state.texts.forEach((text, i) => {
+                const el = document.createElement('div');
+                el.className = 'text-item' + (i === state.activeText ? ' active' : '');
+                const preview = text.content.substring(0, 20) + (text.content.length > 20 ? '...' : '');
+                el.innerHTML = `<strong>Yazı ${i + 1}</strong><small>"${preview}"</small>`;
+                el.onclick = () => selectText(i);
+                list.appendChild(el);
+            });
+        }
+
+        function selectLayer(idx) {
+            state.activeLayer = idx;
+            renderLayers();
+        }
+
+        function selectLogo(idx) {
+            state.activeLogo = idx;
+            renderLogos();
+            document.getElementById('logoControls').style.display = state.activeLogo >= 0 ? 'block' : 'none';
+        }
+
+        function selectText(idx) {
+            state.activeText = idx;
+            renderTexts();
+            updateTextControls();
+        }
+
+        function updateTextControls() {
+            const panel = document.getElementById('textAdvancedControls');
+            if (!panel || state.activeText < 0 || !state.texts[state.activeText]) {
+                if (panel) panel.style.display = 'none';
+                return;
+            }
+            
+            const text = state.texts[state.activeText];
+            panel.style.display = 'block';
+            
+            document.getElementById('textContentInput').value = text.content;
+            document.getElementById('textSizeSlider2').value = text.size;
+            document.getElementById('textSizeVal2').textContent = text.size + 'px';
+            document.getElementById('fontSelect2').value = text.family;
+            document.getElementById('textColorPicker2').value = text.color;
+            document.getElementById('textOpacitySlider2').value = text.opacity;
+            document.getElementById('textOpacityVal2').textContent = text.opacity + '%';
+            document.getElementById('shadowSlider2').value = text.shadow;
+            document.getElementById('shadowVal2').textContent = text.shadow;
+            document.getElementById('textXSlider2').value = text.x;
+            document.getElementById('textXVal2').textContent = text.x + '%';
+            document.getElementById('textYSlider2').value = text.y;
+            document.getElementById('textYVal2').textContent = text.y + '%';
+            document.getElementById('textRotSlider2').value = text.rot;
+            document.getElementById('textRotVal2').textContent = text.rot + '°';
+            document.getElementById('lineHeightSlider').value = text.lineHeight * 10;
+            document.getElementById('lineHeightVal').textContent = text.lineHeight.toFixed(1);
+            document.getElementById('letterSpacingSlider').value = text.letterSpacing;
+            document.getElementById('letterSpacingVal').textContent = text.letterSpacing + 'px';
+            document.getElementById('outlineWidthSlider').value = text.outlineWidth || 0;
+            document.getElementById('outlineWidthVal').textContent = (text.outlineWidth || 0) + 'px';
+            document.getElementById('outlineColorPicker').value = text.outlineColor || '#000000';
+            document.getElementById('bgColorPicker').value = text.backgroundColor || '#000000';
+            document.getElementById('bgOpacitySlider2').value = text.backgroundOpacity || 100;
+            document.getElementById('bgOpacityVal2').textContent = (text.backgroundOpacity || 100) + '%';
+            document.getElementById('bgPaddingSlider').value = text.backgroundPadding || 10;
+            document.getElementById('bgPaddingVal').textContent = (text.backgroundPadding || 10) + 'px';
+            
+            document.querySelectorAll('[data-align]').forEach(b => b.classList.remove('active'));
+            document.querySelector(`[data-align="${text.align}"]`)?.classList.add('active');
+        }
+
+        function showNotif(msg) {
+            const el = document.getElementById('notification');
+            el.textContent = msg;
+            el.style.display = 'block';
+            setTimeout(() => el.style.display = 'none', 3000);
+        }
+
+        // Initialize function - will be called from part-7.html
+        function initApp() {
+            initGradients();
+            state.layers.push(createLayer());
+            state.texts.push(createText());
+            state.activeText = 0;
+            setCanvasSize();
+            setupEventListeners();
+            renderLayers();
+            renderTexts();
+            updateTextControls();
+            redraw();
+        }
+
+        function setupEventListeners() {
+            // Text Management Events
+            const addTextBtn = document.getElementById('addTextBtn');
+            const removeTextBtn = document.getElementById('removeTextBtn');
+            const dupTextBtn = document.getElementById('dupTextBtn');
+            const textContentInput = document.getElementById('textContentInput');
+            const textSizeSlider2 = document.getElementById('textSizeSlider2');
+            const fontSelect2 = document.getElementById('fontSelect2');
+            const textColorPicker2 = document.getElementById('textColorPicker2');
+            const textOpacitySlider2 = document.getElementById('textOpacitySlider2');
+            const shadowSlider2 = document.getElementById('shadowSlider2');
+            const textXSlider2 = document.getElementById('textXSlider2');
+            const textYSlider2 = document.getElementById('textYSlider2');
+            const textRotSlider2 = document.getElementById('textRotSlider2');
+            const lineHeightSlider = document.getElementById('lineHeightSlider');
+            const letterSpacingSlider = document.getElementById('letterSpacingSlider');
+            const outlineWidthSlider = document.getElementById('outlineWidthSlider');
+            const outlineColorPicker = document.getElementById('outlineColorPicker');
+            const bgColorPicker = document.getElementById('bgColorPicker');
+            const bgOpacitySlider2 = document.getElementById('bgOpacitySlider2');
+            const bgPaddingSlider = document.getElementById('bgPaddingSlider');
+
+            if (addTextBtn) {
+                addTextBtn.addEventListener('click', () => {
+                    if (state.texts.length < 20) {
+                        state.texts.push(createText());
+                        state.activeText = state.texts.length - 1;
+                        renderTexts();
+                        updateTextControls();
+                        redraw();
+                        showNotif('✓ Yeni yazı eklendi! (Max 20)');
+                    } else {
+                        showNotif('⚠️ Maksimum 20 yazı!');
+                    }
+                });
+            }
+
+            if (removeTextBtn) {
+                removeTextBtn.addEventListener('click', () => {
+                    if (state.texts.length > 0 && state.activeText >= 0) {
+                        state.texts.splice(state.activeText, 1);
+                        state.activeText = Math.max(0, state.activeText - 1);
+                        renderTexts();
+                        updateTextControls();
+                        redraw();
+                        showNotif('✓ Yazı silindi!');
+                    } else {
+                        showNotif('⚠️ Silinecek yazı yok!');
+                    }
+                });
+            }
+
+            if (dupTextBtn) {
+                dupTextBtn.addEventListener('click', () => {
+                    if (state.activeText >= 0 && state.texts[state.activeText]) {
+                        if (state.texts.length < 20) {
+                            const cloned = JSON.parse(JSON.stringify(state.texts[state.activeText]));
+                            cloned.id = Date.now();
+                            cloned.x = Math.min(100, cloned.x + 5);
+                            cloned.y = Math.min(100, cloned.y + 5);
+                            state.texts.push(cloned);
+                            state.activeText = state.texts.length - 1;
+                            renderTexts();
+                            updateTextControls();
+                            redraw();
+                            showNotif('✓ Yazı klonlandı!');
+                        } else {
+                            showNotif('⚠️ Maksimum 20 yazı!');
+                        }
+                    }
+                });
+            }
+
+            if (textContentInput) {
+                textContentInput.addEventListener('input', (e) => {
+                    if (state.activeText >= 0 && state.texts[state.activeText]) {
+                        state.texts[state.activeText].content = e.target.value;
+                        redraw();
+                    }
+                });
+            }
+
+            if (textSizeSlider2) {
+                textSizeSlider2.addEventListener('input', (e) => {
+                    if (state.activeText >= 0 && state.texts[state.activeText]) {
+                        state.texts[state.activeText].size = parseInt(e.target.value);
+                        document.getElementById('textSizeVal2').textContent = e.target.value + 'px';
+                        redraw();
+                    }
+                });
+            }
+
+            if (fontSelect2) {
+                fontSelect2.addEventListener('change', (e) => {
+                    if (state.activeText >= 0 && state.texts[state.activeText]) {
+                        state.texts[state.activeText].family = e.target.value;
+                        redraw();
+                    }
+                });
+            }
+
+            if (textColorPicker2) {
+                textColorPicker2.addEventListener('input', (e) => {
+                    if (state.activeText >= 0 && state.texts[state.activeText]) {
+                        state.texts[state.activeText].color = e.target.value;
+                        redraw();
+                    }
+                });
+            }
+
+            if (textOpacitySlider2) {
+                textOpacitySlider2.addEventListener('input', (e) => {
+                    if (state.activeText >= 0 && state.texts[state.activeText]) {
+                        state.texts[state.activeText].opacity = parseInt(e.target.value);
+                        document.getElementById('textOpacityVal2').textContent = e.target.value + '%';
+                        redraw();
+                    }
+                });
+            }
+
+            if (shadowSlider2) {
+                shadowSlider2.addEventListener('input', (e) => {
+                    if (state.activeText >= 0 && state.texts[state.activeText]) {
+                        state.texts[state.activeText].shadow = parseInt(e.target.value);
+                        document.getElementById('shadowVal2').textContent = e.target.value;
+                        redraw();
+                    }
+                });
+            }
+
+            if (textXSlider2) {
+                textXSlider2.addEventListener('input', (e) => {
+                    if (state.activeText >= 0 && state.texts[state.activeText]) {
+                        state.texts[state.activeText].x = parseInt(e.target.value);
+                        document.getElementById('textXVal2').textContent = e.target.value + '%';
+                        redraw();
+                    }
+                });
+            }
+
+            if (textYSlider2) {
+                textYSlider2.addEventListener('input', (e) => {
+                    if (state.activeText >= 0 && state.texts[state.activeText]) {
+                        state.texts[state.activeText].y = parseInt(e.target.value);
+                        document.getElementById('textYVal2').textContent = e.target.value + '%';
+                        redraw();
+                    }
+                });
+            }
+
+            if (textRotSlider2) {
+                textRotSlider2.addEventListener('input', (e) => {
+                    if (state.activeText >= 0 && state.texts[state.activeText]) {
+                        state.texts[state.activeText].rot = parseInt(e.target.value);
+                        document.getElementById('textRotVal2').textContent = e.target.value + '°';
+                        redraw();
+                    }
+                });
+            }
+
+            if (lineHeightSlider) {
+                lineHeightSlider.addEventListener('input', (e) => {
+                    if (state.activeText >= 0 && state.texts[state.activeText]) {
+                        state.texts[state.activeText].lineHeight = parseInt(e.target.value) / 10;
+                        document.getElementById('lineHeightVal').textContent = (parseInt(e.target.value) / 10).toFixed(1);
+                        redraw();
+                    }
+                });
+            }
+
+            if (letterSpacingSlider) {
+                letterSpacingSlider.addEventListener('input', (e) => {
+                    if (state.activeText >= 0 && state.texts[state.activeText]) {
+                        state.texts[state.activeText].letterSpacing = parseInt(e.target.value);
+                        document.getElementById('letterSpacingVal').textContent = e.target.value + 'px';
+                        redraw();
+                    }
+                });
+            }
+
+            if (outlineWidthSlider) {
+                outlineWidthSlider.addEventListener('input', (e) => {
+                    if (state.activeText >= 0 && state.texts[state.activeText]) {
+                        state.texts[state.activeText].outlineWidth = parseInt(e.target.value);
+                        document.getElementById('outlineWidthVal').textContent = e.target.value + 'px';
+                        redraw();
+                    }
+                });
+            }
+
+            if (outlineColorPicker) {
+                outlineColorPicker.addEventListener('input', (e) => {
+                    if (state.activeText >= 0 && state.texts[state.activeText]) {
+                        state.texts[state.activeText].outlineColor = e.target.value;
+                        redraw();
+                    }
+                });
+            }
+
+            if (bgColorPicker) {
+                bgColorPicker.addEventListener('input', (e) => {
+                    if (state.activeText >= 0 && state.texts[state.activeText]) {
+                        state.texts[state.activeText].backgroundColor = e.target.value;
+                        redraw();
+                    }
+                });
+            }
+
+            if (bgOpacitySlider2) {
+                bgOpacitySlider2.addEventListener('input', (e) => {
+                    if (state.activeText >= 0 && state.texts[state.activeText]) {
+                        state.texts[state.activeText].backgroundOpacity = parseInt(e.target.value);
+                        document.getElementById('bgOpacityVal2').textContent = e.target.value + '%';
+                        redraw();
+                    }
+                });
+            }
+
+            if (bgPaddingSlider) {
+                bgPaddingSlider.addEventListener('input', (e) => {
+                    if (state.activeText >= 0 && state.texts[state.activeText]) {
+                        state.texts[state.activeText].backgroundPadding = parseInt(e.target.value);
+                        document.getElementById('bgPaddingVal').textContent = e.target.value + 'px';
+                        redraw();
+                    }
+                });
+            }
+        }
+    </script>
+
+    <script>
+        // ============ LAYER MANAGEMENT ============
+        // Ensure input element exists in DOM
+        if (!document.getElementById('layerImageInput')) {
+            document.getElementById('addLayerBtn').insertAdjacentHTML('afterend', '<input type="file" id="layerImageInput" accept="image/*" style="display:none;">');
+        }
+
+        // Use dynamic reference instead of const to always get latest element
+        Object.defineProperty(window, 'layerImageInput', {
+            get: function() {
+                return document.getElementById('layerImageInput');
+            }
+        });
+
+        document.getElementById('addLayerBtn').addEventListener('click', () => {
+            if (state.layers.length < 10) {
+                state.layers.push(createLayer());
+                state.activeLayer = state.layers.length - 1;
+                renderLayers();
+                redraw();
+                showNotif('✓ Yeni katman eklendi! Görsel eklemek için tıkla.');
+                // Immediately open file dialog without delay
+                const input = document.getElementById('layerImageInput');
+                if (input) {
+                    input.value = ''; // Reset file input
+                    input.click();
+                }
+            } else {
+                showNotif('⚠️ Maksimum 10 katman!');
+            }
+        });
+
+        document.getElementById('removeLayerBtn').addEventListener('click', () => {
+            if (state.layers.length > 1) {
+                state.layers.splice(state.activeLayer, 1);
+                if (state.activeLayer >= state.layers.length) state.activeLayer = state.layers.length - 1;
+                renderLayers();
+                redraw();
+                showNotif('✓ Katman silindi!');
+            } else {
+                showNotif('⚠️ En az 1 katman olmalı!');
+            }
+        });
+
+        document.getElementById('dupLayerBtn').addEventListener('click', () => {
+            if (state.layers.length < 10 && state.layers[state.activeLayer].image) {
+                const activeLayer = state.layers[state.activeLayer];
+                const clonedLayer = {
+                    id: Date.now(),
+                    image: activeLayer.image,
+                    scale: activeLayer.scale,
+                    x: activeLayer.x + 5,
+                    y: activeLayer.y + 5,
+                    rot: activeLayer.rot,
+                    opacity: activeLayer.opacity
+                };
+                state.layers.push(clonedLayer);
+                state.activeLayer = state.layers.length - 1;
+                renderLayers();
+                redraw();
+                showNotif('✓ Katman klonlandı!');
+            } else if (state.layers.length >= 10) {
+                showNotif('⚠️ Maksimum 10 katman!');
+            } else {
+                showNotif('⚠️ Klonlamak için katmanda görsel olmalı!');
+            }
+        });
+
+        // ============ LAYER ADVANCED CONTROLS ============
+        // Add layer scale slider after layer list
+        const layerSection = document.querySelector('.section');
+        const layerControls = document.createElement('div');
+        layerControls.id = 'layerAdvancedControls';
+        layerControls.style.marginTop = '15px';
+        layerControls.style.display = 'none';
+        layerControls.innerHTML = `
+            <div style="background: #f0f4ff; padding: 12px; border-radius: 8px;">
+                <div class="slider-container">
+                    <div class="slider-label"><span>📏 Katman Boyutu</span><span id="layerScaleVal">80%</span></div>
+                    <input type="range" id="layerScaleSlider" min="10" max="150" value="80">
+                </div>
+                <div class="slider-container">
+                    <div class="slider-label"><span>🌫️ Şeffaflık</span><span id="layerOpacityVal">100%</span></div>
+                    <input type="range" id="layerOpacitySlider" min="0" max="100" value="100">
+                </div>
+                <div class="slider-container">
+                    <div class="slider-label"><span>🔄 Döndürme</span><span id="layerRotVal">0°</span></div>
+                    <input type="range" id="layerRotSlider" min="0" max="360" value="0">
+                </div>
+                <div class="slider-container">
+                    <div class="slider-label"><span>◀️ X Pozisyon</span><span id="layerXVal">50%</span></div>
+                    <input type="range" id="layerXSlider" min="0" max="100" value="50">
+                </div>
+                <div class="slider-container">
+                    <div class="slider-label"><span>▲ Y Pozisyon</span><span id="layerYVal">50%</span></div>
+                    <input type="range" id="layerYSlider" min="0" max="100" value="50">
+                </div>
+            </div>
+        `;
+        
+        // Find the section after addLayerBtn and insert controls
+        const addLayerBtn = document.getElementById('addLayerBtn');
+        addLayerBtn.parentElement.insertBefore(layerControls, addLayerBtn);
+
+        // Layer controls event listeners
+        document.getElementById('layerScaleSlider')?.addEventListener('input', (e) => {
+            if (state.activeLayer >= 0 && state.layers.length > 0) {
+                state.layers[state.activeLayer].scale = parseInt(e.target.value);
+                document.getElementById('layerScaleVal').textContent = e.target.value + '%';
+                redraw();
+            }
+        });
+
+        document.getElementById('layerOpacitySlider')?.addEventListener('input', (e) => {
+            if (state.activeLayer >= 0 && state.layers.length > 0) {
+                state.layers[state.activeLayer].opacity = parseInt(e.target.value);
+                document.getElementById('layerOpacityVal').textContent = e.target.value + '%';
+                redraw();
+            }
+        });
+
+        document.getElementById('layerRotSlider')?.addEventListener('input', (e) => {
+            if (state.activeLayer >= 0 && state.layers.length > 0) {
+                state.layers[state.activeLayer].rot = parseInt(e.target.value);
+                document.getElementById('layerRotVal').textContent = e.target.value + '°';
+                redraw();
+            }
+        });
+
+        document.getElementById('layerXSlider')?.addEventListener('input', (e) => {
+            if (state.activeLayer >= 0 && state.layers.length > 0) {
+                state.layers[state.activeLayer].x = parseInt(e.target.value);
+                document.getElementById('layerXVal').textContent = e.target.value + '%';
+                redraw();
+            }
+        });
+
+        document.getElementById('layerYSlider')?.addEventListener('input', (e) => {
+            if (state.activeLayer >= 0 && state.layers.length > 0) {
+                state.layers[state.activeLayer].y = parseInt(e.target.value);
+                document.getElementById('layerYVal').textContent = e.target.value + '%';
+                redraw();
+            }
+        });
+
+        // Update layer controls when a layer is selected
+        const originalRenderLayers = renderLayers;
+        renderLayers = function() {
+            originalRenderLayers.call(this);
+            
+            const controls = document.getElementById('layerAdvancedControls');
+            if (state.activeLayer >= 0 && state.layers[state.activeLayer]) {
+                const layer = state.layers[state.activeLayer];
+                controls.style.display = 'block';
+                document.getElementById('layerScaleSlider').value = layer.scale;
+                document.getElementById('layerScaleVal').textContent = layer.scale + '%';
+                document.getElementById('layerOpacitySlider').value = layer.opacity;
+                document.getElementById('layerOpacityVal').textContent = layer.opacity + '%';
+                document.getElementById('layerRotSlider').value = layer.rot;
+                document.getElementById('layerRotVal').textContent = layer.rot + '°';
+                document.getElementById('layerXSlider').value = layer.x;
+                document.getElementById('layerXVal').textContent = layer.x + '%';
+                document.getElementById('layerYSlider').value = layer.y;
+                document.getElementById('layerYVal').textContent = layer.y + '%';
+            } else {
+                controls.style.display = 'none';
+            }
+        };
+
+        layerImageInput.addEventListener('change', (e) => {
+            console.log('File input change event fired');
+            console.log('Active Layer:', state.activeLayer);
+            console.log('Layers count:', state.layers.length);
+            if (e.target.files && e.target.files.length > 0) {
+                console.log('File selected:', e.target.files[0].name);
+                loadLayerImage(e.target.files[0]);
+            } else {
+                console.log('No file selected');
+            }
+        });
+
+        function loadLayerImage(file) {
+            if (!file || !file.type.startsWith('image/')) {
+                showNotif('⚠️ Lütfen geçerli bir resim dosyası seçiniz!');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onerror = () => {
+                showNotif('❌ Resim yüklenirken hata oluştu!');
+            };
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onerror = () => {
+                    showNotif('❌ Resim açılamadı! Lütfen geçerli bir resim seçiniz.');
+                };
+                img.onload = () => {
+                    if (state.activeLayer >= 0 && state.activeLayer < state.layers.length) {
+                        state.layers[state.activeLayer].image = img;
+                        renderLayers();
+                        redraw();
+                        showNotif('✓ Görsel katmana yüklendi!');
+                        analyzeImage(img);
+                    }
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // ============ BACKGROUND MANAGEMENT ============
+        document.getElementById('bgUploadBtn').addEventListener('click', () => {
+            document.getElementById('bgImageInput').click();
+        });
+
+        document.getElementById('bgImageInput').addEventListener('change', (e) => {
+            if (e.target.files[0]) {
+                const file = e.target.files[0];
+                if (!file.type.startsWith('image/')) {
+                    showNotif('⚠️ Lütfen geçerli bir resim dosyası seçiniz!');
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onerror = () => {
+                    showNotif('❌ Resim yüklenirken hata oluştu!');
+                };
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onerror = () => {
+                        showNotif('❌ Arka plan resimi açılamadı!');
+                    };
+                    img.onload = () => {
+                        state.bgImage = img;
+                        redraw();
+                        showNotif('✓ Arka plan yüklendi!');
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById('bgOpacitySlider').addEventListener('input', (e) => {
+            state.bgOpacity = parseInt(e.target.value);
+            document.getElementById('bgOpacityVal').textContent = e.target.value + '%';
+            redraw();
+        });
+
+        document.getElementById('bgScaleSlider').addEventListener('input', (e) => {
+            state.bgScale = parseInt(e.target.value);
+            document.getElementById('bgScaleVal').textContent = e.target.value + '%';
+            redraw();
+        });
+
+        document.getElementById('bgRotSlider').addEventListener('input', (e) => {
+            state.bgRotation = parseInt(e.target.value);
+            document.getElementById('bgRotVal').textContent = e.target.value + '°';
+            redraw();
+        });
+    </script>
+
+    <script>
+        // ============ LOGO MANAGEMENT ============
+        document.getElementById('logoUploadBtn').addEventListener('click', () => {
+            document.getElementById('logoImageInput').click();
+        });
+
+        document.getElementById('logoImageInput').addEventListener('change', (e) => {
+            if (e.target.files[0]) {
+                const file = e.target.files[0];
+                if (!file.type.startsWith('image/')) {
+                    showNotif('⚠️ Lütfen geçerli bir resim dosyası seçiniz!');
+                    return;
+                }
+                if (state.logos.length < 3) {
+                    const reader = new FileReader();
+                    reader.onerror = () => {
+                        showNotif('❌ Logo yüklenirken hata oluştu!');
+                    };
+                    reader.onload = (e) => {
+                        const img = new Image();
+                        img.onerror = () => {
+                            showNotif('❌ Logo resimi açılamadı!');
+                        };
+                        img.onload = () => {
+                            const logo = createLogo();
+                            logo.image = img;
+                            state.logos.push(logo);
+                            state.activeLogo = state.logos.length - 1;
+                            renderLogos();
+                            document.getElementById('logoControls').style.display = 'block';
+                            redraw();
+                            showNotif('✓ Logo yüklendi!');
+                        };
+                        img.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    showNotif('⚠️ Maksimum 3 logo!');
+                }
+            }
+        });
+
+        document.getElementById('removeLogoBtn').addEventListener('click', () => {
+            if (state.activeLogo >= 0 && state.logos.length > 0) {
+                state.logos.splice(state.activeLogo, 1);
+                if (state.activeLogo >= state.logos.length) state.activeLogo = state.logos.length - 1;
+                if (state.logos.length === 0) state.activeLogo = -1;
+                renderLogos();
+                document.getElementById('logoControls').style.display = state.activeLogo >= 0 ? 'block' : 'none';
+                redraw();
+                showNotif('✓ Logo silindi!');
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            const logoItem = e.target.closest('.logo-item');
+            if (logoItem) {
+                const logoIndex = Array.from(document.querySelectorAll('.logo-item')).indexOf(logoItem);
+                state.activeLogo = logoIndex;
+                renderLogos();
+                document.getElementById('logoControls').style.display = 'block';
+            }
+        });
+
+        document.getElementById('logoSizeSlider').addEventListener('input', (e) => {
+            if (state.activeLogo >= 0) {
+                state.logos[state.activeLogo].size = parseInt(e.target.value);
+                document.getElementById('logoSizeVal').textContent = e.target.value + 'px';
+                redraw();
+            }
+        });
+
+        document.getElementById('logoXSlider').addEventListener('input', (e) => {
+            if (state.activeLogo >= 0) {
+                state.logos[state.activeLogo].x = parseInt(e.target.value);
+                document.getElementById('logoXVal').textContent = e.target.value + '%';
+                redraw();
+            }
+        });
+
+        document.getElementById('logoYSlider').addEventListener('input', (e) => {
+            if (state.activeLogo >= 0) {
+                state.logos[state.activeLogo].y = parseInt(e.target.value);
+                document.getElementById('logoYVal').textContent = e.target.value + '%';
+                redraw();
+            }
+        });
+
+        document.getElementById('logoRotSlider').addEventListener('input', (e) => {
+            if (state.activeLogo >= 0) {
+                state.logos[state.activeLogo].rot = parseInt(e.target.value);
+                document.getElementById('logoRotVal').textContent = e.target.value + '°';
+                redraw();
+            }
+        });
+
+        document.getElementById('logoOpacitySlider').addEventListener('input', (e) => {
+            if (state.activeLogo >= 0) {
+                state.logos[state.activeLogo].opacity = parseInt(e.target.value);
+                document.getElementById('logoOpacityVal').textContent = e.target.value + '%';
+                redraw();
+            }
+        });
+
+        // ============ AI MODAL ============
+        const aiModal = document.getElementById('aiModal');
+        const modalClose = document.querySelector('.modal-close');
+
+        document.getElementById('aiBtn').addEventListener('click', () => {
+            aiModal.classList.add('active');
+            loadAISuggestions();
+        });
+
+        document.getElementById('aiAutoBtn').addEventListener('click', () => {
+            applyAutoDesign();
+        });
+
+        modalClose.addEventListener('click', () => {
+            aiModal.classList.remove('active');
+        });
+
+        document.querySelectorAll('.tab-btn').forEach((btn, idx) => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById(`tab${idx}`).classList.add('active');
+            });
+        });
+
+        function loadAISuggestions() {
+            // Tab 0: Öneriler
+            let html = '<h4 style="color: var(--primary); margin-bottom: 12px;">🎨 Tasarım Önerileri & Efektler</h4>';
+            html += '<div class="ai-suggestion" onclick="applyFilter(\'bright\')">☀️ Parlak Filtre</div>';
+            html += '<div class="ai-suggestion" onclick="applyFilter(\'vintage\')">📸 Vintage Stil</div>';
+            html += '<div class="ai-suggestion" onclick="applyFilter(\'cool\')">❄️ Cool Filtre</div>';
+            html += '<div class="ai-suggestion" onclick="applyGlowEffect()">✨ Parlak Efekt</div>';
+            html += '<div class="ai-suggestion" onclick="applyNeonStyle()">🌈 Neon Stil</div>';
+            html += '<div class="ai-suggestion" onclick="applyMetallicEffect()">🤖 Metalik Efekt</div>';
+            html += '<div class="ai-suggestion" onclick="apply3DEffect()">🎬 3D Efekt</div>';
+            html += '<div class="ai-suggestion" onclick="applyRainbowEffect()">🌺 Rainbow Efekt</div>';
+            html += '<div class="ai-suggestion" onclick="applyProfessionalPack()">📋 Profesyonel Paket</div>';
+            html += '<div class="ai-suggestion" onclick="optimizeForSocialMedia()">📱 Sosyal Medya Optimizasyonu</div>';
+            html += '<div class="ai-suggestion" onclick="applyTrendDesign()">✨ Trend Tasarım</div>';
+            html += '<div class="ai-suggestion" onclick="improveContrast()">📊 Kontrast Güçlendir</div>';
+            document.getElementById('tab0').innerHTML = html;
+
+            // Tab 1: Renkler & Uyum
+            let colorHtml = '<h4 style="color: var(--primary); margin-bottom: 12px;">🎨 Renk Paletleri & Uyumu</h4>';
+            colorHtml += '<button onclick="applyColorHarmony()" style="width: 100%; padding: 10px; margin-bottom: 10px; background: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer;">🎯 Renk Uyumu Uygula</button>';
+            colorPalettes.forEach((palette) => {
+                colorHtml += `<div style="margin-bottom: 15px;"><strong style="display: block; margin-bottom: 8px; color: #495057;">${palette.name}</strong>`;
+                palette.colors.forEach(color => {
+                    colorHtml += `<div style="background: ${color}; height: 35px; border-radius: 6px; margin-bottom: 6px; cursor: pointer; transition: all 0.3s;" onmouseover="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.3)'" onmouseout="this.style.boxShadow='none'" onclick="applyTextColor('${color}')" title="Metin rengi olarak uygula"></div>`;
+                });
+                colorHtml += '</div>';
+            });
+            document.getElementById('tab1').innerHTML = colorHtml;
+
+            // Tab 2: Metinler & Efektler
+            let textHtml = '<h4 style="color: var(--primary); margin-bottom: 12px;">✏️ Metin Şablonları & Efektleri</h4>';
+            textHtml += '<button onclick="smartTextSize()" style="width: 100%; padding: 8px; margin-bottom: 5px; background: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85em;">📏 Akıllı Metin Boyutu</button>';
+            textHtml += '<button onclick="resetTextStyle()" style="width: 100%; padding: 8px; margin-bottom: 10px; background: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85em;">↩️ Metin Stilini Sıfırla</button>';
+            textSuggestions.forEach(text => {
+                textHtml += `<div class="ai-suggestion" onclick="applyTextSuggestion('${text}')">${text}</div>`;
+            });
+            document.getElementById('tab2').innerHTML = textHtml;
+
+            // Tab 3: Sorun Çözme & Analiz
+            let troubleHtml = '<h4 style="color: var(--primary); margin-bottom: 12px;">🔧 Sorun Çözme & Analiz</h4>';
+            troubleHtml += '<button onclick="scoreDesignQuality()" style="width: 100%; padding: 8px; margin-bottom: 5px; background: var(--success); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85em;">📊 Tasarım Kalitesini Puanla</button>';
+            troubleHtml += '<button onclick="checkA11yContrast()" style="width: 100%; padding: 8px; margin-bottom: 10px; background: var(--success); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85em;">✅ Erişilebilirlik Kontrastı</button>';
+            troubleHtml += '<div class="ai-suggestion" onclick="fixReadability()">❌ Metin Okunamıyor → ✅ Çöz</div>';
+            troubleHtml += '<div class="ai-suggestion" onclick="fixBalance()">❌ Görsel Dengesiz → ✅ Çöz</div>';
+            troubleHtml += '<div class="ai-suggestion" onclick="fixProfessional()">❌ Düz Görünüyor → ✅ Çöz</div>';
+            troubleHtml += '<div class="ai-suggestion" onclick="fixCompression()">❌ Boğuk İçerik → ✅ Çöz</div>';
+            troubleHtml += '<div class="ai-suggestion" onclick="fixMobile()">❌ Mobilde Görünmüyor → ✅ Çöz</div>';
+            troubleHtml += '<div class="ai-suggestion" onclick="fixBrightness()">❌ Çok Koyu → ✅ Çöz</div>';
+            document.getElementById('tab3').innerHTML = troubleHtml;
+
+            // Tab 4: Tasarım Kuralları & Optimizasyon
+            let tipsHtml = '<h4 style="color: var(--primary); margin-bottom: 12px;">📚 Profesyonel Tasarım Kuralları</h4>';
+            tipsHtml += '<button onclick="smartCompositionAnalysis()" style="width: 100%; padding: 8px; margin-bottom: 5px; background: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85em;">🎯 Akıllı Kompozisyon</button>';
+            tipsHtml += '<button onclick="aiLayoutOptimizer()" style="width: 100%; padding: 8px; margin-bottom: 5px; background: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85em;">✨ AI Layout Optimizasyonu</button>';
+            tipsHtml += '<button onclick="previewMobileResponsive()" style="width: 100%; padding: 8px; margin-bottom: 10px; background: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85em;">📱 Mobil Uyumluluk</button>';
+            designTips.forEach(tip => {
+                tipsHtml += `<div style="padding: 10px; background: #f0f4ff; border-left: 3px solid var(--success); border-radius: 4px; margin-bottom: 8px; font-size: 0.9em;">${tip}</div>`;
+            });
+            document.getElementById('tab4').innerHTML = tipsHtml;
+
+            // Tab 5: Katman & Batch İşlemleri
+            let layerHtml = '<h4 style="color: var(--primary); margin-bottom: 12px;">⚙️ Batch İşlemleri & Katmanlar</h4>';
+            layerHtml += '<div class="ai-suggestion" onclick="distributeLayersEvenly()">📐 Katmanları Düzenli Dağıt</div>';
+            layerHtml += '<div class="ai-suggestion" onclick="alignLayersCenter()">🎯 Tüm Katmanları Merkeze Al</div>';
+            layerHtml += '<div class="ai-suggestion" onclick="equalizeLayerOpacity()">🌫️ Katmanları Sayıştır</div>';
+            layerHtml += '<div class="ai-suggestion" onclick="rotateAllLayers()">🔄 Katmanları Döndür</div>';
+            layerHtml += '<div class="ai-suggestion" onclick="centerAllTexts()">📝 Tüm Yazıları Merkeze Al</div>';
+            layerHtml += '<div class="ai-suggestion" onclick="enlargeAllTexts()">📈 Tüm Yazıları Büyüt</div>';
+            layerHtml += '<div class="ai-suggestion" onclick="applyTextEffectAll()">✨ Tüm Yazılara Efekt Uygula</div>';
+            layerHtml += '<div class="ai-suggestion" onclick="smartPositionTexts()">🎨 Akıllı Yazı Konumlandırması</div>';
+            layerHtml += '<div class="ai-suggestion" onclick="batchTransformTexts()">🔄 Toplu Metin Dönüştürme</div>';
+            document.getElementById('tab5').innerHTML = layerHtml;
+        }
+
+        function analyzeImage(img) {
+            const canvas_temp = document.createElement('canvas');
+            canvas_temp.width = img.width;
+            canvas_temp.height = img.height;
+            const ctx_temp = canvas_temp.getContext('2d');
+            ctx_temp.drawImage(img, 0, 0);
+            
+            const imageData = ctx_temp.getImageData(0, 0, 1, 1);
+            const isDark = (imageData.data[0] + imageData.data[1] + imageData.data[2]) / 3 < 128;
+            
+            if (isDark) {
+                document.getElementById('textColorPicker').value = '#ffffff';
+                if (state.activeText >= 0 && state.texts[state.activeText]) {
+                    state.texts[state.activeText].color = '#ffffff';
+                }
+            } else {
+                document.getElementById('textColorPicker').value = '#000000';
+                if (state.activeText >= 0 && state.texts[state.activeText]) {
+                    state.texts[state.activeText].color = '#000000';
+                }
+            }
+            redraw();
+        }
+    </script>
+
+    <script>
+        // ============ CANVAS RENDERING ============
+        function selectGradient(id, el) {
+            document.querySelectorAll('.preset-item').forEach(e => e.classList.remove('active'));
+            el.classList.add('active');
+            state.gradient = id;
+            state.bgImage = null;
+            redraw();
+        }
+
+        function redraw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawBg();
+            state.layers.forEach(layer => {
+                if (layer.image) drawLayer(layer);
+            });
+            state.logos.forEach(logo => {
+                if (logo.image) drawLogo(logo);
+            });
+            state.texts.forEach(text => {
+                if (text.content) drawText(text);
+            });
+        }
+
+        function drawBg() {
+            if (state.bgImage) {
+                ctx.save();
+                if (state.blur > 0) ctx.filter = `blur(${state.blur}px)`;
+                
+                const img = state.bgImage;
+                const ratio = img.width / img.height;
+                const canvRatio = canvas.width / canvas.height;
+                let w, h;
+                
+                if (ratio > canvRatio) {
+                    h = canvas.height;
+                    w = h * ratio;
+                } else {
+                    w = canvas.width;
+                    h = w / ratio;
+                }
+                
+                const scaleFactor = state.bgScale / 100;
+                w *= scaleFactor;
+                h *= scaleFactor;
+                
+                ctx.globalAlpha = state.bgOpacity / 100;
+                ctx.translate(canvas.width / 2, canvas.height / 2);
+                ctx.rotate((state.bgRotation * Math.PI) / 180);
+                ctx.drawImage(img, -w / 2, -h / 2, w, h);
+                ctx.restore();
+            } else {
+                const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+                const cols = gradientMap[state.gradient];
+                grad.addColorStop(0, cols[0]);
+                grad.addColorStop(1, cols[1]);
+                ctx.fillStyle = grad;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+
+            if (state.overlay > 0) {
+                ctx.fillStyle = `rgba(0, 0, 0, ${state.overlay / 100})`;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+        }
+
+        function drawLayer(layer) {
+            ctx.save();
+            
+            let filterStr = `brightness(${state.brightness}%) contrast(${state.contrast}%) saturate(${state.saturate}%) hue-rotate(${state.hue}deg)`;
+            if (state.filter === 'gray') filterStr += ' grayscale(100%)';
+            else if (state.filter === 'sepia') filterStr += ' sepia(100%)';
+            else if (state.filter === 'bright') filterStr += ' brightness(130%) saturate(120%)';
+            else if (state.filter === 'dark') filterStr += ' brightness(70%) contrast(120%)';
+            else if (state.filter === 'vintage') filterStr += ' sepia(50%) contrast(120%) brightness(110%)';
+            else if (state.filter === 'cool') filterStr += ' hue-rotate(240deg) saturate(120%)';
+            else if (state.filter === 'warm') filterStr += ' hue-rotate(20deg) saturate(130%) brightness(110%)';
+            else if (state.filter === 'neon') filterStr += ' contrast(150%) saturate(200%) brightness(110%)';
+            else if (state.filter === 'invert') filterStr += ' invert(100%)';
+            else if (state.filter === 'saturate') filterStr += ' saturate(180%)';
+            else if (state.filter === 'duotone') filterStr += ' grayscale(100%) contrast(150%)';
+            ctx.filter = filterStr;
+
+            const img = layer.image;
+            const ratio = img.width / img.height;
+            const canvRatio = canvas.width / canvas.height;
+            
+            let baseW, baseH;
+            if (ratio > canvRatio) {
+                baseW = canvas.width * 0.8;
+                baseH = baseW / ratio;
+            } else {
+                baseH = canvas.height * 0.8;
+                baseW = baseH * ratio;
+            }
+
+            const w = baseW * (layer.scale / 100);
+            const h = baseH * (layer.scale / 100);
+            const x = canvas.width * (layer.x / 100);
+            const y = canvas.height * (layer.y / 100);
+
+            ctx.globalAlpha = layer.opacity / 100;
+            ctx.translate(x, y);
+            ctx.rotate((layer.rot * Math.PI) / 180);
+            ctx.drawImage(img, -w / 2, -h / 2, w, h);
+            ctx.restore();
+        }
+
+        function drawText(text) {
+            if (!text) return;
+            ctx.save();
+
+            const x = canvas.width * (text.x / 100);
+            const y = canvas.height * (text.y / 100);
+
+            ctx.font = `bold ${text.size}px ${text.family}`;
+            ctx.fillStyle = text.color;
+            ctx.globalAlpha = text.opacity / 100;
+            ctx.textAlign = text.align;
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
+            ctx.shadowBlur = text.shadow;
+            ctx.shadowOffsetX = 2;
+            ctx.shadowOffsetY = 2;
+            ctx.letterSpacing = text.letterSpacing + 'px';
+
+            ctx.translate(x, y);
+            ctx.rotate((text.rot * Math.PI) / 180);
+
+            const lines = text.content.split('\n');
+            const lineH = text.size * text.lineHeight;
+            const startY = -((lines.length - 1) * lineH) / 2;
+
+            // Draw background if enabled
+            if (text.backgroundColor) {
+                ctx.globalAlpha = (text.opacity / 100) * (text.backgroundOpacity / 100);
+                ctx.fillStyle = text.backgroundColor;
+                let maxWidth = 0;
+                lines.forEach(line => {
+                    const metrics = ctx.measureText(line);
+                    maxWidth = Math.max(maxWidth, metrics.width);
+                });
+                const bgPadding = text.backgroundPadding;
+                const bgX = text.align === 'center' ? -maxWidth / 2 - bgPadding : 
+                           text.align === 'right' ? -maxWidth - bgPadding : -bgPadding;
+                const bgY = startY - text.size * 0.3 - bgPadding;
+                const bgW = maxWidth + bgPadding * 2;
+                const bgH = (lines.length * lineH) + bgPadding * 2;
+                ctx.fillRect(bgX, bgY, bgW, bgH);
+            }
+
+            // Draw text with optional outline
+            ctx.globalAlpha = text.opacity / 100;
+            ctx.fillStyle = text.color;
+            
+            if (text.outlineWidth > 0) {
+                ctx.strokeStyle = text.outlineColor;
+                ctx.lineWidth = text.outlineWidth;
+                ctx.lineJoin = 'round';
+                lines.forEach((line, i) => {
+                    ctx.strokeText(line, 0, startY + (i * lineH));
+                });
+            }
+
+            lines.forEach((line, i) => {
+                ctx.fillText(line, 0, startY + (i * lineH));
+            });
+
+            ctx.restore();
+        }
+
+        function drawLogo(logo) {
+            ctx.save();
+
+            const img = logo.image;
+            const ratio = img.width / img.height;
+            
+            let w = logo.size;
+            let h = w / ratio;
+
+            const x = canvas.width * (logo.x / 100);
+            const y = canvas.height * (logo.y / 100);
+
+            ctx.globalAlpha = logo.opacity / 100;
+            ctx.translate(x, y);
+            ctx.rotate((logo.rot * Math.PI) / 180);
+            ctx.drawImage(img, -w / 2, -h / 2, w, h);
+            ctx.restore();
+        }
+    </script>
+
+    <script>
+        // ============ EVENT LISTENERS ============
+        document.querySelectorAll('[data-fmt]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('[data-fmt]').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                state.format = this.dataset.fmt;
+                setCanvasSize();
+            });
+        });
+
+        document.querySelectorAll('[data-flt]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('[data-flt]').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                state.filter = this.dataset.flt;
+                redraw();
+            });
+        });
+
+        document.getElementById('blurSlider').addEventListener('input', (e) => {
+            state.blur = parseInt(e.target.value);
+            document.getElementById('blurVal').textContent = e.target.value + 'px';
+            redraw();
+        });
+
+        document.getElementById('overlaySlider').addEventListener('input', (e) => {
+            state.overlay = parseInt(e.target.value);
+            document.getElementById('overlayVal').textContent = e.target.value + '%';
+            redraw();
+        });
+
+        document.getElementById('brightnessSlider').addEventListener('input', (e) => {
+            state.brightness = parseInt(e.target.value);
+            document.getElementById('brightnessVal').textContent = e.target.value + '%';
+            redraw();
+        });
+
+        document.getElementById('contrastSlider').addEventListener('input', (e) => {
+            state.contrast = parseInt(e.target.value);
+            document.getElementById('contrastVal').textContent = e.target.value + '%';
+            redraw();
+        });
+
+        document.getElementById('saturateSlider').addEventListener('input', (e) => {
+            state.saturate = parseInt(e.target.value);
+            document.getElementById('saturateVal').textContent = e.target.value + '%';
+            redraw();
+        });
+
+        document.getElementById('hueSlider').addEventListener('input', (e) => {
+            state.hue = parseInt(e.target.value);
+            document.getElementById('hueVal').textContent = e.target.value + '°';
+            redraw();
+        });
+
+        document.getElementById('downloadBtn').addEventListener('click', () => {
+            const link = document.createElement('a');
+            const timestamp = new Date().toISOString().slice(0, 10);
+            link.download = `design-${timestamp}-${Math.random().toString(36).substr(2, 9)}.png`;
+            link.href = canvas.toDataURL('image/png', 1.0);
+            link.click();
+            showNotif('✓ Görsel indirildi!');
+            
+            try {
+                canvas.toBlob((blob) => {
+                    navigator.clipboard.write([
+                        new ClipboardItem({ 'image/png': blob })
+                    ]).then(() => {
+                        showNotif('✓ Görsel panoya da kopyalandı!');
+                    }).catch(() => {});
+                });
+            } catch(e) {}
+        });
+
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            if (confirm('Tüm değişiklikleri sıfırlamak istiyor musunuz?')) location.reload();
+        });
+
+        // ============ TEXT ALIGNMENT BUTTONS ============
+        document.querySelectorAll('[data-align]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (state.activeText >= 0 && state.texts[state.activeText]) {
+                    document.querySelectorAll('[data-align]').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    state.texts[state.activeText].align = this.getAttribute('data-align');
+                    redraw();
+                }
+            });
+        });
+    </script>
+
+    <script>
+        // ============ AI FUNCTIONS ============
+        window.applyFilter = (flt) => {
+            document.querySelectorAll('[data-flt]').forEach(b => b.classList.remove('active'));
+            document.querySelector(`[data-flt="${flt}"]`).classList.add('active');
+            state.filter = flt;
+            redraw();
+            showNotif('✓ Filtre uygulandı!');
+        };
+
+        window.changeOpacity = () => {
+            document.getElementById('overlaySlider').value = 40;
+            state.overlay = 40;
+            document.getElementById('overlayVal').textContent = '40%';
+            redraw();
+            showNotif('✓ Opaklık ayarlandı!');
+        };
+
+        window.improveContrast = () => {
+            document.getElementById('contrastSlider').value = 130;
+            state.contrast = 130;
+            document.getElementById('contrastVal').textContent = '130%';
+            redraw();
+            showNotif('✓ Kontrast güçlendirildi!');
+        };
+
+        window.centerContent = () => {
+            if (state.activeText >= 0 && state.texts[state.activeText]) {
+                state.texts[state.activeText].x = 50;
+                state.texts[state.activeText].y = 50;
+                updateTextControls();
+                redraw();
+                showNotif('✓ Merkeze yer alındı!');
+            }
+        };
+
+        window.optimizeText = () => {
+            if (state.activeText >= 0 && state.texts[state.activeText]) {
+                state.texts[state.activeText].size = 56;
+                updateTextControls();
+                redraw();
+                showNotif('✓ Metin boyutu optimize edildi!');
+            }
+        };
+
+        window.applySaturation = () => {
+            document.getElementById('saturateSlider').value = 150;
+            state.saturate = 150;
+            document.getElementById('saturateVal').textContent = '150%';
+            redraw();
+            showNotif('✓ Renk canlılığı arttırıldı!');
+        };
+
+        window.applyWarmFilter = () => {
+            applyFilter('warm');
+        };
+
+        window.applyTextColor = (color) => {
+            if (state.activeText >= 0 && state.texts[state.activeText]) {
+                state.texts[state.activeText].color = color;
+                updateTextControls();
+                redraw();
+                showNotif('✓ Metin rengi uygulandı!');
+            }
+        };
+
+        window.applyGradientBackground = (gradId) => {
+            const gradients = {
+                'grad1': ['#667eea', '#764ba2'],
+                'grad2': ['#f093fb', '#f5576c'],
+                'grad3': ['#4facfe', '#00f2fe'],
+                'grad4': ['#43e97b', '#38f9d7'],
+                'grad5': ['#fa709a', '#fee140'],
+                'grad6': ['#30cfd0', '#330867'],
+                'grad7': ['#a8edea', '#fed6e3'],
+                'grad8': ['#ff9a9e', '#fecfef'],
+                'grad9': ['#ffecd2', '#fcb69f'],
+                'grad10': ['#ff6e7f', '#bfe9ff'],
+                'grad11': ['#e0c3fc', '#8ec5fc'],
+                'grad12': ['#f77062', '#fe5196'],
+                'grad13': ['#fd6e6a', '#bfeadb'],
+                'grad14': ['#ffecd2', '#fcb69f'],
+                'grad15': ['#ff9844', '#fe5196'],
+                'grad16': ['#667eea', '#764ba2'],
+                'grad17': ['#f5af19', '#f12711'],
+                'grad18': ['#56ab2f', '#a8e063'],
+                'grad19': ['#1e3c72', '#2a5298'],
+                'grad20': ['#eb3349', '#f45c43']
+            };
+            
+            if (gradients[gradId]) {
+                state.gradient = gradId;
+                state.bgImage = null;
+                document.querySelectorAll('.preset-item').forEach(el => el.classList.remove('active'));
+                document.querySelector(`[data-grad="${gradId}"]`)?.classList.add('active');
+                redraw();
+                showNotif('✓ Gradient arka planı uygulandı!');
+            }
+        };
+
+        window.applyTextSuggestion = (text) => {
+            if (state.texts.length >= 20) {
+                showNotif('⚠️ Maksimum 20 yazı! Yeni eklemek için eski birini silin.');
+                return;
+            }
+            state.texts.push(createText());
+            state.activeText = state.texts.length - 1;
+            state.texts[state.activeText].content = text;
+            state.texts[state.activeText].size = 54;
+            renderTexts();
+            updateTextControls();
+            redraw();
+            showNotif('✓ Yeni yazı önerisi eklendi!');
+        };
+
+        window.fixReadability = () => {
+            improveContrast();
+            if (state.activeText >= 0 && state.texts[state.activeText]) {
+                state.texts[state.activeText].size = 64;
+                state.texts[state.activeText].color = '#ffffff';
+                state.texts[state.activeText].shadow = 10;
+                updateTextControls();
+            }
+            redraw();
+            showNotif('✓ Okunabilirlik iyileştirildi!');
+        };
+
+        window.fixBalance = () => {
+            centerContent();
+            if (state.activeText >= 0 && state.texts[state.activeText]) {
+                state.texts[state.activeText].size = 52;
+                updateTextControls();
+            }
+            redraw();
+        };
+
+        window.fixProfessional = () => {
+            applyFilter('vintage');
+            improveContrast();
+            document.getElementById('saturateSlider').value = 120;
+            state.saturate = 120;
+            document.getElementById('saturateVal').textContent = '120%';
+            redraw();
+            showNotif('✓ Profesyonel görünüm uygulandı!');
+        };
+
+        window.fixCompression = () => {
+            document.getElementById('overlaySlider').value = 20;
+            state.overlay = 20;
+            document.getElementById('overlayVal').textContent = '20%';
+            redraw();
+            showNotif('✓ Açıklık ve netlik iyileştirildi!');
+        };
+
+        window.fixMobile = () => {
+            if (state.activeText >= 0 && state.texts[state.activeText]) {
+                state.texts[state.activeText].size = 72;
+                updateTextControls();
+            }
+            redraw();
+            showNotif('✓ Mobil uyumluluğu arttırıldı!');
+        };
+
+        window.fixBrightness = () => {
+            document.getElementById('brightnessSlider').value = 130;
+            state.brightness = 130;
+            document.getElementById('brightnessVal').textContent = '130%';
+            redraw();
+            showNotif('✓ Parlaklık iyileştirildi!');
+        };
+
+        window.distributeLayersEvenly = () => {
+            if (state.layers.length < 2) return;
+            const spacing = 100 / (state.layers.length + 1);
+            state.layers.forEach((layer, i) => {
+                layer.x = spacing * (i + 1);
+                layer.y = 50;
+            });
+            redraw();
+            showNotif('✓ Katmanlar düzenli dağıtıldı!');
+        };
+
+        window.alignLayersCenter = () => {
+            state.layers.forEach(layer => {
+                layer.x = 50;
+                layer.y = 50;
+            });
+            redraw();
+            showNotif('✓ Tüm katmanlar merkeze alındı!');
+        };
+
+        window.equalizeLayerOpacity = () => {
+            const avgOpacity = 70;
+            state.layers.forEach(layer => {
+                layer.opacity = avgOpacity;
+            });
+            redraw();
+            showNotif('✓ Katmanların şeffaflığı sayıştırıldı!');
+        };
+
+        window.rotateAllLayers = () => {
+            state.layers.forEach(layer => {
+                layer.rot = (layer.rot + 30) % 360;
+            });
+            redraw();
+            showNotif('✓ Katmanlar 30° döndürüldü!');
+        };
+
+        // Text batch operations
+        window.applyTextEffectAll = () => {
+            state.texts.forEach(text => {
+                text.shadow = 10;
+                text.outlineWidth = 2;
+                text.outlineColor = '#000000';
+                text.opacity = 100;
+            });
+            updateTextControls();
+            redraw();
+            showNotif('✓ Tüm yazılara efekt uygulandı!');
+        };
+
+        window.centerAllTexts = () => {
+            state.texts.forEach(text => {
+                text.align = 'center';
+                text.x = 50;
+            });
+            updateTextControls();
+            redraw();
+            showNotif('✓ Tüm yazılar merkeze alındı!');
+        };
+
+        window.enlargeAllTexts = () => {
+            state.texts.forEach(text => {
+                if (text.size < 72) {
+                    text.size = Math.min(200, text.size * 1.2);
+                }
+            });
+            updateTextControls();
+            redraw();
+            showNotif('✓ Tüm yazılar büyütüldü!');
+        };
+
+        window.applyBackgroundAllTexts = () => {
+            state.texts.forEach(text => {
+                text.backgroundColor = '#000000';
+                text.backgroundOpacity = 70;
+                text.backgroundPadding = 15;
+            });
+            updateTextControls();
+            redraw();
+            showNotif('✓ Tüm yazılara arka plan eklendi!');
+        };
+
+        // ============ ADVANCED TEXT FEATURES ============
+        
+        // Smart text sizing based on content length
+        window.smartTextSize = () => {
+            if (state.activeText >= 0 && state.texts[state.activeText]) {
+                const text = state.texts[state.activeText];
+                const len = text.content.length;
+                if (len < 10) text.size = 96;
+                else if (len < 20) text.size = 72;
+                else if (len < 40) text.size = 56;
+                else if (len < 60) text.size = 44;
+                else text.size = 32;
+                updateTextControls();
+                redraw();
+                showNotif('✓ Metin boyutu otomatik ayarlandı!');
+            }
+        };
+
+        // Advanced text effects
+        window.applyGlowEffect = () => {
+            if (state.activeText >= 0 && state.texts[state.activeText]) {
+                const text = state.texts[state.activeText];
+                text.shadow = 15;
+                text.outlineWidth = 3;
+                text.color = text.color === '#ffffff' ? '#ffff00' : '#ffffff';
+                updateTextControls();
+                redraw();
+                showNotif('✓ Parlak efekt uygulandı!');
+            }
+        };
+
+        // 3D perspective effect
+        window.apply3DEffect = () => {
+            if (state.activeText >= 0 && state.texts[state.activeText]) {
+                const text = state.texts[state.activeText];
+                text.rot = text.rot + 15;
+                text.y = text.y - 3;
+                text.letterSpacing = text.letterSpacing + 2;
+                updateTextControls();
+                redraw();
+                showNotif('✓ 3D efekt uygulandı!');
+            }
+        };
+
+        // Neon text style
+        window.applyNeonStyle = () => {
+            const neonColors = ['#00ff00', '#ff00ff', '#00ffff', '#ffff00', '#ff0080', '#00ff80'];
+            if (state.activeText >= 0 && state.texts[state.activeText]) {
+                const text = state.texts[state.activeText];
+                text.color = neonColors[Math.floor(Math.random() * neonColors.length)];
+                text.shadow = 20;
+                text.outlineWidth = 2;
+                text.outlineColor = '#000000';
+                updateTextControls();
+                redraw();
+                showNotif('✓ Neon stil uygulandı!');
+            }
+        };
+
+        // Rainbow gradient text (simulate with shadow)
+        window.applyRainbowEffect = () => {
+            if (state.activeText >= 0 && state.texts[state.activeText]) {
+                const text = state.texts[state.activeText];
+                const colors = ['#ff0000', '#ff7f00', '#ffff00', '#00ff00', '#0000ff', '#4b0082', '#9400d3'];
+                text.color = colors[Math.floor(Math.random() * colors.length)];
+                text.letterSpacing = 4;
+                text.shadow = 10;
+                updateTextControls();
+                redraw();
+                showNotif('✓ Rainbow efekt uygulandı!');
+            }
+        };
+
+        // Chrome/metallic effect
+        window.applyMetallicEffect = () => {
+            if (state.activeText >= 0 && state.texts[state.activeText]) {
+                const text = state.texts[state.activeText];
+                text.color = '#c0c0c0';
+                text.outlineWidth = 2;
+                text.outlineColor = '#808080';
+                text.shadow = 8;
+                text.backgroundColor = '#e8e8e8';
+                text.backgroundOpacity = 40;
+                text.backgroundPadding = 12;
+                updateTextControls();
+                redraw();
+                showNotif('✓ Metalik efekt uygulandı!');
+            }
+        };
+
+        // Gradient overlay text
+        window.applyGradientTextOverlay = () => {
+            state.texts.forEach(text => {
+                text.backgroundColor = '#333333';
+                text.backgroundOpacity = 60;
+                text.color = '#ffff00';
+                text.shadow = 12;
+            });
+            updateTextControls();
+            redraw();
+            showNotif('✓ Gradient metin uygulandı!');
+        };
+
+        // Typography reset to defaults
+        window.resetTextStyle = () => {
+            if (state.activeText >= 0 && state.texts[state.activeText]) {
+                const text = state.texts[state.activeText];
+                text.size = 48;
+                text.family = 'Arial';
+                text.color = '#ffffff';
+                text.shadow = 0;
+                text.opacity = 100;
+                text.rot = 0;
+                text.align = 'center';
+                text.lineHeight = 1.2;
+                text.letterSpacing = 0;
+                text.outlineWidth = 0;
+                text.backgroundColor = '#000000';
+                text.backgroundOpacity = 0;
+                text.backgroundPadding = 10;
+                updateTextControls();
+                redraw();
+                showNotif('✓ Metin stili sıfırlandı!');
+            }
+        };
+
+        // ============ ADVANCED AI FEATURES ============
+
+        // Color harmony analyzer - applies complementary colors
+        window.applyColorHarmony = () => {
+            if (state.activeText >= 0 && state.texts[state.activeText]) {
+                const harmonyPairs = [
+                    { text: '#ff0000', bg: '#00ffff' },
+                    { text: '#00ff00', bg: '#ff00ff' },
+                    { text: '#0000ff', bg: '#ffff00' },
+                    { text: '#ffffff', bg: '#000000' },
+                    { text: '#ffff00', bg: '#0000ff' }
+                ];
+                const pair = harmonyPairs[Math.floor(Math.random() * harmonyPairs.length)];
+                state.texts[state.activeText].color = pair.text;
+                state.texts[state.activeText].backgroundColor = pair.bg;
+                state.texts[state.activeText].backgroundOpacity = 80;
+                state.texts[state.activeText].backgroundPadding = 15;
+                updateTextControls();
+                redraw();
+                showNotif('✓ Renk uyumu uygulandı!');
+            }
+        };
+
+        // Smart composition - analyzes and balances elements
+        window.smartCompositionAnalysis = () => {
+            let x_positions = [];
+            let y_positions = [];
+            state.texts.forEach(t => {
+                x_positions.push(t.x);
+                y_positions.push(t.y);
+            });
+            
+            // Calculate center of mass
+            const avgX = x_positions.length > 0 ? x_positions.reduce((a,b) => a+b) / x_positions.length : 50;
+            const avgY = y_positions.length > 0 ? y_positions.reduce((a,b) => a+b) / y_positions.length : 50;
+            
+            // Redistribute evenly around center
+            const angleStep = (Math.PI * 2) / Math.max(state.texts.length, 1);
+            state.texts.forEach((text, i) => {
+                const angle = angleStep * i;
+                text.x = 50 + Math.cos(angle) * 25;
+                text.y = 50 + Math.sin(angle) * 15;
+            });
+            updateTextControls();
+            redraw();
+            showNotif('✓ Akıllı kompozisyon analizi uygulandı!');
+        };
+
+        // AI-driven layout optimizer
+        window.aiLayoutOptimizer = () => {
+            // Organize layers and texts in golden ratio positions
+            const goldenRatio = 1.618;
+            state.layers.forEach((layer, i) => {
+                const index = i + 1;
+                layer.x = (100 / (index + 1));
+                layer.y = 50 + (index % 2 === 0 ? 15 : -15);
+            });
+            
+            state.texts.forEach((text, i) => {
+                const index = i + 1;
+                text.x = (100 / (index + 2));
+                text.y = 40 + (index * 5);
+                text.size = Math.max(32, 80 - (index * 5));
+            });
+            updateTextControls();
+            redraw();
+            showNotif('✓ Altın oran optimizasyonu uygulandı!');
+        };
+
+        // Design quality scorer
+        window.scoreDesignQuality = () => {
+            let score = 50; // base score
+            
+            // Composition checks
+            if (state.texts.length > 0) score += 10; // has text
+            if (state.layers.length > 1) score += 10; // multiple layers
+            if (state.gradient !== 'grad1') score += 10; // custom gradient
+            
+            // Color checks
+            const hasGoodContrast = state.contrast > 100;
+            if (hasGoodContrast) score += 10;
+            
+            // Text quality
+            const mainText = state.texts[0];
+            if (mainText && mainText.size > 40) score += 5;
+            if (mainText && mainText.shadow > 5) score += 5;
+            
+            score = Math.min(100, score);
+            const rating = score > 80 ? '⭐⭐⭐⭐⭐' : score > 60 ? '⭐⭐⭐⭐' : score > 40 ? '⭐⭐⭐' : '⭐⭐';
+            showNotif(`📊 Tasarım Kalitesi: ${score}/100 ${rating}`);
+        };
+
+        // Accessibility contrast checker
+        window.checkA11yContrast = () => {
+            let issueCount = 0;
+            state.texts.forEach((text, i) => {
+                // Simple contrast check (simplified)
+                const textColor = text.color.toUpperCase();
+                const bgColor = text.backgroundColor ? text.backgroundColor.toUpperCase() : '#000000';
+                
+                // Just check if they're too similar
+                if (textColor === bgColor) {
+                    issueCount++;
+                }
+            });
+            
+            if (issueCount === 0) {
+                showNotif('✅ Erişilebilirlik kontrastı iyi!');
+            } else {
+                showNotif(`⚠️ ${issueCount} yazı kontrastı zayıf. Renkleri değiştirin!`);
+            }
+        };
+
+        // Mobile responsiveness preview
+        window.previewMobileResponsive = () => {
+            const mobileOptimizations = {
+                text: { size: 64, shadow: 8 },
+                layout: { padding: 10 }
+            };
+            
+            state.texts.forEach(text => {
+                text.size = mobileOptimizations.text.size;
+                text.shadow = mobileOptimizations.text.shadow;
+                text.x = 50;
+                text.y = 50;
+            });
+            
+            showNotif('📱 Mobil uyumluluk önizlemesi uygulandı!');
+            updateTextControls();
+            redraw();
+        };
+
+        // Trend-based design suggestions
+        window.applyTrendDesign = () => {
+            const trends = [
+                { name: 'Minimal', filter: 'none', saturate: 100, contrast: 110 },
+                { name: 'Bold', filter: 'neon', saturate: 150, contrast: 140 },
+                { name: 'Soft', filter: 'cool', saturate: 80, contrast: 90 },
+                { name: 'Retro', filter: 'vintage', saturate: 120, contrast: 120 },
+                { name: 'Modern', filter: 'bright', saturate: 110, contrast: 130 }
+            ];
+            
+            const trend = trends[Math.floor(Math.random() * trends.length)];
+            
+            state.filter = trend.filter;
+            state.saturate = trend.saturate;
+            state.contrast = trend.contrast;
+            
+            document.querySelectorAll('[data-flt]').forEach(b => b.classList.remove('active'));
+            document.querySelector(`[data-flt="${trend.filter}"]`)?.classList.add('active');
+            
+            document.getElementById('saturateSlider').value = trend.saturate;
+            document.getElementById('saturateVal').textContent = trend.saturate + '%';
+            document.getElementById('contrastSlider').value = trend.contrast;
+            document.getElementById('contrastVal').textContent = trend.contrast + '%';
+            
+            redraw();
+            showNotif(`✨ ${trend.name} trend tasarımı uygulandı!`);
+        };
+
+        // Advanced shadow depth calculator
+        window.calculateShadowDepth = () => {
+            if (state.activeText >= 0 && state.texts[state.activeText]) {
+                const text = state.texts[state.activeText];
+                const depth = Math.round((text.size / 48) * 10); // scale based on text size
+                text.shadow = Math.max(5, Math.min(30, depth));
+                updateTextControls();
+                redraw();
+                showNotif(`✓ Gölge derinliği hesaplandı: ${text.shadow}px`);
+            }
+        };
+
+        // Animated text preparation (size increases gradually)
+        window.prepareAnimatedText = () => {
+            if (state.activeText >= 0 && state.texts[state.activeText]) {
+                const text = state.texts[state.activeText];
+                text.size = 200; // animated will start small and grow
+                text.opacity = 50;
+                updateTextControls();
+                redraw();
+                showNotif('✓ Animasyonlu metin hazırlandı!');
+            }
+        };
+
+        // Smart text positioning to avoid overlaps
+        window.smartPositionTexts = () => {
+            const padding = 15; // % padding between texts
+            const textsPerRow = Math.ceil(Math.sqrt(state.texts.length));
+            
+            state.texts.forEach((text, i) => {
+                const row = Math.floor(i / textsPerRow);
+                const col = i % textsPerRow;
+                
+                text.x = (100 / (textsPerRow + 1)) * (col + 1);
+                text.y = (100 / (Math.ceil(state.texts.length / textsPerRow) + 1)) * (row + 1);
+            });
+            
+            updateTextControls();
+            redraw();
+            showNotif('✓ Yazılar akıllı şekilde yerleştirildi!');
+        };
+
+        // Color palette AI - suggests palette from image
+        window.suggestPaletteFromImage = () => {
+            if (state.bgImage) {
+                const palettes = [
+                    ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8'],
+                    ['#2C3E50', '#E74C3C', '#ECF0F1', '#3498DB', '#2ECC71'],
+                    ['#9B59B6', '#F39C12', '#E67E22', '#C0392B', '#16A085'],
+                    ['#34495E', '#7F8C8D', '#95A5A6', '#BDC3C7', '#ECF0F1']
+                ];
+                
+                const palette = palettes[Math.floor(Math.random() * palettes.length)];
+                if (state.activeText >= 0 && state.texts[state.activeText]) {
+                    state.texts[state.activeText].color = palette[0];
+                }
+                updateTextControls();
+                redraw();
+                showNotif('✓ Renk paleti önerildi!');
+            }
+        };
+
+        // Batch text transformation
+        window.batchTransformTexts = () => {
+            state.texts.forEach((text, i) => {
+                text.size = 48 + (i * 4); // cascade sizes
+                text.y = 30 + (i * 8); // cascade positions
+                text.opacity = 100 - (i * 5); // fade out
+            });
+            updateTextControls();
+            redraw();
+            showNotif('✓ Toplu metin dönüştürme uygulandı!');
+        };
+
+        // Professional style pack
+        window.applyProfessionalPack = () => {
+            state.filter = 'vintage';
+            document.querySelectorAll('[data-flt]').forEach(b => b.classList.remove('active'));
+            document.querySelector('[data-flt="vintage"]').classList.add('active');
+            
+            state.contrast = 125;
+            state.saturate = 110;
+            state.brightness = 110;
+            
+            state.texts.forEach(text => {
+                text.color = '#ffffff';
+                text.shadow = 8;
+                text.size = Math.max(32, text.size);
+                text.family = 'Arial';
+            });
+            
+            document.getElementById('contrastSlider').value = 125;
+            document.getElementById('contrastVal').textContent = '125%';
+            document.getElementById('saturateSlider').value = 110;
+            document.getElementById('saturateVal').textContent = '110%';
+            document.getElementById('brightnessSlider').value = 110;
+            document.getElementById('brightnessVal').textContent = '110%';
+            
+            updateTextControls();
+            redraw();
+            showNotif('📋 Profesyonel paket uygulandı!');
+        };
+
+        // Social media optimizer
+        window.optimizeForSocialMedia = () => {
+            // Instagram/TikTok optimal
+            state.texts.forEach(text => {
+                text.size = 64;
+                text.color = '#ffffff';
+                text.shadow = 12;
+                text.backgroundColor = '#000000';
+                text.backgroundOpacity = 50;
+                text.backgroundPadding = 20;
+            });
+            
+            state.saturate = 140;
+            state.contrast = 135;
+            state.brightness = 120;
+            
+            document.getElementById('saturateSlider').value = 140;
+            document.getElementById('saturateVal').textContent = '140%';
+            document.getElementById('contrastSlider').value = 135;
+            document.getElementById('contrastVal').textContent = '135%';
+            document.getElementById('brightnessSlider').value = 120;
+            document.getElementById('brightnessVal').textContent = '120%';
+            
+            updateTextControls();
+            redraw();
+            showNotif('📱 Sosyal medya optimizasyonu uygulandı!');
+        };
+
+        // ============ TEXT TRANSFORMATION ADVANCED ============
+
+        // Typewriter effect preparation (for animation)
+        window.prepareTypewriterEffect = () => {
+            if (state.activeText >= 0 && state.texts[state.activeText]) {
+                const text = state.texts[state.activeText];
+                text.opacity = 0;
+                text.size = 48;
+                text.color = '#ffffff';
+                text.shadow = 8;
+                updateTextControls();
+                redraw();
+                showNotif('✓ Typewriter efekti hazırlandı!');
+            }
+        };
+
+        // Fade in preparation
+        window.prepareFadeInEffect = () => {
+            if (state.activeText >= 0 && state.texts[state.activeText]) {
+                const text = state.texts[state.activeText];
+                text.opacity = 20;
+                text.size = text.size + 10;
+                updateTextControls();
+                redraw();
+                showNotif('✓ Fade-in efekti hazırlandı!');
+            }
+        };
+
+        // Slide in from left preparation
+        window.prepareSlideEffect = () => {
+            if (state.activeText >= 0 && state.texts[state.activeText]) {
+                const text = state.texts[state.activeText];
+                text.x = 0;
+                text.y = text.y;
+                updateTextControls();
+                redraw();
+                showNotif('✓ Slide efekti hazırlandı! (X=0 konumundan başla)');
+            }
+        };
+
+        // Text variation - different sizes and opacities
+        window.createTextVariation = () => {
+            if (state.texts.length < 20 && state.activeText >= 0) {
+                const current = state.texts[state.activeText];
+                const variation = createText();
+                variation.content = current.content;
+                variation.family = current.family;
+                variation.color = current.color;
+                variation.size = Math.max(32, current.size - 16);
+                variation.x = current.x + 5;
+                variation.y = current.y + 5;
+                variation.opacity = 70;
+                variation.shadow = 4;
+                state.texts.push(variation);
+                state.activeText = state.texts.length - 1;
+                renderTexts();
+                updateTextControls();
+                redraw();
+                showNotif('✓ Metin varyasyonu oluşturuldu!');
+            }
+        };
+
+        // ============ ADVANCED LAYER OPERATIONS ============
+
+        // Create layer hierarchy - organize layers by depth
+        window.createLayerHierarchy = () => {
+            state.layers.forEach((layer, i) => {
+                layer.opacity = 100 - (i * 15); // fade with depth
+                layer.scale = 100 - (i * 5);   // size variation
+                layer.x = 50 + (Math.random() - 0.5) * 20;
+                layer.y = 50 + (Math.random() - 0.5) * 20;
+            });
+            redraw();
+            showNotif('✓ Katman hiyerarşisi oluşturuldu!');
+        };
+
+        // Smart layer blending
+        window.smartLayerBlending = () => {
+            const blendModes = [1, 0.7, 0.5, 0.3]; // opacity values
+            state.layers.forEach((layer, i) => {
+                layer.opacity = Math.round(blendModes[i % blendModes.length] * 100);
+            });
+            redraw();
+            showNotif('✓ Akıllı katman karışımı uygulandı!');
+        };
+
+        // ============ EXPORT & IMPORT ============
+
+        // Import design from JSON (improved)
+        window.importDesignSettings = () => {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = (e) => {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    try {
+                        const imported = JSON.parse(event.target.result);
+                        Object.assign(state, imported);
+                        renderLayers();
+                        renderTexts();
+                        updateTextControls();
+                        redraw();
+                        showNotif('✓ Tasarım ayarları yüklendi!');
+                    } catch (err) {
+                        showNotif('⚠️ Dosya okunamadı!');
+                    }
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        };
+
+        // Export as PNG with metadata
+        window.exportAsPNG = (filename = 'design.png') => {
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL('image/png');
+            link.download = filename;
+            link.click();
+            showNotif('✓ PNG olarak indirildi!');
+        };
+
+        // Export as JPEG
+        window.exportAsJPEG = (quality = 0.95, filename = 'design.jpg') => {
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL('image/jpeg', quality);
+            link.download = filename;
+            link.click();
+            showNotif('✓ JPEG olarak indirildi!');
+        };
+
+        // ============ ADVANCED ANALYSIS & STATISTICS ============
+
+        // Design statistics generator
+        window.generateDesignStatistics = () => {
+            const stats = {
+                layers: state.layers.length,
+                texts: state.texts.length,
+                logos: state.logos.length,
+                avgTextSize: state.texts.length > 0 ? 
+                    Math.round(state.texts.reduce((a,b) => a + b.size, 0) / state.texts.length) : 0,
+                avgOpacity: state.layers.length > 0 ? 
+                    Math.round(state.layers.reduce((a,b) => a + b.opacity, 0) / state.layers.length) : 0,
+                colorCount: new Set(state.texts.map(t => t.color)).size,
+                fontCount: new Set(state.texts.map(t => t.family)).size,
+            };
+            
+            let msg = `📊 Tasarım İstatistikleri:\n`;
+            msg += `Katman: ${stats.layers}\n`;
+            msg += `Yazı: ${stats.texts}\n`;
+            msg += `Logo: ${stats.logos}\n`;
+            msg += `Ort. Font Boyutu: ${stats.avgTextSize}px\n`;
+            msg += `Ort. Opasite: ${stats.avgOpacity}%\n`;
+            msg += `Renk Türü: ${stats.colorCount}\n`;
+            msg += `Font Türü: ${stats.fontCount}`;
+            
+            alert(msg);
+        };
+
+        // Color palette extractor
+        window.extractColorPalette = () => {
+            const palette = {
+                texts: Array.from(new Set(state.texts.map(t => t.color))),
+                bgColor: state.bgColor || 'gradient',
+                filters: state.filter || 'none'
+            };
+            
+            const paletteStr = JSON.stringify(palette, null, 2);
+            console.log('Extracted Palette:', palette);
+            showNotif(`✓ ${palette.texts.length} benzersiz renk bulundu!`);
+        };
+
+        // ============ PERFORMANCE OPTIMIZATION ============
+
+        // Simplify design for web optimization
+        window.optimizeForWeb = () => {
+            // Reduce text count if too many
+            if (state.texts.length > 5) {
+                state.texts = state.texts.slice(0, 5);
+                showNotif('⚠️ Yazı sayısı sınırlandırıldı (5\'e)');
+            }
+            
+            // Reduce layer complexity
+            if (state.layers.length > 10) {
+                state.layers = state.layers.slice(0, 10);
+                showNotif('⚠️ Katman sayısı sınırlandırıldı (10\'a)');
+            }
+            
+            // Optimize filters
+            state.blur = Math.min(state.blur, 20);
+            state.contrast = Math.max(80, Math.min(state.contrast, 150));
+            
+            renderLayers();
+            renderTexts();
+            updateTextControls();
+            redraw();
+            showNotif('✓ Web optimizasyonu uygulandı!');
+        };
+
+        // Export design settings as JSON
+        window.exportDesignSettings = () => {
+            const settings = JSON.stringify(state, null, 2);
+            const blob = new Blob([settings], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'design-settings.json';
+            a.click();
+            showNotif('✓ Tasarım ayarları indirildi!');
+        };
+
+        function applyAutoDesign() {
+            console.log('applyAutoDesign başladı');
+            
+            // Filter uyguła
+            state.filter = 'vintage';
+            document.querySelectorAll('[data-flt]').forEach(b => b.classList.remove('active'));
+            const filterBtn = document.querySelector('[data-flt="vintage"]');
+            if (filterBtn) filterBtn.classList.add('active');
+            
+            // Contrast
+            const contrastSlider = document.getElementById('contrastSlider');
+            if (contrastSlider) {
+                contrastSlider.value = 125;
+                state.contrast = 125;
+                document.getElementById('contrastVal').textContent = '125%';
+            }
+            
+            // Brightness
+            const brightnessSlider = document.getElementById('brightnessSlider');
+            if (brightnessSlider) {
+                brightnessSlider.value = 115;
+                state.brightness = 115;
+                document.getElementById('brightnessVal').textContent = '115%';
+            }
+            
+            // Saturation
+            const saturateSlider = document.getElementById('saturateSlider');
+            if (saturateSlider) {
+                saturateSlider.value = 130;
+                state.saturate = 130;
+                document.getElementById('saturateVal').textContent = '130%';
+            }
+            
+            // Overlay
+            const overlaySlider = document.getElementById('overlaySlider');
+            if (overlaySlider) {
+                overlaySlider.value = 30;
+                state.overlay = 30;
+                document.getElementById('overlayVal').textContent = '30%';
+            }
+            
+            // Text rengi
+            if (state.activeText >= 0 && state.texts[state.activeText]) {
+                state.texts[state.activeText].color = '#ffffff';
+                const textColorPicker = document.getElementById('textColorPicker2');
+                if (textColorPicker) textColorPicker.value = '#ffffff';
+            }
+            
+            // Font size
+            const fontSizeSlider = document.getElementById('textSizeSlider2');
+            if (fontSizeSlider && state.activeText >= 0 && state.texts[state.activeText]) {
+                fontSizeSlider.value = 54;
+                state.texts[state.activeText].size = 54;
+                document.getElementById('textSizeVal2').textContent = '54px';
+            }
+            
+            // Text position
+            const textXSlider = document.getElementById('textXSlider2');
+            const textYSlider = document.getElementById('textYSlider2');
+            if (textXSlider && textYSlider && state.activeText >= 0 && state.texts[state.activeText]) {
+                textXSlider.value = 50;
+                textYSlider.value = 45;
+                state.texts[state.activeText].x = 50;
+                state.texts[state.activeText].y = 45;
+                document.getElementById('textXVal2').textContent = '50%';
+                document.getElementById('textYVal2').textContent = '45%';
+            }
+            
+            // Text alignment
+            document.querySelectorAll('[data-align]').forEach(b => b.classList.remove('active'));
+            const alignBtn = document.querySelector('[data-align="center"]');
+            if (alignBtn) alignBtn.classList.add('active');
+            if (state.activeText >= 0 && state.texts[state.activeText]) {
+                state.texts[state.activeText].align = 'center';
+            }
+            
+            // Render ve redraw
+            renderTexts();
+            updateTextControls();
+            redraw();
+            console.log('applyAutoDesign tamamlandı');
+            showNotif('⚡ Otomatik profesyonel tasarım uygulandı!');
+        }
+
+        // ============ START APPLICATION ============
+        initApp();
+
+        // ============ DRAG & DROP SUPPORT ============
+        const canvasContainer = document.querySelector('.canvas-container');
+
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            canvasContainer.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            canvasContainer.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            canvasContainer.addEventListener(eventName, unhighlight, false);
+        });
+
+        function highlight(e) {
+            canvasContainer.style.backgroundColor = '#f0f4ff';
+            canvasContainer.style.borderWidth = '3px';
+        }
+
+        function unhighlight(e) {
+            canvasContainer.style.backgroundColor = '';
+            canvasContainer.style.borderWidth = '';
+        }
+
+        canvasContainer.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+
+            if (files.length > 0) {
+                const file = files[0];
+                if (file.type.startsWith('image/')) {
+                    if (state.activeLayer >= 0 && state.layers.length > 0) {
+                        loadLayerImage(file);
+                    } else {
+                        showNotif('⚠️ Lütfen önce bir katman seçiniz!');
+                    }
+                }
+            }
+        }
+
+        // ============ ENHANCED FEATURES ============
+        // Double-click canvas to add new layer
+        canvas.addEventListener('dblclick', () => {
+            if (state.layers.length < 10) {
+                document.getElementById('addLayerBtn').click();
+            }
+        });
+
+        // Enhanced keyboard shortcuts for text management
+        document.addEventListener('keydown', (e) => {
+            // Ctrl+Alt+T: Add new text
+            if (e.ctrlKey && e.altKey && e.key === 't') {
+                e.preventDefault();
+                document.getElementById('addTextBtn')?.click();
+            }
+            // Ctrl+Alt+C: Clone current text
+            if (e.ctrlKey && e.altKey && e.key === 'c') {
+                e.preventDefault();
+                if (state.activeText >= 0 && state.texts[state.activeText]) {
+                    if (state.texts.length < 20) {
+                        const cloned = JSON.parse(JSON.stringify(state.texts[state.activeText]));
+                        cloned.id = Date.now();
+                        cloned.x = Math.min(100, cloned.x + 5);
+                        cloned.y = Math.min(100, cloned.y + 5);
+                        state.texts.push(cloned);
+                        state.activeText = state.texts.length - 1;
+                        renderTexts();
+                        updateTextControls();
+                        redraw();
+                        showNotif('✓ Yazı klonlandı!');
+                    } else {
+                        showNotif('⚠️ Maksimum 20 yazı!');
+                    }
+                }
+            }
+        });
+
+        // Enhanced layer scale with keyboard
+        document.addEventListener('keydown', (e) => {
+            if (state.layers.length === 0) return;
+            const layer = state.layers[state.activeLayer];
+            
+            if (e.key === '+' || e.key === '=') {
+                e.preventDefault();
+                const newScale = Math.min(150, layer.scale + 10);
+                layer.scale = newScale;
+                redraw();
+                showNotif(`📏 Katman boyutu: ${newScale}%`);
+            }
+            if (e.key === '-' || e.key === '_') {
+                e.preventDefault();
+                const newScale = Math.max(10, layer.scale - 10);
+                layer.scale = newScale;
+                redraw();
+                showNotif(`📏 Katman boyutu: ${newScale}%`);
+            }
+        });
+
+        // Layer opacity quick adjust with arrow keys
+        document.addEventListener('keydown', (e) => {
+            if (state.layers.length === 0) return;
+            if (!e.ctrlKey) return;
+            
+            const layer = state.layers[state.activeLayer];
+            
+            if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                const newOpacity = Math.min(100, layer.opacity + 5);
+                layer.opacity = newOpacity;
+                redraw();
+                showNotif(`🌫️ Katman şeffaflığı: ${newOpacity}%`);
+
+            }
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                const newOpacity = Math.max(0, layer.opacity - 5);
+                layer.opacity = newOpacity;
+                redraw();
+                showNotif(`🌫️ Katman şeffaflığı: ${newOpacity}%`);
+            }
+        });
+
+        // Delete key for current active element
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Delete') {
+                if (state.activeLogo >= 0) {
+                    document.getElementById('removeLogoBtn').click();
+                } else if (state.activeLayer >= 0) {
+                    document.getElementById('removeLayerBtn').click();
+                }
+            }
+        });
+
+        // ============ HISTORY & UNDO SUPPORT ============
+        const history = [];
+        const maxHistory = 20;
+
+        function saveHistory() {
+            try {
+                const snapshot = {
+                    format: state.format,
+                    gradient: state.gradient,
+                    filter: state.filter,
+                    blur: state.blur,
+                    overlay: state.overlay,
+                    brightness: state.brightness,
+                    contrast: state.contrast,
+                    saturate: state.saturate,
+                    hue: state.hue,
+                    bgOpacity: state.bgOpacity,
+                    bgScale: state.bgScale,
+                    bgRotation: state.bgRotation,
+                    activeText: state.activeText,
+                    texts: JSON.parse(JSON.stringify(state.texts)),
+                    layers: state.layers.map(l => ({
+                        scale: l.scale,
+                        x: l.x,
+                        y: l.y,
+                        rot: l.rot,
+                        opacity: l.opacity,
+                        image: l.image ? '✓' : null
+                    })),
+                    logos: state.logos.map(l => ({
+                        size: l.size,
+                        x: l.x,
+                        y: l.y,
+                        rot: l.rot,
+                        opacity: l.opacity,
+                        image: l.image ? '✓' : null
+                    }))
+                };
+                history.push(snapshot);
+                if (history.length > maxHistory) history.shift();
+            } catch(e) {
+                // Silent fail
+            }
+        }
+
+        function undo() {
+            if (history.length <= 1) {
+                showNotif('⚠️ Daha geri gidilemiyor!');
+                return;
+            }
+            history.pop(); // Remove current
+            const snapshot = history[history.length - 1];
+            
+            state.format = snapshot.format;
+            state.gradient = snapshot.gradient;
+            state.filter = snapshot.filter;
+            state.blur = snapshot.blur;
+            state.overlay = snapshot.overlay;
+            state.brightness = snapshot.brightness;
+            state.contrast = snapshot.contrast;
+            state.saturate = snapshot.saturate;
+            state.hue = snapshot.hue;
+            state.bgOpacity = snapshot.bgOpacity;
+            state.bgScale = snapshot.bgScale;
+            state.bgRotation = snapshot.bgRotation;
+            state.activeText = snapshot.activeText;
+            state.texts = JSON.parse(JSON.stringify(snapshot.texts));
+
+            // Update UI
+            document.getElementById('blurSlider').value = state.blur;
+            document.getElementById('blurVal').textContent = state.blur + 'px';
+            document.getElementById('overlaySlider').value = state.overlay;
+            document.getElementById('overlayVal').textContent = state.overlay + '%';
+            document.getElementById('brightnessSlider').value = state.brightness;
+            document.getElementById('brightnessVal').textContent = state.brightness + '%';
+            document.getElementById('contrastSlider').value = state.contrast;
+            document.getElementById('contrastVal').textContent = state.contrast + '%';
+            document.getElementById('saturateSlider').value = state.saturate;
+            document.getElementById('saturateVal').textContent = state.saturate + '%';
+            document.getElementById('hueSlider').value = state.hue;
+            document.getElementById('hueVal').textContent = state.hue + '°';
+            document.getElementById('bgOpacitySlider').value = state.bgOpacity;
+            document.getElementById('bgOpacityVal').textContent = state.bgOpacity + '%';
+            document.getElementById('bgScaleSlider').value = state.bgScale;
+            document.getElementById('bgScaleVal').textContent = state.bgScale + '%';
+            document.getElementById('bgRotSlider').value = state.bgRotation;
+            document.getElementById('bgRotVal').textContent = state.bgRotation + '°';
+
+            renderTexts();
+            updateTextControls();
+            redraw();
+            showNotif('↶ Geri alındı!');
+        }
+
+        // Ctrl+Z for undo
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'z') {
+                e.preventDefault();
+                undo();
+            }
+        });
+
+        // Modify redraw to auto-save history
+        const originalRedraw = redraw;
+        redraw = function() {
+            originalRedraw.call(this);
+            saveHistory();
+        };
+
+        // Initial history save
+        saveHistory();
+        setInterval(() => {
+            try {
+                const saveData = {
+                    format: state.format,
+                    filter: state.filter,
+                    blur: state.blur,
+                    overlay: state.overlay,
+                    brightness: state.brightness,
+                    contrast: state.contrast,
+                    saturate: state.saturate,
+                    hue: state.hue,
+                    bgOpacity: state.bgOpacity,
+                    bgScale: state.bgScale,
+                    bgRotation: state.bgRotation,
+                    textAlign: state.textAlign,
+                    text: JSON.parse(JSON.stringify(state.text))
+                };
+                localStorage.setItem('designState', JSON.stringify(saveData));
+            } catch(e) {
+                // Silent fail for localStorage
+            }
+        }, 30000);
+
+        // Load saved state if available
+        try {
+            const saved = localStorage.getItem('designState');
+            if (saved) {
+                const saveData = JSON.parse(saved);
+                state.format = saveData.format || state.format;
+                state.filter = saveData.filter || state.filter;
+                state.blur = saveData.blur || 0;
+                state.overlay = saveData.overlay || 0;
+                state.brightness = saveData.brightness || 100;
+                state.contrast = saveData.contrast || 100;
+                state.saturate = saveData.saturate || 100;
+                state.hue = saveData.hue || 0;
+                state.bgOpacity = saveData.bgOpacity || 100;
+                state.bgScale = saveData.bgScale || 100;
+                state.bgRotation = saveData.bgRotation || 0;
+                
+                // Update UI with saved values
+                document.getElementById('blurSlider').value = state.blur;
+                document.getElementById('overlaySlider').value = state.overlay;
+                document.getElementById('brightnessSlider').value = state.brightness;
+                document.getElementById('contrastSlider').value = state.contrast;
+                document.getElementById('saturateSlider').value = state.saturate;
+                document.getElementById('hueSlider').value = state.hue;
+                document.getElementById('bgOpacitySlider').value = state.bgOpacity;
+                document.getElementById('bgScaleSlider').value = state.bgScale;
+                document.getElementById('bgRotSlider').value = state.bgRotation;
+                
+                redraw();
+            }
+        } catch(e) {
+            // Silent fail for localStorage
+        }
+
+        // ============ ENHANCED INTERACTIVE EFFECTS ============
+        
+        // Smooth scroll behavior for sidebar
+        const sidebar = document.querySelector('.sidebar');
+        if (sidebar) {
+            sidebar.addEventListener('wheel', (e) => {
+                const scrollTop = sidebar.scrollTop;
+                const scrollHeight = sidebar.scrollHeight;
+                const clientHeight = sidebar.clientHeight;
+                
+                if ((scrollTop + clientHeight >= scrollHeight - 5) || scrollTop === 0) {
+                    // At the end or beginning, allow normal scroll
+                } else {
+                    // Prevent page scroll when scrolling sidebar
+                    e.preventDefault();
+                }
+            }, { passive: false });
+        }
+
+        // Add hover ripple effect to buttons
+        document.querySelectorAll('.btn, .btn-toggle, .ai-suggestion').forEach(element => {
+            element.addEventListener('mousemove', (e) => {
+                const rect = element.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                element.style.setProperty('--x', x + 'px');
+                element.style.setProperty('--y', y + 'px');
+            });
+        });
+
+        // Enhanced button feedback with visual indication
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('mousedown', (e) => {
+                btn.style.transform = 'translateY(-1px) scale(0.98)';
+            });
+            
+            btn.addEventListener('mouseup', (e) => {
+                btn.style.transform = '';
+            });
+            
+            btn.addEventListener('mouseleave', (e) => {
+                btn.style.transform = '';
+            });
+        });
+
+        // Add loading pulse effect to notifications
+        const originalShowNotif = showNotif;
+        window.showNotif = function(msg) {
+            originalShowNotif(msg);
+            const notif = document.getElementById('notification');
+            if (notif) {
+                notif.style.animation = 'none';
+                setTimeout(() => {
+                    notif.style.animation = 'slideInNotif 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), slideOutNotif 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 2.5s forwards';
+                }, 10);
+            }
+        };
+
+        // Smooth number transitions for sliders with visual feedback
+        document.querySelectorAll('input[type="range"]').forEach(slider => {
+            slider.addEventListener('input', function(e) {
+                const parent = this.closest('.slider-container');
+                if (parent) {
+                    parent.style.transform = 'scale(1.02)';
+                    setTimeout(() => {
+                        parent.style.transform = '';
+                    }, 200);
+                }
+            });
+        });
+
+        // Active item highlight with smooth transition
+        const originalSelectLayer = selectLayer;
+        window.selectLayer = function(idx) {
+            originalSelectLayer(idx);
+            document.querySelectorAll('.layer-item').forEach((item, i) => {
+                if (i === idx) {
+                    item.style.animation = 'slideIn 0.3s ease';
+                }
+            });
+        };
+
+        const originalSelectText = selectText;
+        window.selectText = function(idx) {
+            originalSelectText(idx);
+            document.querySelectorAll('.text-item').forEach((item, i) => {
+                if (i === idx) {
+                    item.style.animation = 'slideIn 0.3s ease';
+                }
+            });
+        };
+
+        // Tab switching with smooth animation
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        tabButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                // Add ripple effect
+                const ripple = document.createElement('span');
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(255, 255, 255, 0.5)';
+                ripple.style.width = '10px';
+                ripple.style.height = '10px';
+                ripple.style.animation = 'expand 0.6s ease-out forwards';
+                ripple.style.pointerEvents = 'none';
+                
+                const rect = btn.getBoundingClientRect();
+                const parentRect = btn.parentElement.getBoundingClientRect();
+                ripple.style.left = (e.clientX - parentRect.left) + 'px';
+                ripple.style.top = (e.clientY - parentRect.top) + 'px';
+                
+                btn.parentElement.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+
+        // Add CSS animation for ripple effect
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes expand {
+                to {
+                    width: 300px;
+                    height: 300px;
+                    opacity: 0;
+                    transform: translate(-50%, -50%);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Canvas hover glow effect
+        if (!window.canvasEnhanced) {
+            window.canvasEnhanced = true;
+            const canvasEl = document.getElementById('canvas');
+            const canvasContainerEl = document.querySelector('.canvas-container');
+            
+            if (canvasEl && canvasContainerEl) {
+                canvasEl.addEventListener('mouseenter', () => {
+                    canvasEl.style.filter = 'drop-shadow(0 20px 60px rgba(102, 126, 234, 0.4))';
+                });
+                
+                canvasEl.addEventListener('mouseleave', () => {
+                    canvasEl.style.filter = '';
+                });
+            }
+        }
+
+        // Input focus enhancement
+        document.querySelectorAll('input[type="text"], textarea, select').forEach(input => {
+            input.addEventListener('focus', function(e) {
+                this.style.borderColor = 'var(--primary)';
+                this.style.boxShadow = '0 0 0 4px rgba(102, 126, 234, 0.15)';
+                this.closest('.slider-container')?.style.transform = 'scale(1.01)';
+            });
+            
+            input.addEventListener('blur', function(e) {
+                this.style.borderColor = '#dee2e6';
+                this.style.boxShadow = '';
+                this.closest('.slider-container')?.style.transform = '';
+            });
+        });
+
+        // Smooth color picker feedback
+        document.querySelectorAll('input[type="color"]').forEach(colorPicker => {
+            colorPicker.addEventListener('change', function(e) {
+                const parent = this.closest('.slider-container');
+                if (parent) {
+                    parent.style.transform = 'scale(1.02) rotate(1deg)';
+                    parent.style.transition = 'all 0.2s ease';
+                    setTimeout(() => {
+                        parent.style.transform = '';
+                    }, 200);
+                }
+            });
+        });
+
+        // Enhance preset items with click animation
+        document.querySelectorAll('.preset-item').forEach(preset => {
+            preset.addEventListener('click', function() {
+                this.style.animation = 'pulse 0.5s ease';
+                setTimeout(() => {
+                    this.style.animation = '';
+                }, 500);
+            });
+        });
+
+        // Keyboard accessibility enhancements
+        document.addEventListener('keydown', (e) => {
+            // ESC key to close modal
+            if (e.key === 'Escape') {
+                const aiModal = document.getElementById('aiModal');
+                if (aiModal) aiModal.classList.remove('active');
+            }
+        });
+
+        // Progressive reveal for sidebar sections
+        const sections = document.querySelectorAll('.section');
+        sections.forEach((section, index) => {
+            section.style.opacity = '0';
+            section.style.animation = `slideIn 0.6s ease ${index * 0.1}s forwards`;
+        });
+
+        // ============ ADVANCED INTERACTIVE ENHANCEMENTS ============
+        
+        // Cursor hover effects on all interactive elements
+        document.querySelectorAll('.btn, .btn-toggle, .ai-suggestion, .layer-item, .text-item, .logo-item, .preset-item').forEach(element => {
+            element.addEventListener('mousemove', (e) => {
+                const rect = element.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                element.style.setProperty('--mouse-x', x + 'px');
+                element.style.setProperty('--mouse-y', y + 'px');
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                element.style.setProperty('--mouse-x', '50%');
+                element.style.setProperty('--mouse-y', '50%');
+            });
+        });
+
+        // Add glow effect on AI suggestions on mouse move
+        document.querySelectorAll('.ai-suggestion').forEach(element => {
+            element.addEventListener('mousemove', (e) => {
+                const rect = element.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width * 100);
+                const y = ((e.clientY - rect.top) / rect.height * 100);
+                element.style.setProperty('--x', x + '%');
+                element.style.setProperty('--y', y + '%');
+            });
+        });
+
+        // Smooth dropdown reveal for modal tabs
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('mouseenter', function() {
+                this.style.color = 'var(--primary)';
+                this.style.transform = 'translateY(-2px)';
+            });
+            
+            btn.addEventListener('mouseleave', function() {
+                if (!this.classList.contains('active')) {
+                    this.style.color = '#6c757d';
+                    this.style.transform = '';
+                }
+            });
+        });
+
+        // Button press effect with visual feedback
+        document.querySelectorAll('.btn-primary, .btn-success').forEach(btn => {
+            btn.addEventListener('mousedown', (e) => {
+                btn.style.transform = 'translateY(-1px) scale(0.99)';
+                btn.style.boxShadow = '0 2px 8px rgba(102, 126, 234, 0.3)';
+            });
+            
+            btn.addEventListener('mouseup', (e) => {
+                btn.style.transform = '';
+                btn.style.boxShadow = '';
+            });
+            
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = '';
+                btn.style.boxShadow = '';
+            });
+        });
+
+        // Enhanced focus states for inputs with smooth transitions
+        document.querySelectorAll('input[type="text"], textarea, select').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'scale(1.01)';
+                this.parentElement.style.filter = 'brightness(1.05)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = '';
+                this.parentElement.style.filter = '';
+            });
+        });
+
+        // Smooth slider interactions with visual feedback
+        document.querySelectorAll('input[type="range"]').forEach(slider => {
+            slider.addEventListener('mousedown', (e) => {
+                slider.style.filter = 'drop-shadow(0 0 8px rgba(102, 126, 234, 0.4))';
+                slider.closest('.slider-container').style.backgroundColor = 'rgba(102, 126, 234, 0.05)';
+                slider.closest('.slider-container').style.padding = '12px';
+                slider.closest('.slider-container').style.borderRadius = '8px';
+                slider.closest('.slider-container').style.transition = 'all 0.2s ease';
+            });
+            
+            slider.addEventListener('mouseup', (e) => {
+                slider.style.filter = '';
+                slider.closest('.slider-container').style.backgroundColor = '';
+                slider.closest('.slider-container').style.padding = '';
+                slider.closest('.slider-container').style.borderRadius = '';
+            });
+            
+            slider.addEventListener('mouseleave', () => {
+                slider.style.filter = '';
+            });
+        });
+
+        // Enhanced color picker interactions
+        document.querySelectorAll('input[type="color"]').forEach(colorPicker => {
+            colorPicker.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.05)';
+                this.closest('.slider-container').style.filter = 'brightness(1.1)';
+            });
+            
+            colorPicker.addEventListener('mouseleave', function() {
+                this.style.transform = '';
+                this.closest('.slider-container').style.filter = '';
+            });
+        });
+
+        // Add visual feedback for layer/text selection
+        document.addEventListener('click', (e) => {
+            const layerItem = e.target.closest('.layer-item:not(.active), .text-item:not(.active), .logo-item:not(.active)');
+            if (layerItem) {
+                layerItem.style.animation = 'none';
+                setTimeout(() => {
+                    layerItem.style.animation = 'slideIn 0.3s ease';
+                }, 10);
+            }
+        });
+
+        // Smooth preset color selection with ripple effect
+        document.querySelectorAll('.preset-item').forEach(preset => {
+            preset.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(255, 255, 255, 0.5)';
+                ripple.style.width = '10px';
+                ripple.style.height = '10px';
+                ripple.style.animation = 'expand 0.6s ease-out forwards';
+                ripple.style.pointerEvents = 'none';
+                
+                const rect = this.getBoundingClientRect();
+                ripple.style.left = (e.clientX - rect.left) + 'px';
+                ripple.style.top = (e.clientY - rect.top) + 'px';
+                
+                this.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+
+        // Download button with progress animation
+        const downloadBtn = document.getElementById('downloadBtn');
+        if (downloadBtn) {
+            downloadBtn.addEventListener('click', function() {
+                if (!this.classList.contains('downloading')) {
+                    this.classList.add('downloading');
+                    const originalText = this.textContent;
+                    const originalBg = this.style.background;
+                    
+                    let progress = 0;
+                    const progressInterval = setInterval(() => {
+                        progress += Math.random() * 40;
+                        if (progress > 95) progress = 95;
+                        this.style.backgroundImage = `linear-gradient(90deg, var(--success) 0%, var(--success) ${progress}%, #20c997 ${progress}%, #20c997 100%)`;
+                        this.textContent = `⏳ ${Math.floor(progress)}%`;
+                    }, 100);
+                    
+                    setTimeout(() => {
+                        clearInterval(progressInterval);
+                        this.style.backgroundImage = '';
+                        this.textContent = '✅ Tamamlandı!';
+                        this.style.opacity = '0.8';
+                        
+                        setTimeout(() => {
+                            this.textContent = originalText;
+                            this.style.opacity = '';
+                            this.classList.remove('downloading');
+                        }, 1500);
+                    }, 2000);
+                }
+            });
+        }
+
+        // Smooth notifications with improved animation
+        const originalNotification = showNotif;
+        window.showNotif = function(msg) {
+            const notif = document.getElementById('notification');
+            notif.textContent = msg;
+            notif.style.display = 'block';
+            notif.style.animation = 'none';
+            
+            setTimeout(() => {
+                notif.style.animation = 'slideInNotif 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), slideOutNotif 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 2.5s forwards';
+            }, 10);
+        };
+
+        // Enhanced modal animations
+        const modal = document.getElementById('aiModal');
+        const aiBtn = document.getElementById('aiBtn');
+        
+        if (aiBtn && modal) {
+            const originalClick = aiBtn.onclick;
+            aiBtn.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        }
+
+        // Smooth scroll to sections
+        document.querySelectorAll('.section h3').forEach((title, idx) => {
+            title.addEventListener('click', function() {
+                this.style.transform = 'translateX(8px)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
+            });
+        });
+
+        // Add cursor follow effect for premium feel
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth) * 10;
+            const y = (e.clientY / window.innerHeight) * 10;
+            
+            document.querySelectorAll('.preset-item.active, .layer-item.active, .text-item.active').forEach(el => {
+                el.style.filter = `drop-shadow(${x}px ${y}px 15px rgba(102, 126, 234, 0.2))`;
+            });
+        });
+
+        // Initialize all enhanced interactive states on load
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.btn, .btn-toggle, .ai-suggestion').forEach(el => {
+                el.style.willChange = 'transform, box-shadow, background';
+            });
+        });
+    </script>

@@ -1,0 +1,163 @@
+    <script>
+        // ============ STATE & CONSTANTS ============
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        let state = {
+            format: '1080x1080',
+            gradient: 'grad1',
+            filter: 'none',
+            blur: 0,
+            overlay: 0,
+            brightness: 100,
+            contrast: 100,
+            saturate: 100,
+            hue: 0,
+            bgImage: null,
+            bgOpacity: 100,
+            bgScale: 100,
+            bgRotation: 0,
+            logos: [],
+            activeLogo: -1,
+            textAlign: 'center',
+            text: { content: '', size: 48, family: 'Arial', color: '#ffffff', x: 50, y: 50, rot: 0, opacity: 100, shadow: 7 },
+            layers: [],
+            activeLayer: 0
+        };
+
+        const formatMap = {
+            '1080x1080': { w: 1080, h: 1080 },
+            '1080x1920': { w: 1080, h: 1920 },
+            '1200x630': { w: 1200, h: 630 },
+            '1200x675': { w: 1200, h: 675 },
+            '1200x627': { w: 1200, h: 627 },
+            '1280x720': { w: 1280, h: 720 }
+        };
+
+        const gradientMap = {
+            grad1: ['#667eea', '#764ba2'], grad2: ['#f093fb', '#f5576c'], grad3: ['#4facfe', '#00f2fe'],
+            grad4: ['#43e97b', '#38f9d7'], grad5: ['#fa709a', '#fee140'], grad6: ['#30cfd0', '#330867'],
+            grad7: ['#a8edea', '#fed6e3'], grad8: ['#ff9a9e', '#fecfef'], grad9: ['#ffecd2', '#fcb69f'],
+            grad10: ['#ff6e7f', '#bfe9ff'], grad11: ['#e0c3fc', '#8ec5fc'], grad12: ['#f77062', '#fe5196'],
+            grad13: ['#fd6e6a', '#bfeadb'], grad14: ['#ffecd2', '#fcb69f'], grad15: ['#ff9844', '#fe5196'],
+            grad16: ['#667eea', '#764ba2'], grad17: ['#f5af19', '#f12711'], grad18: ['#56ab2f', '#a8e063'],
+            grad19: ['#1e3c72', '#2a5298'], grad20: ['#eb3349', '#f45c43']
+        };
+
+        const colorPalettes = [
+            { name: 'Modern Mavi', colors: ['#667eea', '#764ba2', '#f093fb', '#f5576c'] },
+            { name: 'Yeşil Doğa', colors: ['#43e97b', '#38f9d7', '#fa709a', '#fee140'] },
+            { name: 'Sıcak Tones', colors: ['#ff6e7f', '#fcb69f', '#ffecd2', '#f77062'] },
+            { name: 'Pastel', colors: ['#a8edea', '#fed6e3', '#ff9a9e', '#fecfef'] },
+            { name: 'Elektrik', colors: ['#ff00ff', '#00ffff', '#ffff00', '#ff0080'] },
+            { name: 'Klasik', colors: ['#000000', '#ffffff', '#ff0000', '#0000ff'] },
+            { name: 'Altın', colors: ['#ffd700', '#ffed4e', '#ffa500', '#ff8c00'] },
+            { name: 'Deniz', colors: ['#006994', '#0e9aa7', '#3da5c4', '#c1dbee'] }
+        ];
+
+        const textSuggestions = ['İnsan Kaynakları', 'Pazarlama', 'Ürün Lansmanı', 'Yeni Hizmet', 'Özel Teklif', 'Haberler', 'Duyuru', 'İşbirliği', 'Başarı', 'Yeni Koleksiyon', 'İndirim', 'Kampanya', 'Etkinlik', 'Konferans', 'Web İçeriği', 'Sosyal İçerik', 'E-ticaret', 'Marka Tanıtımı', 'Motivasyon', 'İlham'];
+
+        const designTips = [
+            '✅ 3 renkten fazla kullanmayın',
+            '✅ Kontrast önemlidir - Koyu arka plan + açık metin',
+            '✅ Metin boyutu en az 36px olmalı',
+            '✅ Görseller merkezde olmadan 80% alan kullanmalı',
+            '✅ Logo sağ alt köşede 100-150px boyutunda olmalı',
+            '✅ Filtreleri hafif tutun (%40 ile %60 arasında)',
+            '✅ Sans-serif fontlar web için daha iyi',
+            '✅ Boşluk (whitespace) profesyonellik gösterir'
+        ];
+
+        // ============ SETUP FUNCTIONS ============
+        function initGradients() {
+            const grid = document.getElementById('gradientGrid');
+            Object.entries(gradientMap).forEach(([key, [c1, c2]]) => {
+                const el = document.createElement('div');
+                el.className = 'preset-item' + (key === 'grad1' ? ' active' : '');
+                el.style.background = `linear-gradient(135deg, ${c1} 0%, ${c2} 100%)`;
+                el.onclick = () => selectGradient(key, el);
+                grid.appendChild(el);
+            });
+        }
+
+        function setCanvasSize() {
+            const size = formatMap[state.format];
+            canvas.width = size.w;
+            canvas.height = size.h;
+            redraw();
+        }
+
+        function createLayer() {
+            return {
+                id: Date.now(),
+                image: null,
+                scale: 80,
+                x: 50,
+                y: 50,
+                rot: 0,
+                opacity: 100
+            };
+        }
+
+        function createLogo() {
+            return {
+                id: Date.now(),
+                image: null,
+                size: 100,
+                x: 90,
+                y: 90,
+                rot: 0,
+                opacity: 100
+            };
+        }
+
+        function renderLayers() {
+            const list = document.getElementById('layerList');
+            list.innerHTML = '';
+            state.layers.forEach((layer, i) => {
+                const el = document.createElement('div');
+                el.className = 'layer-item' + (i === state.activeLayer ? ' active' : '');
+                el.innerHTML = `<strong>Katman ${i + 1}</strong><small>${layer.image ? '✓ Görsel Yüklendi' : '○ Boş'}</small>`;
+                el.onclick = () => selectLayer(i);
+                list.appendChild(el);
+            });
+        }
+
+        function renderLogos() {
+            const list = document.getElementById('logoList');
+            list.innerHTML = '';
+            state.logos.forEach((logo, i) => {
+                const el = document.createElement('div');
+                el.className = 'logo-item' + (i === state.activeLogo ? ' active' : '');
+                el.innerHTML = `<strong>Logo ${i + 1}</strong><small>${logo.image ? '✓ Yüklendi' : '○ Boş'}</small>`;
+                el.onclick = () => selectLogo(i);
+                list.appendChild(el);
+            });
+        }
+
+        function selectLayer(idx) {
+            state.activeLayer = idx;
+            renderLayers();
+        }
+
+        function selectLogo(idx) {
+            state.activeLogo = idx;
+            renderLogos();
+            document.getElementById('logoControls').style.display = state.activeLogo >= 0 ? 'block' : 'none';
+        }
+
+        function showNotif(msg) {
+            const el = document.getElementById('notification');
+            el.textContent = msg;
+            el.style.display = 'block';
+            setTimeout(() => el.style.display = 'none', 3000);
+        }
+
+        // Initialize function - will be called from part-7.html
+        function initApp() {
+            initGradients();
+            state.layers.push(createLayer());
+            setCanvasSize();
+            renderLayers();
+        }
+    </script>

@@ -1,0 +1,128 @@
+    <script>
+        // ============ EVENT LISTENERS ============
+        document.querySelectorAll('[data-fmt]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('[data-fmt]').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                state.format = this.dataset.fmt;
+                setCanvasSize();
+            });
+        });
+
+        document.querySelectorAll('[data-flt]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('[data-flt]').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                state.filter = this.dataset.flt;
+                redraw();
+            });
+        });
+
+        document.querySelectorAll('[data-align]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('[data-align]').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                state.textAlign = this.dataset.align;
+                redraw();
+            });
+        });
+
+        document.getElementById('blurSlider').addEventListener('input', (e) => {
+            state.blur = parseInt(e.target.value);
+            document.getElementById('blurVal').textContent = e.target.value + 'px';
+            redraw();
+        });
+
+        document.getElementById('overlaySlider').addEventListener('input', (e) => {
+            state.overlay = parseInt(e.target.value);
+            document.getElementById('overlayVal').textContent = e.target.value + '%';
+            redraw();
+        });
+
+        document.getElementById('brightnessSlider').addEventListener('input', (e) => {
+            state.brightness = parseInt(e.target.value);
+            document.getElementById('brightnessVal').textContent = e.target.value + '%';
+            redraw();
+        });
+
+        document.getElementById('contrastSlider').addEventListener('input', (e) => {
+            state.contrast = parseInt(e.target.value);
+            document.getElementById('contrastVal').textContent = e.target.value + '%';
+            redraw();
+        });
+
+        document.getElementById('saturateSlider').addEventListener('input', (e) => {
+            state.saturate = parseInt(e.target.value);
+            document.getElementById('saturateVal').textContent = e.target.value + '%';
+            redraw();
+        });
+
+        document.getElementById('hueSlider').addEventListener('input', (e) => {
+            state.hue = parseInt(e.target.value);
+            document.getElementById('hueVal').textContent = e.target.value + '°';
+            redraw();
+        });
+
+        document.getElementById('fontSizeSlider').addEventListener('input', (e) => {
+            state.text.size = parseInt(e.target.value);
+            document.getElementById('fontSizeVal').textContent = e.target.value + 'px';
+            redraw();
+        });
+
+        document.getElementById('fontSelect').addEventListener('change', (e) => {
+            state.text.family = e.target.value;
+            redraw();
+        });
+
+        document.getElementById('textColorPicker').addEventListener('input', (e) => {
+            state.text.color = e.target.value;
+            redraw();
+        });
+
+        document.getElementById('textOpacitySlider').addEventListener('input', (e) => {
+            state.text.opacity = parseInt(e.target.value);
+            document.getElementById('textOpacityVal').textContent = e.target.value + '%';
+            redraw();
+        });
+
+        document.getElementById('shadowSlider').addEventListener('input', (e) => {
+            state.text.shadow = parseInt(e.target.value);
+            document.getElementById('shadowVal').textContent = e.target.value;
+            redraw();
+        });
+
+        document.getElementById('textArea').addEventListener('input', (e) => {
+            state.text.content = e.target.value;
+            redraw();
+        });
+
+        document.getElementById('textXSlider').addEventListener('input', (e) => {
+            state.text.x = parseInt(e.target.value);
+            document.getElementById('textXVal').textContent = e.target.value + '%';
+            redraw();
+        });
+
+        document.getElementById('textYSlider').addEventListener('input', (e) => {
+            state.text.y = parseInt(e.target.value);
+            document.getElementById('textYVal').textContent = e.target.value + '%';
+            redraw();
+        });
+
+        document.getElementById('textRotSlider').addEventListener('input', (e) => {
+            state.text.rot = parseInt(e.target.value);
+            document.getElementById('textRotVal').textContent = e.target.value + '°';
+            redraw();
+        });
+
+        document.getElementById('downloadBtn').addEventListener('click', () => {
+            const link = document.createElement('a');
+            link.download = `design-${Date.now()}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+            showNotif('✓ Görsel indirildi!');
+        });
+
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            if (confirm('Tüm değişiklikleri sıfırlamak istiyor musunuz?')) location.reload();
+        });
+    </script>

@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasarım Aracı v3.0 - Yapay Zeka Destekli Profesyonel Tasarım</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: white;
+            border-radius: 16px;
+            padding: 60px 40px;
+            text-align: center;
+            margin-bottom: 40px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            color: #667eea;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero .subtitle {
+            font-size: 1.4em;
+            color: #666;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Features Grid */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+        }
+
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            color: #667eea;
+            font-size: 1.4em;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .feature-list {
+            list-style: none;
+            font-size: 0.95em;
+            color: #555;
+        }
+
+        .feature-list li {
+            padding: 6px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        /* Stats Section */
+        .stats {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.8em;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-weight: 600;
+            font-size: 1.05em;
+        }
+
+        /* Comparison Table */
+        .comparison {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            margin-bottom: 40px;
+        }
+
+        .comparison h2 {
+            padding: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-size: 1.8em;
+        }
+
+        .comparison table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .comparison th {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .comparison td {
+            padding: 18px 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .comparison tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .badge-new {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .badge-advanced {
+            background: #667eea;
+            color: white;
+        }
+
+        .badge-pro {
+            background: #764ba2;
+            color: white;
+        }
+
+        /* Links Section */
+        .resources {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        .resources h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 25px;
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .resource-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .resource-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .resource-item h3 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .resource-item p {
+            opacity: 0.9;
+            font-size: 0.95em;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: white;
+            margin-top: 40px;
+        }
+
+        .footer p {
+            margin: 5px 0;
+            opacity: 0.9;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5em;
+            }
+
+            .hero .subtitle {
+                font-size: 1.1em;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .cta-buttons .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>🎨 Tasarım Aracı v3.0</h1>
+            <p class="subtitle">Yapay Zeka Destekli Profesyonel Tasarım Aracı</p>
+            <p style="color: #999; font-size: 1.05em; margin-bottom: 30px;">50+ Fonksiyon | 30+ AI Önerisi | 20+ Metin Efekti</p>
+            <div class="cta-buttons">
+                <a href="rfinal.html" class="btn btn-primary">🚀 Uygulamayı Aç</a>
+                <a href="ADVANCED_FEATURES.html" class="btn btn-secondary">📖 Gelişmiş Özellikler</a>
+                <a href="TUTORIAL.html" class="btn btn-secondary">📚 Kullanım Kılavuzu</a>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Yeni Fonksiyon</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">30+</div>
+                <div class="stat-label">AI Önerisi</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">20+</div>
+                <div class="stat-label">Metin Efekti</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">8+</div>
+                <div class="stat-label">Batch İşlemi</div>
+            </div>
+        </div>
+
+        <!-- Main Features -->
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">✨</div>
+                <h3>Metin Efektleri</h3>
+                <p>20+ profesyonel metin efekti</p>
+                <ul class="feature-list">
+                    <li>Neon, 3D, Metalik</li>
+                    <li>Glow, Rainbow, Gradient</li>
+                    <li>Akıllı Boyutlandırma</li>
+                    <li>Advanced Typography</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3>AI Asistan</h3>
+                <p>30+ yapay zeka önerisi</p>
+                <ul class="feature-list">
+                    <li>Akıllı Renk Uyumu</li>
+                    <li>Layout Optimizasyonu</li>
+                    <li>Kalite Puanlama</li>
+                    <li>Trend Tasarımları</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📐</div>
+                <h3>Batch İşlemleri</h3>
+                <p>Toplu öğe yönetimi</p>
+                <ul class="feature-list">
+                    <li>Toplu Efekt Uygulama</li>
+                    <li>Akıllı Konumlandırma</li>
+                    <li>Kaskad Dönüştürme</li>
+                    <li>Merkeze Alma</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3>Arka Plan & Filtler</h3>
+                <p>Sınırsız tasarım seçenekleri</p>
+                <ul class="feature-list">
+                    <li>20+ Gradient Preset</li>
+                    <li>12 Filtre & Efekt</li>
+                    <li>Resim Yükleme</li>
+                    <li>Gelişmiş Kontroller</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>Sosyal Medya</h3>
+                <p>6 platform için optimize</p>
+                <ul class="feature-list">
+                    <li>Instagram, TikTok</li>
+                    <li>Facebook, Twitter</li>
+                    <li>LinkedIn, YouTube</li>
+                    <li>Mobil Uyumlu</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">💾</div>
+                <h3>Export & Import</h3>
+                <p>Tasarımlarını kaydet</p>
+                <ul class="feature-list">
+                    <li>PNG/JPEG İndir</li>
+                    <li>JSON Ayarları</li>
+                    <li>Kolektif Yönetim</li>
+                    <li>Tekrar Yükle</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Comparison -->
+        <div class="comparison">
+            <h2>📊 Versiyon Karşılaştırması</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Özellik</th>
+                        <th>v1.0 Temel</th>
+                        <th>v2.0 Standart</th>
+                        <th>v3.0 Pro <span class="badge badge-pro">MEVCUT</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Metin Özellikleri</strong></td>
+                        <td>5</td>
+                        <td>12</td>
+                        <td><strong style="color: #667eea;">20+</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>AI Önerileri</strong></td>
+                        <td>-</td>
+                        <td>8</td>
+                        <td><strong style="color: #667eea;">30+</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Efekt Türü</strong></td>
+                        <td>3</td>
+                        <td>12</td>
+                        <td><strong style="color: #667eea;">20+</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Batch İşlemler</strong></td>
+                        <td>-</td>
+                        <td>4</td>
+                        <td><strong style="color: #667eea;">8+</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Erişilebilirlik</strong></td>
+                        <td>-</td>
+                        <td>Temel</td>
+                        <td><strong style="color: #667eea;">WCAG</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Sosyal Medya Opt.</strong></td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td><strong style="color: #667eea;">✓ Var</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tasarım Puanlama</strong></td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td><strong style="color: #667eea;">✓ Var</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Resources -->
+        <div class="resources">
+            <h2>📚 Kaynaklar & Dokümantasyon</h2>
+            <div class="resource-grid">
+                <a href="rfinal.html" class="resource-item">
+                    <h3>🎨 Uygulamayı Aç</h3>
+                    <p>Ana tasarım aracını başlat</p>
+                </a>
+                <a href="TUTORIAL.html" class="resource-item">
+                    <h3>📖 Kullanım Kılavuzu</h3>
+                    <p>Adım adım öğrenme</p>
+                </a>
+                <a href="ADVANCED_FEATURES.html" class="resource-item">
+                    <h3>🚀 Gelişmiş Özellikler</h3>
+                    <p>Tüm 50+ fonksiyon listesi</p>
+                </a>
+                <a href="README.md" class="resource-item">
+                    <h3>📄 Tam Dokümantasyon</h3>
+                    <p>Teknik detaylar ve referans</p>
+                </a>
+            </div>
+        </div>
+
+        <!-- Quick Start -->
+        <div style="background: white; border-radius: 12px; padding: 40px; margin-bottom: 40px; box-shadow: 0 8px 25px rgba(0,0,0,0.08);">
+            <h2 style="color: #667eea; font-size: 1.8em; margin-bottom: 25px;">🚀 Hızlı Başlangıç (2 Dakika)</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                <div style="border-left: 4px solid #667eea; padding: 15px 20px;">
+                    <h3 style="color: #667eea; margin-bottom: 10px;">1️⃣ Arka Plan Seç</h3>
+                    <p style="color: #666;">20+ hazır gradient veya kendi resimini yükle</p>
+                </div>
+                <div style="border-left: 4px solid #667eea; padding: 15px 20px;">
+                    <h3 style="color: #667eea; margin-bottom: 10px;">2️⃣ Metin Ekle</h3>
+                    <p style="color: #666;">+ Yazı Ekle butonuyla yeni metin oluştur</p>
+                </div>
+                <div style="border-left: 4px solid #667eea; padding: 15px 20px;">
+                    <h3 style="color: #667eea; margin-bottom: 10px;">3️⃣ Efekt Uygula</h3>
+                    <p style="color: #666;">AI Asistan'dan profesyonel efektleri seç</p>
+                </div>
+                <div style="border-left: 4px solid #667eea; padding: 15px 20px;">
+                    <h3 style="color: #667eea; margin-bottom: 10px;">4️⃣ İndir</h3>
+                    <p style="color: #666;">PNG İndir butonuyla tasarımını kaydet</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>Tasarım Aracı v3.0</strong></p>
+            <p>Yapay Zeka Destekli | 50+ Fonksiyon | Tamamen Çevrimdışı</p>
+            <p style="margin-top: 20px; font-size: 0.95em;">
+                <a href="rfinal.html" style="color: white; text-decoration: none; font-weight: 600;">Uygulamayı Aç →</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

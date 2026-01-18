@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gelişmiş Özellikler - Tasarım Aracı v3.0</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+        }
+
+        .feature-card h3 {
+            color: #667eea;
+            margin-bottom: 12px;
+            font-size: 1.3em;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin: 15px 0;
+        }
+
+        .feature-list li {
+            color: #555;
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .category-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 40px 0 25px 0;
+            text-align: center;
+        }
+
+        .category-header h2 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .category-header p {
+            opacity: 0.9;
+            font-size: 1.05em;
+        }
+
+        .back-link {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            margin-bottom: 30px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .back-link:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .comparison-table {
+            width: 100%;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            margin: 30px 0;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .comparison-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .badge-new {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .badge-advanced {
+            background: #667eea;
+            color: white;
+        }
+
+        .badge-pro {
+            background: #764ba2;
+            color: white;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-weight: 600;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: all 0.3s;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            padding: 30px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="rfinal.html" class="back-link">← Uygulamaya Geri Dön</a>
+
+        <div class="header">
+            <h1>🚀 Tasarım Aracı v3.0 - Gelişmiş Özellikler</h1>
+            <p>50+ yeni fonksiyon ve profesyonel tasarım araçları</p>
+        </div>
+
+        <!-- Statistics -->
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Yeni Fonksiyon</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">30+</div>
+                <div class="stat-label">AI Önerileri</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">20+</div>
+                <div class="stat-label">Metin Efekti</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">∞</div>
+                <div class="stat-label">Kombinasyon</div>
+            </div>
+        </div>
+
+        <!-- Advanced Text Features -->
+        <div class="category-header">
+            <h2>✨ Gelişmiş Metin Özellikleri</h2>
+            <p>Profesyonel tipografi kontrolleri ve efektler</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3>🎯 Akıllı Metin Boyutu <span class="badge badge-new">YENİ</span></h3>
+                <p>Metin uzunluğuna göre otomatik boyutlandırma</p>
+                <ul class="feature-list">
+                    <li>Kısa metinler: 96px</li>
+                    <li>Orta metinler: 72px</li>
+                    <li>Uzun metinler: 44px</li>
+                    <li>Çok uzun metinler: 32px</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>✨ Parlak Efekt <span class="badge badge-advanced">ADVANCED</span></h3>
+                <p>Metne göz kamaştırıcı parlak efekt ekle</p>
+                <ul class="feature-list">
+                    <li>Dinamik gölge (15px)</li>
+                    <li>Otomatik renk seçimi</li>
+                    <li>Outline efekti</li>
+                    <li>Profesyonel görünüm</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>🎬 3D Perspektif <span class="badge badge-advanced">ADVANCED</span></h3>
+                <p>Metne 3D derinlik ve perspective ekle</p>
+                <ul class="feature-list">
+                    <li>Otomatik döndürme (15°)</li>
+                    <li>Konumlandırma ayarı</li>
+                    <li>Letter spacing arttırma</li>
+                    <li>Derinlik simülasyonu</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>🌈 Neon Stil <span class="badge badge-new">YENİ</span></h3>
+                <p>Retro neon tarzı metin efekti</p>
+                <ul class="feature-list">
+                    <li>Rastgele neon renkleri</li>
+                    <li>Güçlü gölge</li>
+                    <li>Black outline</li>
+                    <li>Müzik videosu stili</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>🌺 Rainbow Efekti <span class="badge badge-new">YENİ</span></h3>
+                <p>Canlı gökkuşağı renkleri ve letter-spacing</p>
+                <ul class="feature-list">
+                    <li>7 renginde seçim</li>
+                    <li>Geniş letter spacing</li>
+                    <li>Dinamik gölge</li>
+                    <li>Her tıklaşta yeni renk</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>🤖 Metalik Efekt <span class="badge badge-pro">PRO</span></h3>
+                <p>Profesyonel metalik ve chrome efekti</p>
+                <ul class="feature-list">
+                    <li>Silver renk (#c0c0c0)</li>
+                    <li>Gray outline</li>
+                    <li>Arka plan yükseltmesi</li>
+                    <li>Premium görünüm</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>🎨 Gradient Overlay <span class="badge badge-advanced">ADVANCED</span></h3>
+                <p>Tüm yazılara gradient arka plan overlay</p>
+                <ul class="feature-list">
+                    <li>Karanlık arka plan</li>
+                    <li>Sarı metin (#ffff00)</li>
+                    <li>Güçlü gölde (12px)</li>
+                    <li>Toplu uygulama</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>↩️ Stil Sıfırlama <span class="badge badge-new">YENİ</span></h3>
+                <p>Metin stilini varsayılana döndür</p>
+                <ul class="feature-list">
+                    <li>Tüm özellikleri sıfırla</li>
+                    <li>Varsayılan fontlar</li>
+                    <li>Standart boyutlar</li>
+                    <li>Clean slate</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Advanced AI Features -->
+        <div class="category-header">
+            <h2>🤖 Gelişmiş Yapay Zeka Özellikleri</h2>
+            <p>Akıllı tasarım analizi ve optimizasyonu</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3>🎯 Renk Uyumu <span class="badge badge-pro">PRO</span></h3>
+                <p>Renk teorisine dayalı uyumlu renk seçimi</p>
+                <ul class="feature-list">
+                    <li>Tamamlayıcı renkler</li>
+                    <li>Otomatik seçim</li>
+                    <li>Profesyonel paletler</li>
+                    <li>Dinamik kombinasyonlar</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>🎨 Akıllı Kompozisyon <span class="badge badge-pro">PRO</span></h3>
+                <p>Görsel dengesi için otomatik yeniden konumlandırma</p>
+                <ul class="feature-list">
+                    <li>Kütle merkezi analizi</li>
+                    <li>Dairesel dağıtım</li>
+                    <li>Dinamik yerleştirme</li>
+                    <li>Görsel denge</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>✨ AI Layout Optimizasyonu <span class="badge badge-pro">PRO</span></h3>
+                <p>Altın oran kullanarak profesyonel düzen</p>
+                <ul class="feature-list">
+                    <li>Altın oran (1.618)</li>
+                    <li>Katman dağıtımı</li>
+                    <li>Kademeli boyutlandırma</li>
+                    <li>Profesyonel yükseklik</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>📊 Kalite Puanlama <span class="badge badge-new">YENİ</span></h3>
+                <p>Tasarım kalitesini puanlandır ve sırala</p>
+                <ul class="feature-list">
+                    <li>0-100 puan sistemi</li>
+                    <li>5 yıldız rating</li>
+                    <li>Detaylı analiz</li>
+                    <li>İyileştirme önerileri</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>✅ Erişilebilirlik Kontrastı <span class="badge badge-new">YENİ</span></h3>
+                <p>WCAG standartlarına uyum kontrol</p>
+                <ul class="feature-list">
+                    <li>Renk kontrast analizi</li>
+                    <li>Okunabilirlik kontrolü</li>
+                    <li>Uyarı sistemi</li>
+                    <li>Düzeltme önerileri</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>📱 Mobil Uyumluluk <span class="badge badge-advanced">ADVANCED</span></h3>
+                <p>Mobil cihazlar için otomatik optimizasyon</p>
+                <ul class="feature-list">
+                    <li>Büyük font boyutları</li>
+                    <li>Güçlü gölgeler</li>
+                    <li>Merkezleme</li>
+                    <li>Touch-friendly layout</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>✨ Trend Tasarımları <span class="badge badge-advanced">ADVANCED</span></h3>
+                <p>Mevcut tasarım trendlerini otomatik uygula</p>
+                <ul class="feature-list">
+                    <li>Minimal stil</li>
+                    <li>Bold tasarımı</li>
+                    <li>Soft estetik</li>
+                    <li>5+ trend seçeneği</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>🔍 Palette Önerisi <span class="badge badge-advanced">ADVANCED</span></h3>
+                <p>Yüklenen resimden renk paleti öner</p>
+                <ul class="feature-list">
+                    <li>Dinamik renk analizi</li>
+                    <li>Görüntü temel renkleri</li>
+                    <li>Duyarlı tonlar</li>
+                    <li>Harmonik paletler</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Batch Operations -->
+        <div class="category-header">
+            <h2>🔄 Toplu İşlemler (Batch Operations)</h2>
+            <p>Birden fazla öğeye aynı anda işlem uygula</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3>📏 Akıllı Konumlandırma <span class="badge badge-new">YENİ</span></h3>
+                <p>Yazıları grid düzeninde otomatik yerleştir</p>
+                <ul class="feature-list">
+                    <li>Çakışma önleme</li>
+                    <li>Otomatik grid</li>
+                    <li>Eşit aralıklandırma</li>
+                    <li>Tüm yazılara uygula</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>🔄 Toplu Dönüştürme <span class="badge badge-new">YENİ</span></h3>
+                <p>Yazıları kaskadlı şekilde dönüştür</p>
+                <ul class="feature-list">
+                    <li>Kademeli boyutlandırma</li>
+                    <li>Konumlandırma kaskadı</li>
+                    <li>Opasite gradyenti</li>
+                    <li>Profesyonel hiyerarşi</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>📋 Profesyonel Paket <span class="badge badge-pro">PRO</span></h3>
+                <p>Tüm profesyonel ayarları toplu uygula</p>
+                <ul class="feature-list">
+                    <li>Vintage filtresi</li>
+                    <li>Optimal kontrast</li>
+                    <li>Renk satürasyonu</li>
+                    <li>One-click profesyonellik</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>📱 Sosyal Medya Optimizasyonu <span class="badge badge-advanced">ADVANCED</span></h3>
+                <p>Instagram, TikTok vb için otomatik hazırla</p>
+                <ul class="feature-list">
+                    <li>Optimal font boyutu</li>
+                    <li>Yüksek kontrast</li>
+                    <li>Arka plan efektleri</li>
+                    <li>Canlı renkler</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>📈 Toplu Metin Büyütme <span class="badge badge-new">YENİ</span></h3>
+                <p>Tüm yazıları yüzde 20 oranında büyüt</p>
+                <ul class="feature-list">
+                    <li>Akıllı boyutlandırma</li>
+                    <li>Maksimum sınır (200px)</li>
+                    <li>Orantılı artış</li>
+                    <li>Tüm yazılara uygula</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>✨ Toplu Efekt Uygulama <span class="badge badge-advanced">ADVANCED</span></h3>
+                <p>Tüm yazılara shadow ve outline ekle</p>
+                <ul class="feature-list">
+                    <li>Gölge (10px)</li>
+                    <li>Outline (2px siyah)</li>
+                    <li>Tam opasite</li>
+                    <li>Uyumlu tasarım</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>🎯 Merkeze Alma <span class="badge badge-new">YENİ</span></h3>
+                <p>Tüm yazıları merkeze hızlı şekilde al</p>
+                <ul class="feature-list">
+                    <li>Yatay merkezleme</li>
+                    <li>Center alignment</li>
+                    <li>Tek tıklaşta</li>
+                    <li>Tüm yazılara</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>🎨 Toplu Arka Plan <span class="badge badge-new">YENİ</span></h3>
+                <p>Tüm yazılara arka plan ve padding ekle</p>
+                <ul class="feature-list">
+                    <li>Siyah arka plan</li>
+                    <li>70% opasite</li>
+                    <li>15px padding</li>
+                    <li>Profesyonel görünüm</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Comparison Table -->
+        <div class="category-header">
+            <h2>📊 Versiyon Karşılaştırması</h2>
+        </div>
+
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Özellik</th>
+                    <th>v1.0 Temel</th>
+                    <th>v2.0 Standart</th>
+                    <th>v3.0 Pro <span class="badge badge-pro">MEVCUT</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Metin Özellikleri</td>
+                    <td>5</td>
+                    <td>12</td>
+                    <td><strong>20+</strong></td>
+                </tr>
+                <tr>
+                    <td>AI Önerileri</td>
+                    <td>Yok</td>
+                    <td>8</td>
+                    <td><strong>30+</strong></td>
+                </tr>
+                <tr>
+                    <td>Efekt Türü</td>
+                    <td>3</td>
+                    <td>12</td>
+                    <td><strong>20+</strong></td>
+                </tr>
+                <tr>
+                    <td>Batch İşlemler</td>
+                    <td>Yok</td>
+                    <td>4</td>
+                    <td><strong>8+</strong></td>
+                </tr>
+                <tr>
+                    <td>Renk Analizi</td>
+                    <td>Yok</td>
+                    <td>Basit</td>
+                    <td><strong>Gelişmiş</strong></td>
+                </tr>
+                <tr>
+                    <td>Tasarım Puanlama</td>
+                    <td>Yok</td>
+                    <td>Yok</td>
+                    <td><strong>✓ Var</strong></td>
+                </tr>
+                <tr>
+                    <td>Erişilebilirlik</td>
+                    <td>Yok</td>
+                    <td>Temel</td>
+                    <td><strong>WCAG Uyumlu</strong></td>
+                </tr>
+                <tr>
+                    <td>Sosyal Medya Opt.</td>
+                    <td>Yok</td>
+                    <td>Yok</td>
+                    <td><strong>✓ Var</strong></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Call to Action -->
+        <div style="text-align: center; margin: 50px 0;">
+            <h2 style="color: white; margin-bottom: 20px;">Hemen Başla!</h2>
+            <a href="rfinal.html" class="cta-button">Tasarım Aracını Aç →</a>
+        </div>
+
+        <div class="footer">
+            <p>Tasarım Aracı v3.0 | 50+ Gelişmiş Fonksiyon | Yapay Zeka Destekli</p>
+            <p style="margin-top: 10px; opacity: 0.8; font-size: 0.9em;">Tüm özellikler tamamen kapalı kaynak ve yerel olarak çalışmaktadır.</p>
+        </div>
+    </div>
+</body>
+</html>

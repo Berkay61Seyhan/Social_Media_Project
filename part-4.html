@@ -1,0 +1,197 @@
+    <script>
+        // ============ LOGO MANAGEMENT ============
+        document.getElementById('logoUploadBtn').addEventListener('click', () => {
+            document.getElementById('logoImageInput').click();
+        });
+
+        document.getElementById('logoImageInput').addEventListener('change', (e) => {
+            if (e.target.files[0]) {
+                if (state.logos.length < 3) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const img = new Image();
+                        img.onload = () => {
+                            const logo = createLogo();
+                            logo.image = img;
+                            state.logos.push(logo);
+                            state.activeLogo = state.logos.length - 1;
+                            renderLogos();
+                            document.getElementById('logoControls').style.display = 'block';
+                            redraw();
+                            showNotif('✓ Logo yüklendi!');
+                        };
+                        img.src = e.target.result;
+                    };
+                    reader.readAsDataURL(e.target.files[0]);
+                } else {
+                    showNotif('⚠️ Maksimum 3 logo!');
+                }
+            }
+        });
+
+        document.getElementById('removeLogoBtn').addEventListener('click', () => {
+            if (state.activeLogo >= 0 && state.logos.length > 0) {
+                state.logos.splice(state.activeLogo, 1);
+                if (state.activeLogo >= state.logos.length) state.activeLogo = state.logos.length - 1;
+                if (state.logos.length === 0) state.activeLogo = -1;
+                renderLogos();
+                document.getElementById('logoControls').style.display = state.activeLogo >= 0 ? 'block' : 'none';
+                redraw();
+                showNotif('✓ Logo silindi!');
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            const logoItem = e.target.closest('.logo-item');
+            if (logoItem) {
+                const logoIndex = Array.from(document.querySelectorAll('.logo-item')).indexOf(logoItem);
+                state.activeLogo = logoIndex;
+                renderLogos();
+                document.getElementById('logoControls').style.display = 'block';
+            }
+        });
+
+        document.getElementById('logoSizeSlider').addEventListener('input', (e) => {
+            if (state.activeLogo >= 0) {
+                state.logos[state.activeLogo].size = parseInt(e.target.value);
+                document.getElementById('logoSizeVal').textContent = e.target.value + 'px';
+                redraw();
+            }
+        });
+
+        document.getElementById('logoXSlider').addEventListener('input', (e) => {
+            if (state.activeLogo >= 0) {
+                state.logos[state.activeLogo].x = parseInt(e.target.value);
+                document.getElementById('logoXVal').textContent = e.target.value + '%';
+                redraw();
+            }
+        });
+
+        document.getElementById('logoYSlider').addEventListener('input', (e) => {
+            if (state.activeLogo >= 0) {
+                state.logos[state.activeLogo].y = parseInt(e.target.value);
+                document.getElementById('logoYVal').textContent = e.target.value + '%';
+                redraw();
+            }
+        });
+
+        document.getElementById('logoRotSlider').addEventListener('input', (e) => {
+            if (state.activeLogo >= 0) {
+                state.logos[state.activeLogo].rot = parseInt(e.target.value);
+                document.getElementById('logoRotVal').textContent = e.target.value + '°';
+                redraw();
+            }
+        });
+
+        document.getElementById('logoOpacitySlider').addEventListener('input', (e) => {
+            if (state.activeLogo >= 0) {
+                state.logos[state.activeLogo].opacity = parseInt(e.target.value);
+                document.getElementById('logoOpacityVal').textContent = e.target.value + '%';
+                redraw();
+            }
+        });
+
+        // ============ AI MODAL ============
+        const aiModal = document.getElementById('aiModal');
+        const modalClose = document.querySelector('.modal-close');
+
+        document.getElementById('aiBtn').addEventListener('click', () => {
+            aiModal.classList.add('active');
+            loadAISuggestions();
+        });
+
+        document.getElementById('aiAutoBtn').addEventListener('click', () => {
+            applyAutoDesign();
+        });
+
+        modalClose.addEventListener('click', () => {
+            aiModal.classList.remove('active');
+        });
+
+        document.querySelectorAll('.tab-btn').forEach((btn, idx) => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById(`tab${idx}`).classList.add('active');
+            });
+        });
+
+        function loadAISuggestions() {
+            // Tab 0: Öneriler
+            let html = '<h4 style="color: var(--primary); margin-bottom: 12px;">🎨 Tasarım Önerileri</h4>';
+            html += '<div class="ai-suggestion" onclick="applyFilter(\'bright\')">☀️ Parlak Filtre - Görselleri canlılaştır</div>';
+            html += '<div class="ai-suggestion" onclick="applyFilter(\'vintage\')">📸 Vintage Stil - Profesyonel görünüm</div>';
+            html += '<div class="ai-suggestion" onclick="changeOpacity()">🌫️ Opaklığı Artır - Arka plan etkisi</div>';
+            html += '<div class="ai-suggestion" onclick="improveContrast()">📊 Kontrastı Güçlendir - Metin okunabilir</div>';
+            html += '<div class="ai-suggestion" onclick="centerContent()">🎯 Merkeze Ortala - Dengeli tasarım</div>';
+            html += '<div class="ai-suggestion" onclick="optimizeText()">✏️ Metin Optimize - Boyut iyileştir</div>';
+            html += '<div class="ai-suggestion" onclick="applySaturation()">🎨 Renk Canlılığı - Saturasyonu artır</div>';
+            html += '<div class="ai-suggestion" onclick="applyWarmFilter()">🔥 Sıcak Tonlar - Solgun resimlere uygun</div>';
+            document.getElementById('tab0').innerHTML = html;
+
+            // Tab 1: Renkler
+            let colorHtml = '<h4 style="color: var(--primary); margin-bottom: 12px;">🎨 Renk Paletleri</h4>';
+            colorPalettes.forEach((palette) => {
+                colorHtml += `<div style="margin-bottom: 15px;"><strong style="display: block; margin-bottom: 8px; color: #495057;">${palette.name}</strong>`;
+                palette.colors.forEach(color => {
+                    colorHtml += `<div style="background: ${color}; height: 35px; border-radius: 6px; margin-bottom: 6px; cursor: pointer; transition: all 0.3s;" onmouseover="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.3)'" onmouseout="this.style.boxShadow='none'" onclick="applyTextColor('${color}')" title="Metin rengi olarak uygula"></div>`;
+                });
+                colorHtml += '</div>';
+            });
+            document.getElementById('tab1').innerHTML = colorHtml;
+
+            // Tab 2: Metinler
+            let textHtml = '<h4 style="color: var(--primary); margin-bottom: 12px;">✏️ Metin Şablonları (20+)</h4>';
+            textSuggestions.forEach(text => {
+                textHtml += `<div class="ai-suggestion" onclick="applyTextSuggestion('${text}')">${text}</div>`;
+            });
+            document.getElementById('tab2').innerHTML = textHtml;
+
+            // Tab 3: Sorun Çözme
+            let troubleHtml = '<h4 style="color: var(--primary); margin-bottom: 12px;">🔧 Sık Sorunlar & Otomatik Çözümler</h4>';
+            troubleHtml += '<div class="ai-suggestion" onclick="fixReadability()">❌ Metin Okunamıyor → ✅ Okunabilirlik Arttır</div>';
+            troubleHtml += '<div class="ai-suggestion" onclick="fixBalance()">❌ Görsel Dengesiz → ✅ Merkeze Ortala</div>';
+            troubleHtml += '<div class="ai-suggestion" onclick="fixProfessional()">❌ Düz Görünüyor → ✅ Filtre & Efekt</div>';
+            troubleHtml += '<div class="ai-suggestion" onclick="fixCompression()">❌ Boğuk İçerik → ✅ Açıklık Ekle</div>';
+            troubleHtml += '<div class="ai-suggestion" onclick="fixMobile()">❌ Mobilde Görünmüyor → ✅ Metin Büyüt</div>';
+            troubleHtml += '<div class="ai-suggestion" onclick="fixBrightness()">❌ Çok Koyu → ✅ Parlaklık Artır</div>';
+            troubleHtml += '<div class="ai-suggestion" onclick="improveContrast()">❌ Kontrastlı Değil → ✅ Kontrast Güçlendir</div>';
+            document.getElementById('tab3').innerHTML = troubleHtml;
+
+            // Tab 4: Tasarım Kuralları
+            let tipsHtml = '<h4 style="color: var(--primary); margin-bottom: 12px;">📚 Profesyonel Tasarım Kuralları</h4>';
+            designTips.forEach(tip => {
+                tipsHtml += `<div style="padding: 10px; background: #f0f4ff; border-left: 3px solid var(--success); border-radius: 4px; margin-bottom: 8px; font-size: 0.9em;">${tip}</div>`;
+            });
+            document.getElementById('tab4').innerHTML = tipsHtml;
+
+            // Tab 5: Katman İşlemleri
+            let layerHtml = '<h4 style="color: var(--primary); margin-bottom: 12px;">⚙️ Katman İşlemleri</h4>';
+            layerHtml += '<div class="ai-suggestion" onclick="distributeLayersEvenly()">📐 Katmanları Düzenli Dağıt</div>';
+            layerHtml += '<div class="ai-suggestion" onclick="alignLayersCenter()">🎯 Tüm Katmanları Merkeze Al</div>';
+            layerHtml += '<div class="ai-suggestion" onclick="equalizeLayerOpacity()">🌫️ Katmanları Sayıştır (Opacity)</div>';
+            layerHtml += '<div class="ai-suggestion" onclick="rotateAllLayers()">🔄 Katmanları Döndür (30°)</div>';
+            document.getElementById('tab5').innerHTML = layerHtml;
+        }
+
+        function analyzeImage(img) {
+            const canvas_temp = document.createElement('canvas');
+            canvas_temp.width = img.width;
+            canvas_temp.height = img.height;
+            const ctx_temp = canvas_temp.getContext('2d');
+            ctx_temp.drawImage(img, 0, 0);
+            
+            const imageData = ctx_temp.getImageData(0, 0, 1, 1);
+            const isDark = (imageData.data[0] + imageData.data[1] + imageData.data[2]) / 3 < 128;
+            
+            if (isDark) {
+                document.getElementById('textColorPicker').value = '#ffffff';
+                state.text.color = '#ffffff';
+            } else {
+                document.getElementById('textColorPicker').value = '#000000';
+                state.text.color = '#000000';
+            }
+            redraw();
+        }
+    </script>

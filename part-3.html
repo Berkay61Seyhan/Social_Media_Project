@@ -1,0 +1,128 @@
+    <script>
+        // ============ LAYER MANAGEMENT ============
+        document.getElementById('addLayerBtn').insertAdjacentHTML('afterend', '<input type="file" id="layerImageInput" accept="image/*" style="display:none;">');
+        const layerImageInput = document.getElementById('layerImageInput');
+
+        document.getElementById('addLayerBtn').addEventListener('click', () => {
+            if (state.layers.length < 10) {
+                state.layers.push(createLayer());
+                state.activeLayer = state.layers.length - 1;
+                renderLayers();
+                setTimeout(() => {
+                    document.getElementById('layerImageInput').click();
+                }, 100);
+                showNotif('✓ Yeni katman eklendi!');
+            } else {
+                showNotif('⚠️ Maksimum 10 katman!');
+            }
+        });
+
+        document.getElementById('removeLayerBtn').addEventListener('click', () => {
+            if (state.layers.length > 1) {
+                state.layers.splice(state.activeLayer, 1);
+                if (state.activeLayer >= state.layers.length) state.activeLayer = state.layers.length - 1;
+                renderLayers();
+                redraw();
+                showNotif('✓ Katman silindi!');
+            } else {
+                showNotif('⚠️ En az 1 katman olmalı!');
+            }
+        });
+
+        document.getElementById('dupLayerBtn').addEventListener('click', () => {
+            if (state.layers.length < 10 && state.layers[state.activeLayer].image) {
+                const activeLayer = state.layers[state.activeLayer];
+                const clonedLayer = {
+                    id: Date.now(),
+                    image: activeLayer.image,
+                    scale: activeLayer.scale,
+                    x: activeLayer.x + 5,
+                    y: activeLayer.y + 5,
+                    rot: activeLayer.rot,
+                    opacity: activeLayer.opacity
+                };
+                state.layers.push(clonedLayer);
+                state.activeLayer = state.layers.length - 1;
+                renderLayers();
+                redraw();
+                showNotif('✓ Katman klonlandı!');
+            } else if (state.layers.length >= 10) {
+                showNotif('⚠️ Maksimum 10 katman!');
+            } else {
+                showNotif('⚠️ Klonlamak için katmanda görsel olmalı!');
+            }
+        });
+
+        layerImageInput.addEventListener('change', (e) => {
+            if (e.target.files[0]) {
+                loadLayerImage(e.target.files[0]);
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            const layerItem = e.target.closest('.layer-item');
+            if (layerItem) {
+                const layerIndex = Array.from(document.querySelectorAll('.layer-item')).indexOf(layerItem);
+                state.activeLayer = layerIndex;
+                renderLayers();
+                setTimeout(() => {
+                    document.getElementById('layerImageInput').click();
+                }, 100);
+            }
+        });
+
+        function loadLayerImage(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    state.layers[state.activeLayer].image = img;
+                    renderLayers();
+                    redraw();
+                    showNotif('✓ Görsel katmana yüklendi!');
+                    analyzeImage(img);
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // ============ BACKGROUND MANAGEMENT ============
+        document.getElementById('bgUploadBtn').addEventListener('click', () => {
+            document.getElementById('bgImageInput').click();
+        });
+
+        document.getElementById('bgImageInput').addEventListener('change', (e) => {
+            if (e.target.files[0]) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        state.bgImage = img;
+                        redraw();
+                        showNotif('✓ Arka plan yüklendi!');
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(e.target.files[0]);
+            }
+        });
+
+        document.getElementById('bgOpacitySlider').addEventListener('input', (e) => {
+            state.bgOpacity = parseInt(e.target.value);
+            document.getElementById('bgOpacityVal').textContent = e.target.value + '%';
+            redraw();
+        });
+
+        document.getElementById('bgScaleSlider').addEventListener('input', (e) => {
+            state.bgScale = parseInt(e.target.value);
+            document.getElementById('bgScaleVal').textContent = e.target.value + '%';
+            redraw();
+        });
+
+        document.getElementById('bgRotSlider').addEventListener('input', (e) => {
+            state.bgRotation = parseInt(e.target.value);
+            document.getElementById('bgRotVal').textContent = e.target.value + '°';
+            redraw();
+        });
+    </script>

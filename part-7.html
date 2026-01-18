@@ -1,0 +1,209 @@
+    <script>
+        // ============ AI FUNCTIONS ============
+        window.applyFilter = (flt) => {
+            document.querySelectorAll('[data-flt]').forEach(b => b.classList.remove('active'));
+            document.querySelector(`[data-flt="${flt}"]`).classList.add('active');
+            state.filter = flt;
+            redraw();
+            showNotif('✓ Filtre uygulandı!');
+        };
+
+        window.changeOpacity = () => {
+            document.getElementById('overlaySlider').value = 40;
+            state.overlay = 40;
+            document.getElementById('overlayVal').textContent = '40%';
+            redraw();
+            showNotif('✓ Opaklık ayarlandı!');
+        };
+
+        window.improveContrast = () => {
+            document.getElementById('contrastSlider').value = 130;
+            state.contrast = 130;
+            document.getElementById('contrastVal').textContent = '130%';
+            redraw();
+            showNotif('✓ Kontrast güçlendirildi!');
+        };
+
+        window.centerContent = () => {
+            document.getElementById('textXSlider').value = 50;
+            document.getElementById('textYSlider').value = 50;
+            state.text.x = 50;
+            state.text.y = 50;
+            document.getElementById('textXVal').textContent = '50%';
+            document.getElementById('textYVal').textContent = '50%';
+            redraw();
+            showNotif('✓ Merkeze yer alındı!');
+        };
+
+        window.optimizeText = () => {
+            document.getElementById('fontSizeSlider').value = 56;
+            state.text.size = 56;
+            document.getElementById('fontSizeVal').textContent = '56px';
+            redraw();
+            showNotif('✓ Metin boyutu optimize edildi!');
+        };
+
+        window.applySaturation = () => {
+            document.getElementById('saturateSlider').value = 150;
+            state.saturate = 150;
+            document.getElementById('saturateVal').textContent = '150%';
+            redraw();
+            showNotif('✓ Renk canlılığı arttırıldı!');
+        };
+
+        window.applyWarmFilter = () => {
+            applyFilter('warm');
+        };
+
+        window.applyTextColor = (color) => {
+            document.getElementById('textColorPicker').value = color;
+            state.text.color = color;
+            redraw();
+            showNotif('✓ Renk uygulandı!');
+        };
+
+        window.applyTextSuggestion = (text) => {
+            document.getElementById('textArea').value = text;
+            state.text.content = text;
+            redraw();
+            showNotif('✓ Metin eklendi!');
+        };
+
+        window.fixReadability = () => {
+            improveContrast();
+            document.getElementById('fontSizeSlider').value = 64;
+            state.text.size = 64;
+            document.getElementById('fontSizeVal').textContent = '64px';
+            document.getElementById('textColorPicker').value = '#ffffff';
+            state.text.color = '#ffffff';
+            redraw();
+            showNotif('✓ Okunabilirlik iyileştirildi!');
+        };
+
+        window.fixBalance = () => {
+            centerContent();
+            document.getElementById('fontSizeSlider').value = 52;
+            state.text.size = 52;
+            document.getElementById('fontSizeVal').textContent = '52px';
+            redraw();
+        };
+
+        window.fixProfessional = () => {
+            applyFilter('vintage');
+            improveContrast();
+            document.getElementById('saturateSlider').value = 120;
+            state.saturate = 120;
+            document.getElementById('saturateVal').textContent = '120%';
+            redraw();
+            showNotif('✓ Profesyonel görünüm uygulandı!');
+        };
+
+        window.fixCompression = () => {
+            document.getElementById('overlaySlider').value = 20;
+            state.overlay = 20;
+            document.getElementById('overlayVal').textContent = '20%';
+            redraw();
+            showNotif('✓ Açıklık ve netlik iyileştirildi!');
+        };
+
+        window.fixMobile = () => {
+            document.getElementById('fontSizeSlider').value = 72;
+            state.text.size = 72;
+            document.getElementById('fontSizeVal').textContent = '72px';
+            redraw();
+            showNotif('✓ Mobil uyumluluğu arttırıldı!');
+        };
+
+        window.fixBrightness = () => {
+            document.getElementById('brightnessSlider').value = 130;
+            state.brightness = 130;
+            document.getElementById('brightnessVal').textContent = '130%';
+            redraw();
+            showNotif('✓ Parlaklık iyileştirildi!');
+        };
+
+        window.distributeLayersEvenly = () => {
+            if (state.layers.length < 2) return;
+            const spacing = 100 / (state.layers.length + 1);
+            state.layers.forEach((layer, i) => {
+                layer.x = spacing * (i + 1);
+                layer.y = 50;
+            });
+            redraw();
+            showNotif('✓ Katmanlar düzenli dağıtıldı!');
+        };
+
+        window.alignLayersCenter = () => {
+            state.layers.forEach(layer => {
+                layer.x = 50;
+                layer.y = 50;
+            });
+            redraw();
+            showNotif('✓ Tüm katmanlar merkeze alındı!');
+        };
+
+        window.equalizeLayerOpacity = () => {
+            const avgOpacity = 70;
+            state.layers.forEach(layer => {
+                layer.opacity = avgOpacity;
+            });
+            redraw();
+            showNotif('✓ Katmanların şeffaflığı sayıştırıldı!');
+        };
+
+        window.rotateAllLayers = () => {
+            state.layers.forEach(layer => {
+                layer.rot = (layer.rot + 30) % 360;
+            });
+            redraw();
+            showNotif('✓ Katmanlar 30° döndürüldü!');
+        };
+
+        function applyAutoDesign() {
+            state.filter = 'vintage';
+            document.querySelectorAll('[data-flt]').forEach(b => b.classList.remove('active'));
+            document.querySelector('[data-flt="vintage"]').classList.add('active');
+            
+            document.getElementById('contrastSlider').value = 125;
+            state.contrast = 125;
+            document.getElementById('contrastVal').textContent = '125%';
+            
+            document.getElementById('brightnessSlider').value = 115;
+            state.brightness = 115;
+            document.getElementById('brightnessVal').textContent = '115%';
+            
+            document.getElementById('saturateSlider').value = 130;
+            state.saturate = 130;
+            document.getElementById('saturateVal').textContent = '130%';
+            
+            document.getElementById('overlaySlider').value = 30;
+            state.overlay = 30;
+            document.getElementById('overlayVal').textContent = '30%';
+            
+            state.text.color = '#ffffff';
+            document.getElementById('textColorPicker').value = '#ffffff';
+            
+            document.getElementById('fontSizeSlider').value = 54;
+            state.text.size = 54;
+            document.getElementById('fontSizeVal').textContent = '54px';
+            
+            document.getElementById('textXSlider').value = 50;
+            document.getElementById('textYSlider').value = 45;
+            state.text.x = 50;
+            state.text.y = 45;
+            document.getElementById('textXVal').textContent = '50%';
+            document.getElementById('textYVal').textContent = '45%';
+            
+            document.querySelectorAll('[data-align]').forEach(b => b.classList.remove('active'));
+            document.querySelector('[data-align="center"]').classList.add('active');
+            state.textAlign = 'center';
+            
+            redraw();
+            showNotif('⚡ Otomatik profesyonel tasarım uygulandı!');
+        }
+
+        // ============ START APPLICATION ============
+        // Call initialization function to start the app
+        // This will be executed after all parts are loaded
+        initApp();
+    </script>

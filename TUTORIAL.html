@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nasıl Kullanılır - Tasarım Aracı v3.0</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .nav {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav a {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .nav a:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin: 25px 0 15px 0;
+        }
+
+        p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        .step {
+            background: #f0f4ff;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            margin: 15px 0;
+            border-radius: 6px;
+        }
+
+        .step-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        code {
+            background: #f0f4ff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #667eea;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .feature-box {
+            background: #fff9e6;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .feature-box h4 {
+            color: #ff9800;
+            margin-bottom: 8px;
+        }
+
+        .tip {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #2196f3;
+            margin: 15px 0;
+        }
+
+        .warning {
+            background: #fff3e0;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ff9800;
+            margin: 15px 0;
+        }
+
+        .success {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #4caf50;
+            margin: 15px 0;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: #999;
+            border-top: 1px solid #eee;
+        }
+
+        a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Tasarım Aracı v3.0 - Kullanım Kılavuzu</h1>
+            <p class="subtitle">Adım adım öğren ve profesyonel tasarımlar oluştur</p>
+            <div class="nav">
+                <a href="rfinal.html">← Uygulamaya Dön</a>
+                <a href="ADVANCED_FEATURES.html">Gelişmiş Özellikler →</a>
+            </div>
+        </header>
+
+        <div class="section">
+            <h2>🚀 Hızlı Başlangıç (5 Dakika)</h2>
+            
+            <h3>Adım 1: Arka Plan Seç</h3>
+            <div class="step">
+                <span class="step-number">1</span>
+                Sağ panelden <strong>Arka Plan & Katmanlar</strong> bölümünü aç
+            </div>
+            <div class="step">
+                <span class="step-number">2</span>
+                Hazır gradientler arasından birini seç veya kendi resmini yükle
+            </div>
+            <div class="step">
+                <span class="step-number">3</span>
+                <strong>Şeffaflık</strong> ve <strong>Döndürme</strong> kontrollerini ayarla
+            </div>
+
+            <h3>Adım 2: Metin Ekle</h3>
+            <div class="step">
+                <span class="step-number">1</span>
+                <strong>Yazı Yönetimi</strong> bölümünde <strong>+ Yazı Ekle</strong> butonuna tıkla
+            </div>
+            <div class="step">
+                <span class="step-number">2</span>
+                Listenin altında oluşan yazıya tıkla (seçili olur ve kontroller açılır)
+            </div>
+            <div class="step">
+                <span class="step-number">3</span>
+                <strong>Metin İçeriği</strong> alanına yazını yaz
+            </div>
+            <div class="step">
+                <span class="step-number">4</span>
+                <strong>Yazı Ayarları</strong> panelinde fontunu, boyutunu ve rengini seç
+            </div>
+
+            <h3>Adım 3: Efekt Uygula</h3>
+            <div class="step">
+                <span class="step-number">1</span>
+                <strong>AI Asistan</strong> bölümünde <strong>Gelişmiş Özellikler</strong>'e tıkla
+            </div>
+            <div class="step">
+                <span class="step-number">2</span>
+                İstediğin efekti seç (Neon, 3D, Metalik vb.)
+            </div>
+            <div class="step">
+                <span class="step-number">3</span>
+                Canvas'da değişimi izle
+            </div>
+
+            <h3>Adım 4: İndir</h3>
+            <div class="step">
+                <span class="step-number">1</span>
+                Üst kısımda <strong>PNG İndir</strong> butonuna tıkla
+            </div>
+            <div class="step">
+                <span class="step-number">2</span>
+                Tasarımın PNG dosyası bilgisayarına kaydedilir
+            </div>
+
+            <div class="success">
+                <strong>✓ Tebrikler!</strong> Profesyonel bir tasarım oluşturdun!
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🎨 Metin Kontrolleri Rehberi</h2>
+
+            <h3>Temel Kontroller</h3>
+            <div class="feature-grid">
+                <div class="feature-box">
+                    <h4>📏 Metin Boyutu</h4>
+                    <p>12px ile 200px arasında ayarla. Büyük fontlar başlıklar için ideal.</p>
+                </div>
+                <div class="feature-box">
+                    <h4>🎨 Renk Seç</h4>
+                    <p>Renk picker ile herhangi bir renk seç. Kontrast için beyaz/siyah kullan.</p>
+                </div>
+                <div class="feature-box">
+                    <h4>📍 Konumlandır</h4>
+                    <p>X ve Y kaydırıcısı ile metni harita üzerinde konumlandır.</p>
+                </div>
+                <div class="feature-box">
+                    <h4>🔄 Döndür</h4>
+                    <p>0-360° arasında döndür. Dinamik tasarımlar için 15-45° ideal.</p>
+                </div>
+            </div>
+
+            <h3>İleri Kontroller</h3>
+            <div class="feature-grid">
+                <div class="feature-box">
+                    <h4>🌫️ Opasite</h4>
+                    <p>0-100% şeffaflık. 70% katmanlar için iyi görünüyor.</p>
+                </div>
+                <div class="feature-box">
+                    <h4>✨ Gölge</h4>
+                    <p>Metin gölgesi ekle. 5-20px okunabilirlik için iyi.</p>
+                </div>
+                <div class="feature-box">
+                    <h4>📝 Hizalama</h4>
+                    <p>Sağ, Sol, Merkez - Metin akışını kontrol et.</p>
+                </div>
+                <div class="feature-box">
+                    <h4>↔️ Boşluk</h4>
+                    <p>Letter Spacing - Harfler arası boşluk ekle.</p>
+                </div>
+            </div>
+
+            <h3>Efekt Kontrolleri</h3>
+            <div class="feature-grid">
+                <div class="feature-box">
+                    <h4>📐 Outline</h4>
+                    <p>Metin kenarlığı ekle. Siyah outline beyaz metni iyileştirir.</p>
+                </div>
+                <div class="feature-box">
+                    <h4>🎨 Arka Plan</h4>
+                    <p>Metin arkasında renklı kutu. Padding ile boşluk ayarla.</p>
+                </div>
+                <div class="feature-box">
+                    <h4>📏 Çizgi Yüksekliği</h4>
+                    <p>Satırlar arası mesafe. Çok satırlı metinler için önemli.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🤖 AI Asistan Nasıl Kullanılır</h2>
+
+            <h3>💡 Akıllı Öneriler</h3>
+            <p><strong>AI Asistan</strong> bölümündeki <strong>Akıllı Öneriler</strong> butonuna tıkla. 6 sekmede şunlar bulunur:</p>
+            <ol style="margin-left: 20px; margin-bottom: 15px;">
+                <li><strong>Tasarım Önerileri:</strong> 12+ filtre ve efekt önerisi</li>
+                <li><strong>Renk Paletleri:</strong> Profesyonel renk kombinasyonları</li>
+                <li><strong>Metin Şablonları:</strong> 20+ hazır metin önerisi</li>
+                <li><strong>Sorun Çözme:</strong> Tasarım sorunlarına otomatik çözümler</li>
+                <li><strong>Tasarım Kuralları:</strong> Profesyonel tasarım prensipleri</li>
+                <li><strong>Batch İşlemleri:</strong> Tüm katmanlara toplu işlem uygula</li>
+            </ol>
+
+            <h3>⚡ Otomatik Tasarım</h3>
+            <p><strong>Otomatik Tasarım</strong> butonuna tıkla ve şunlar otomatik uygulanır:</p>
+            <ul style="margin-left: 20px; margin-bottom: 15px;">
+                <li>✓ Vintage filtresi</li>
+                <li>✓ Optimal kontrast ve parlaklık</li>
+                <li>✓ Renk satürasyonu artışı</li>
+                <li>✓ Metin boyutu optimizasyonu</li>
+                <li>✓ Merkeze yerleştirme</li>
+            </ul>
+
+            <h3>🚀 Gelişmiş Özellikler</h3>
+            <p><strong>Gelişmiş Özellikler</strong> detaylarında bulunur:</p>
+            <div class="feature-grid">
+                <div class="feature-box">
+                    <h4>🎯 Akıllı Komp.</h4>
+                    <p>Tasarımı otomatik dengele</p>
+                </div>
+                <div class="feature-box">
+                    <h4>✨ Layout AI</h4>
+                    <p>Altın oran ile düzen</p>
+                </div>
+                <div class="feature-box">
+                    <h4>📊 Puanla</h4>
+                    <p>Tasarım kalitesini puanla</p>
+                </div>
+                <div class="feature-box">
+                    <h4>✅ A11y</h4>
+                    <p>Erişilebilirlik kontrastı kontrol et</p>
+                </div>
+            </div>
+
+            <div class="tip">
+                <strong>💡 İpucu:</strong> Farklı efektleri sırasıyla dene ve kombinasyonlar oluştur. Her efekt tasarımı daha etkileyici hale getirebilir!
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>✨ Profesyonel İpuçları</h2>
+
+            <h3>1. Renk Uyumu</h3>
+            <p>Tamamlayıcı renkler kullan (kırmızı-turkuaz, sarı-mavi). <strong>Renk Uyumu</strong> butonuyla otomatik kombinasyonlar oluştur.</p>
+
+            <h3>2. Hiyerarşi</h3>
+            <p>En önemli metni en büyük yap. Başlık 64px+, altmetin 32-48px ideal.</p>
+
+            <h3>3. Boşluk</h3>
+            <p>Öğeler arasına yeterli boşluk bırak. Kalabalık tasarımlardan kaçın.</p>
+
+            <h3>4. Tipografi</h3>
+            <p>Maksimum 2-3 farklı font kullan. Arial, Verdana emniyetli seçimlerdir.</p>
+
+            <h3>5. Kontrast</h3>
+            <p>Metin ve arka plan arasında yüksek kontrast olsun. Beyaz metin + siyah gölge ideal.</p>
+
+            <h3>6. Mobil</h3>
+            <p>Yazılarını mobilde test et. <strong>Sosyal Medya Optimizasyonu</strong> bu işi yapar.</p>
+
+            <div class="warning">
+                <strong>⚠️ Hatalardan Kaçın:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Çok fazla renk kullanmak (maksimum 5)</li>
+                    <li>Çok küçük metin (minimum 32px)</li>
+                    <li>Çok fazla efekt (maksimum 2-3)</li>
+                    <li>Kötü renk kontrastı</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🎬 Video Gibi Efektler</h2>
+
+            <h3>Typewriter Efekti</h3>
+            <p><strong>Typewriter Efekti</strong>'ni hazırla, sonra CSS animasyonu ile harf harf yazıldığını göster.</p>
+
+            <h3>Fade In</h3>
+            <p><strong>Fade-in Efekti</strong>'ni kullan. Opasite 0'dan 100'e animasyon için hazır.</p>
+
+            <h3>Slide In</h3>
+            <p><strong>Slide Efekti</strong>'ni kullan. X=0 konumundan başlayıp sağa kaydırır.</p>
+
+            <div class="success">
+                <strong>✓ Açıklama:</strong> CSS @keyframes ile kombinasyon yapıp JavaScript ile kontrol edebilirsin!
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📱 Format Seçimi</h2>
+
+            <p>Üst kısımda 6 format seçeneği vardır. Her biri farklı ölçülerde tasarım için optimizdir:</p>
+
+            <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+                <tr style="background: #f0f4ff;">
+                    <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Format</th>
+                    <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Boyut</th>
+                    <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Kullanım</th>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Instagram Post</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">1080x1080</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Feed görselleri</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Instagram Story</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">1080x1920</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Story ve Reels</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Facebook</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">1200x630</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Share ve paylaşımlar</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Twitter</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">1200x675</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Tweet görüntüleri</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid #ddd;">LinkedIn</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">1200x627</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Profesyonel paylaşımlar</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid #ddd;">YouTube</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">1280x720</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Kapak ve thumbnails</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>🛠️ Kişiselleştirme ve Kaydetme</h2>
+
+            <p>Tasarımını kaydetmek ve daha sonra devam etmek istersen:</p>
+            <div class="step">
+                <span class="step-number">1</span>
+                <strong>Gelişmiş Özellikler</strong>'de <strong>Kaydet</strong> butonuna tıkla
+            </div>
+            <div class="step">
+                <span class="step-number">2</span>
+                <code>design-settings.json</code> dosyası indirilir
+            </div>
+            <div class="step">
+                <span class="step-number">3</span>
+                Daha sonra <strong>Yükle</strong> butonuyla bu ayarları geri yükle
+            </div>
+
+            <div class="tip">
+                <strong>💡 İpucu:</strong> Farklı tasarımlar için farklı JSON dosyaları oluştur ve organize et!
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2024 Tasarım Aracı v3.0 | Yapay Zeka Destekli | <a href="rfinal.html">Uygulamaya Dön</a></p>
+        </div>
+    </div>
+</body>
+</html>

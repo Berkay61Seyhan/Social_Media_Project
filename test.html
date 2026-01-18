@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test</title>
+</head>
+<body>
+    <h1>Test Sayfa</h1>
+    <button id="testBtn">Test Butonu</button>
+    <div id="log"></div>
+    
+    <script>
+        document.getElementById('testBtn').addEventListener('click', () => {
+            document.getElementById('log').innerHTML += 'Buton tıklandı!<br>';
+        });
+        
+        console.log('Test sayası yüklendi');
+    </script>
+</body>
+</html>

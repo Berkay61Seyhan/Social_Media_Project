@@ -1,0 +1,154 @@
+    <script>
+        // ============ CANVAS RENDERING ============
+        function selectGradient(id, el) {
+            document.querySelectorAll('.preset-item').forEach(e => e.classList.remove('active'));
+            el.classList.add('active');
+            state.gradient = id;
+            state.bgImage = null;
+            redraw();
+        }
+
+        function redraw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawBg();
+            state.layers.forEach(layer => {
+                if (layer.image) drawLayer(layer);
+            });
+            state.logos.forEach(logo => {
+                if (logo.image) drawLogo(logo);
+            });
+            if (state.text.content) drawText();
+        }
+
+        function drawBg() {
+            if (state.bgImage) {
+                ctx.save();
+                if (state.blur > 0) ctx.filter = `blur(${state.blur}px)`;
+                
+                const img = state.bgImage;
+                const ratio = img.width / img.height;
+                const canvRatio = canvas.width / canvas.height;
+                let w, h;
+                
+                if (ratio > canvRatio) {
+                    h = canvas.height;
+                    w = h * ratio;
+                } else {
+                    w = canvas.width;
+                    h = w / ratio;
+                }
+                
+                const scaleFactor = state.bgScale / 100;
+                w *= scaleFactor;
+                h *= scaleFactor;
+                
+                ctx.globalAlpha = state.bgOpacity / 100;
+                ctx.translate(canvas.width / 2, canvas.height / 2);
+                ctx.rotate((state.bgRotation * Math.PI) / 180);
+                ctx.drawImage(img, -w / 2, -h / 2, w, h);
+                ctx.restore();
+            } else {
+                const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+                const cols = gradientMap[state.gradient];
+                grad.addColorStop(0, cols[0]);
+                grad.addColorStop(1, cols[1]);
+                ctx.fillStyle = grad;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+
+            if (state.overlay > 0) {
+                ctx.fillStyle = `rgba(0, 0, 0, ${state.overlay / 100})`;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+        }
+
+        function drawLayer(layer) {
+            ctx.save();
+            
+            let filterStr = `brightness(${state.brightness}%) contrast(${state.contrast}%) saturate(${state.saturate}%) hue-rotate(${state.hue}deg)`;
+            if (state.filter === 'gray') filterStr += ' grayscale(100%)';
+            else if (state.filter === 'sepia') filterStr += ' sepia(100%)';
+            else if (state.filter === 'bright') filterStr += ' brightness(130%) saturate(120%)';
+            else if (state.filter === 'dark') filterStr += ' brightness(70%) contrast(120%)';
+            else if (state.filter === 'vintage') filterStr += ' sepia(50%) contrast(120%) brightness(110%)';
+            else if (state.filter === 'cool') filterStr += ' hue-rotate(240deg) saturate(120%)';
+            else if (state.filter === 'warm') filterStr += ' hue-rotate(20deg) saturate(130%) brightness(110%)';
+            else if (state.filter === 'neon') filterStr += ' contrast(150%) saturate(200%) brightness(110%)';
+            else if (state.filter === 'invert') filterStr += ' invert(100%)';
+            else if (state.filter === 'saturate') filterStr += ' saturate(180%)';
+            else if (state.filter === 'duotone') filterStr += ' grayscale(100%) contrast(150%)';
+            ctx.filter = filterStr;
+
+            const img = layer.image;
+            const ratio = img.width / img.height;
+            const canvRatio = canvas.width / canvas.height;
+            
+            let baseW, baseH;
+            if (ratio > canvRatio) {
+                baseW = canvas.width * 0.8;
+                baseH = baseW / ratio;
+            } else {
+                baseH = canvas.height * 0.8;
+                baseW = baseH * ratio;
+            }
+
+            const w = baseW * (layer.scale / 100);
+            const h = baseH * (layer.scale / 100);
+            const x = canvas.width * (layer.x / 100);
+            const y = canvas.height * (layer.y / 100);
+
+            ctx.globalAlpha = layer.opacity / 100;
+            ctx.translate(x, y);
+            ctx.rotate((layer.rot * Math.PI) / 180);
+            ctx.drawImage(img, -w / 2, -h / 2, w, h);
+            ctx.restore();
+        }
+
+        function drawText() {
+            ctx.save();
+
+            const x = canvas.width * (state.text.x / 100);
+            const y = canvas.height * (state.text.y / 100);
+
+            ctx.font = `bold ${state.text.size}px ${state.text.family}`;
+            ctx.fillStyle = state.text.color;
+            ctx.globalAlpha = state.text.opacity / 100;
+            ctx.textAlign = state.textAlign;
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
+            ctx.shadowBlur = state.text.shadow;
+            ctx.shadowOffsetX = 2;
+            ctx.shadowOffsetY = 2;
+
+            ctx.translate(x, y);
+            ctx.rotate((state.text.rot * Math.PI) / 180);
+
+            const lines = state.text.content.split('\n');
+            const lineH = state.text.size * 1.3;
+            const startY = -((lines.length - 1) * lineH) / 2;
+
+            lines.forEach((line, i) => {
+                ctx.fillText(line, 0, startY + (i * lineH));
+            });
+
+            ctx.restore();
+        }
+
+        function drawLogo(logo) {
+            ctx.save();
+
+            const img = logo.image;
+            const ratio = img.width / img.height;
+            
+            let w = logo.size;
+            let h = w / ratio;
+
+            const x = canvas.width * (logo.x / 100);
+            const y = canvas.height * (logo.y / 100);
+
+            ctx.globalAlpha = logo.opacity / 100;
+            ctx.translate(x, y);
+            ctx.rotate((logo.rot * Math.PI) / 180);
+            ctx.drawImage(img, -w / 2, -h / 2, w, h);
+            ctx.restore();
+        }
+    </script>
